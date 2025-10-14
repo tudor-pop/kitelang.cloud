@@ -64,7 +64,7 @@
 <div class="code-demo" role="region" aria-label="Kite code demo">
     <div class="demo-header">
         <div class="tabs" role="tablist">
-            <div class="tab active" role="tab" aria-selected="true" data-id="simple">Simple</div>
+            <div class="tab active" role="tab" aria-selected="true" data-id="resources">Resources</div>
             <div class="tab" role="tab" data-id="async">Asynchronous</div>
             <div class="tab" role="tab" data-id="oop">Object-oriented</div>
             <div class="tab" role="tab" data-id="functional">Functional</div>
@@ -82,7 +82,7 @@
 
 <script>
     const snippets = {
-        simple: `fun <fn>main</fn>() {
+        resources: `fun <fn>main</fn>() {
   <kw>val</kw> <type>name</type> = <str>"stranger"</str>     <com>// Declare your first variable</com>
   println(<str>"Hi, $name!"</str>)           <com>// ...and use it!</com>
   print(<str>"Current count:"</str>)
@@ -123,7 +123,7 @@ println(<fn>sum</fn>(listOf(1,2,3)))
     };
 
     const footerMessages = {
-        simple: 'Kite • Dummy footer message for Simple',
+        resources: 'Kite • Dummy footer message for Resources',
         async: 'Kite • Dummy footer message for Async',
         oop: 'Kite • Dummy footer message for OOP',
         functional: 'Kite • Dummy footer message for Functional',
@@ -156,7 +156,7 @@ println(<fn>sum</fn>(listOf(1,2,3)))
 
     tabs.forEach(t => t.addEventListener('click', () => setTab(t.dataset.id)));
 
-    setTab('simple');
+    setTab('resources');
 </script>
 </body>
 </html>
