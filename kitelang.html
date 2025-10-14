@@ -102,7 +102,7 @@ component Frontend {
      output string arn = Bucket.logs.arn
 }
 
-// create both buckets bucket
+// create both buckets by using a component
 component Frontend prod {
      name = "prod-logs"
 }
