@@ -6,7 +6,7 @@
     <title>Kite – Code Demo Tabs</title>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root{
+        :root {
             --bg:#0d141a;
             --panel:#121a22;
             --panel-2:#0f171e;
@@ -14,51 +14,105 @@
             --text:#e7ecf2;
             --accent:#6d5dfc;
             --accent-2:#9a4ef5;
-            --ok:#7ee787;
             --border:rgba(255,255,255,.08);
             --shadow:0 10px 30px rgba(0,0,0,.35);
             --radius:14px;
             --mono:'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            --purple:#a855f7;   /* keywords */
-            --blue:#00aaff;     /* types */
-            --green:#7ee787;    /* strings */
-            --yellow:#facc15;   /* decorator */
+            --purple:#a855f7;
+            --blue:#00aaff;
+            --green:#7ee787;
+            --yellow:#facc15;
         }
-        html,body{height:100%;}
-        body{
-            margin:0;
-            background:var(--bg);
-            color:var(--text);
-            font-family: Inter,system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-            display:grid; place-items:center; padding:0px;
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
             overflow: hidden;
         }
 
-        .code-demo{width:min(1100px,92vw); background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        }
 
-        .demo-header{display:flex; gap:22px; align-items:flex-end; padding:10px 20px 0; background:var(--panel-2); border-bottom:1px solid var(--border)}
-        .tabs{display:flex; gap:18px}
-        .tab{position:relative; padding:14px 6px; font-weight:600; letter-spacing:.2px; color:var(--muted); cursor:pointer; user-select:none}
-        .tab.active{color:var(--text)}
-        .tab.active:after{content:""; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); border-radius:3px 3px 0 0}
+        .code-demo {
+            display: flex;
+            flex-direction: column;
+            width: min(1100px, 92vw);
+            height: 100vh;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
 
-        .editor{position:relative; background:#0d1117;}
-        pre{margin:0; padding:24px; overflow:auto; max-height:520px; font-family:var(--mono); font-size:15px; line-height:1.6}
+        .demo-header {
+            display: flex;
+            gap: 22px;
+            align-items: flex-end;
+            padding: 10px 20px 0;
+            background: var(--panel-2);
+            border-bottom: 1px solid var(--border);
+        }
 
-        /* Token colors per spec */
-        .tok-kw{color:var(--purple)}        /* import, from, resource */
-        .tok-type{color:var(--blue)}        /* Bucket */
-        .tok-str{color:var(--green)}        /* "..." */
-        .tok-deco{color:var(--yellow)}      /* @dependsOn */
-        .tok-com{color:#7f9f7f}
+        .tabs { display: flex; gap: 18px; }
+        .tab {
+            position: relative;
+            padding: 14px 6px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            color: var(--muted);
+            cursor: pointer;
+            user-select: none;
+        }
+        .tab.active { color: var(--text); }
+        .tab.active:after {
+            content: "";
+            position: absolute;
+            left: 0; right: 0; bottom: -1px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border-radius: 3px 3px 0 0;
+        }
 
-        .demo-footer{display:flex; justify-content:space-between; align-items:center; padding:14px 20px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
-        .brand{display:flex; align-items:center; gap:8px; font-weight:600; color:#cbd5e1}
+        .editor { flex: 1; background: #0d1117; overflow: hidden; }
+        pre {
+            margin: 0;
+            padding: 20px;
+            height: 100%;
+            overflow: auto;
+            font-family: var(--mono);
+            font-size: 15px;
+            line-height: 1.6;
+        }
 
-        @media (max-width:720px){
-            .tabs{gap:10px}
-            .tab{font-size:14px}
-            pre{font-size:14px}
+        .tok-kw { color: var(--purple); }
+        .tok-type { color: var(--blue); }
+        .tok-str { color: var(--green); }
+        .tok-deco { color: var(--yellow); }
+        .tok-com { color:#7f9f7f; }
+
+        .demo-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            border-top: 1px solid var(--border);
+            background: #0d1117;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 720px) {
+            .tabs { gap: 10px; }
+            .tab { font-size: 14px; }
+            pre { font-size: 14px; }
         }
     </style>
 </head>
@@ -66,31 +120,31 @@
 <div class="code-demo" role="region" aria-label="Kite code demo">
     <div class="demo-header">
         <div class="tabs" role="tablist">
-            <div class="tab active" role="tab" aria-selected="true" data-id="resources">Resources</div>
-            <div class="tab" role="tab" data-id="async">Asynchronous</div>
-            <div class="tab" role="tab" data-id="oop">Object-oriented</div>
-            <div class="tab" role="tab" data-id="functional">Functional</div>
-            <div class="tab" role="tab" data-id="tests">Ideal for tests</div>
+            <div class="tab active" data-id="resources">Resources</div>
+            <div class="tab" data-id="async">Asynchronous</div>
+            <div class="tab" data-id="oop">Object-oriented</div>
+            <div class="tab" data-id="functional">Functional</div>
+            <div class="tab" data-id="tests">Ideal for tests</div>
         </div>
     </div>
 
-    <div class="editor"><pre id="code" tabindex="0" aria-label="code sample"></pre></div>
+    <div class="editor"><pre id="code"></pre></div>
 
     <div class="demo-footer">
-        <span class="brand" id="brand-text">Kite • Write once, deploy anywhere</span>
+        <span id="brand-text">Kite • Write once, deploy anywhere</span>
         <span id="status">Ready</span>
     </div>
 </div>
 
 <script>
     const snippets = {
-        resources: `import Bucket from "aws.s3.Bucket"
+        resources: `import Bucket from "aws.s3.Bucket" // clean import statement
 
 resource Bucket photos {
   name = "my-photos"
 }
 
-@dependsOn(Bucket.photos)
+@dependsOn(Bucket.photos) // decorator and metadata are outside the resource block
 resource Bucket videos {
   name = "my-videos"
 }
@@ -99,14 +153,10 @@ for it in [Bucket.photos, Bucket.videos] {
   println(it)
 }
 `,
-        async: `suspend fun fetchUsers() : List<User> { return http.get("/users") }
-`,
-        oop: `class Bucket(val name: String) { fun create() { println("creating $name") } }
-`,
-        functional: `fun sum(xs: List<Int>) = xs.fold(0) { a, b -> a + b }
-`,
-        tests: `test "bucket has a name" { val b = Bucket("prod"); assertEquals("prod", b.name) }
-`
+        async: `suspend fun fetchUsers() : List<User> { return http.get("/users") }`,
+        oop: `class Bucket(val name: String) { fun create() { println("creating $name") } }`,
+        functional: `fun sum(xs: List<Int>) = xs.fold(0) { a, b -> a + b }`,
+        tests: `test "bucket has a name" { val b = Bucket("prod"); assertEquals("prod", b.name) }`
     };
 
     const footerMessages = {
@@ -117,32 +167,21 @@ for it in [Bucket.photos, Bucket.videos] {
         tests: 'Kite • Dummy footer message for Tests'
     };
 
-    function escapeHtml(s){
-        return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    function escapeHtml(s) {
+        return s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
     }
 
-    function highlightKite(src){
+    function highlightKite(src) {
         const stringMatches = [];
         let escaped = escapeHtml(src);
-
-        // Extract and temporarily replace strings
         escaped = escaped.replace(/\"([^\"\\]|\\.)*\"/g, m => {
             stringMatches.push(m);
             return `@@STR${stringMatches.length - 1}@@`;
         });
-
-        // Decorator @dependsOn
-        escaped = escaped.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
-
-        // Keywords: import, from, resource, for, in
-        escaped = escaped.replace(/\b(import|from|resource|for|in)\b/g, m => `<span class="tok-kw">${m}</span>`);
-
-        // Types: Bucket (capitalized exact)
-        escaped = escaped.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
-
-        // Reinsert strings safely, unhighlighted within
-        escaped = escaped.replace(/@@STR(\d+)@@/g, (_, i) => `<span class="tok-str">${stringMatches[i]}</span>`);
-
+        escaped = escaped.replace(/@dependsOn\\b/g, '<span class="tok-deco">@dependsOn</span>');
+        escaped = escaped.replace(/\\b(import|from|resource|for|in)\\b/g, m => `<span class="tok-kw">${m}</span>`);
+        escaped = escaped.replace(/\\bBucket\\b/g, '<span class="tok-type">Bucket</span>');
+        escaped = escaped.replace(/@@STR(\\d+)@@/g, (_, i) => `<span class="tok-str">${stringMatches[i]}</span>`);
         return escaped;
     }
 
@@ -151,7 +190,7 @@ for it in [Bucket.photos, Bucket.videos] {
     const status = document.getElementById('status');
     const brandText = document.getElementById('brand-text');
 
-    function setTab(id){
+    function setTab(id) {
         tabs.forEach(t => t.classList.toggle('active', t.dataset.id === id));
         codeEl.innerHTML = highlightKite(snippets[id] || '');
         brandText.textContent = footerMessages[id] || 'Kite • Write once, deploy anywhere';
@@ -159,7 +198,6 @@ for it in [Bucket.photos, Bucket.videos] {
     }
 
     tabs.forEach(t => t.addEventListener('click', () => setTab(t.dataset.id)));
-
     setTab('resources');
 </script>
 </body>
