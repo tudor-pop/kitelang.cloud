@@ -83,7 +83,6 @@
 </div>
 
 <script>
-    // --- Snippets ---
     const snippets = {
         resources: `import Bucket from "aws.s3.Bucket"
 
@@ -93,7 +92,11 @@ resource Bucket photos {
 
 @dependsOn(Bucket.photos)
 resource Bucket videos {
-  name = "my-photos"
+  name = "my-videos"
+}
+
+for it in [Bucket.photos, Bucket.videos] {
+  println(it)
 }
 `,
         async: `suspend fun fetchUsers() : List<User> { return http.get("/users") }
@@ -107,34 +110,40 @@ resource Bucket videos {
     };
 
     const footerMessages = {
-        resources: 'Kite • Dummy footer message for Resources',
+        resources: 'Define and iterate over a list of resources',
         async: 'Kite • Dummy footer message for Async',
         oop: 'Kite • Dummy footer message for OOP',
         functional: 'Kite • Dummy footer message for Functional',
         tests: 'Kite • Dummy footer message for Tests'
     };
 
-    // --- Highlighter ---
     function escapeHtml(s){
         return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
     }
 
     function highlightKite(src){
-        let out = escapeHtml(src);
+        const stringMatches = [];
+        let escaped = escapeHtml(src);
 
-        // Strings first
-        out = out.replace(/"([^"\\]|\\.)*"/g, m => `<span class="tok-str">${m}</span>`);
+        // Extract and temporarily replace strings
+        escaped = escaped.replace(/\"([^\"\\]|\\.)*\"/g, m => {
+            stringMatches.push(m);
+            return `@@STR${stringMatches.length - 1}@@`;
+        });
 
         // Decorator @dependsOn
-        out = out.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
+        escaped = escaped.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
 
-        // Keywords: import, from, resource
-        out = out.replace(/\b(import|from|resource)\b/g, m => `<span class="tok-kw">${m}</span>`);
+        // Keywords: import, from, resource, for, in
+        escaped = escaped.replace(/\b(import|from|resource|for|in)\b/g, m => `<span class="tok-kw">${m}</span>`);
 
         // Types: Bucket (capitalized exact)
-        out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
+        escaped = escaped.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
 
-        return out;
+        // Reinsert strings safely, unhighlighted within
+        escaped = escaped.replace(/@@STR(\d+)@@/g, (_, i) => `<span class="tok-str">${stringMatches[i]}</span>`);
+
+        return escaped;
     }
 
     const codeEl = document.getElementById('code');
