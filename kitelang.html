@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kite – Code Demo Tabs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0d141a;
+      --panel:#121a22;
+      --panel-2:#0f171e;
+      --muted:#9aa5b1;
+      --text:#e7ecf2;
+      --accent:#6d5dfc;
+      --accent-2:#9a4ef5;
+      --ok:#7ee787;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:14px;
+      --mono:'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --magenta:#ff00ff;
+      --blue:#00aaff;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Inter,system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      display:grid; place-items:center; padding:32px;
+    }
+
+    .code-demo{width:min(1100px,92vw); background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden}
+
+    .demo-header{display:flex; gap:22px; align-items:flex-end; padding:18px 22px 0; background:var(--panel-2); border-bottom:1px solid var(--border)}
+    .tabs{display:flex; gap:18px}
+    .tab{position:relative; padding:14px 6px; font-weight:600; letter-spacing:.2px; color:var(--muted); cursor:pointer; user-select:none}
+    .tab.active{color:var(--text)}
+    .tab.active:after{content:""; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); border-radius:3px 3px 0 0}
+
+    .editor{position:relative; background:#0d1117;}
+    pre{margin:0; padding:24px; overflow:auto; max-height:520px; font-family:var(--mono); font-size:15px; line-height:1.6}
+
+    .tok-kw{color:var(--magenta)}
+    .tok-fn{color:#6ab7ff}
+    .tok-str{color:#e6db74}
+    .tok-num{color:#b5cea8}
+    .tok-com{color:#7f9f7f}
+    .tok-type{color:var(--blue)}
+
+    .demo-footer{display:flex; justify-content:space-between; align-items:center; padding:14px 20px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
+    .brand{display:flex; align-items:center; gap:8px; font-weight:600; color:#cbd5e1}
+    .brand img{width:20px; height:20px;}
+
+    @media (max-width:720px){
+      .tabs{gap:10px}
+      .tab{font-size:14px}
+      pre{font-size:14px}
+    }
+  </style>
+</head>
+<body>
+  <div class="code-demo" role="region" aria-label="Kite code demo">
+    <div class="demo-header">
+      <div class="tabs" role="tablist">
+        <div class="tab active" role="tab" aria-selected="true" data-id="simple">Simple</div>
+        <div class="tab" role="tab" data-id="async">Asynchronous</div>
+        <div class="tab" role="tab" data-id="oop">Object-oriented</div>
+        <div class="tab" role="tab" data-id="functional">Functional</div>
+        <div class="tab" role="tab" data-id="tests">Ideal for tests</div>
+      </div>
+    </div>
+
+    <div class="editor"><pre id="code" tabindex="0" aria-label="code sample"></pre></div>
+
+    <div class="demo-footer">
+      <span class="brand"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Kite_-_The_python_linter_logo.svg" alt="Kite logo"/>Kite • Write once, deploy anywhere</span>
+      <span id="status">Ready</span>
+    </div>
+  </div>
+
+  <script>
+    const snippets = {
+      simple: `fun <fn>main</fn>() {
+  <kw>val</kw> <type>name</type> = <str>"stranger"</str>     <com>// Declare your first variable</com>
+  println(<str>"Hi, $name!"</str>)           <com>// ...and use it!</com>
+  print(<str>"Current count:"</str>)
+  <kw>for</kw> (i <kw>in</kw> 0..10) {           <com>// Loop over a range from 0 to 10</com>
+    print(<str>" $i"</str>)
+  }
+}
+`,
+      async: `suspend fun <fn>fetchUsers</fn>() : <type>List</type><<type>User</type>> {
+  <kw>return</kw> http.get(<str>"/users"</str>)
+}
+
+<kw>fun</kw> <fn>main</fn>() {
+  <kw>launch</kw> {
+    <kw>val</kw> users = <fn>fetchUsers</fn>()
+    println(users.size)
+  }
+}
+`,
+      oop: `<kw>class</kw> <type>Bucket</type>(<kw>val</kw> name: <type>String</type>) {
+  <kw>fun</kw> <fn>create</fn>() { println(<str>"creating $name"</str>) }
+}
+
+<kw>fun</kw> <fn>main</fn>() {
+  <kw>val</kw> b = <type>Bucket</type>(<str>"logs"</str>)
+  b.<fn>create</fn>()
+}
+`,
+      functional: `<kw>fun</kw> <fn>sum</fn>(xs: <type>List</type><<type>Int</type>>) = xs.<fn>fold</fn>(0) { a, b -> a + b }
+
+println(<fn>sum</fn>(listOf(1,2,3)))
+`,
+      tests: `<kw>test</kw> <str>"bucket has a name"</str> {
+  <kw>val</kw> b = <type>Bucket</type>(<str>"prod"</str>)
+  <fn>assertEquals</fn>(<str>"prod"</str>, b.name)
+}
+`
+    };
+
+    const highlight = (src) => src
+      .replaceAll('<kw>', '<span class="tok-kw">')
+      .replaceAll('</kw>', '</span>')
+      .replaceAll('<fn>', '<span class="tok-fn">')
+      .replaceAll('</fn>', '</span>')
+      .replaceAll('<str>', '<span class="tok-str">')
+      .replaceAll('</str>', '</span>')
+      .replaceAll('<com>', '<span class="tok-com">')
+      .replaceAll('</com>', '</span>')
+      .replaceAll('<type>', '<span class="tok-type">')
+      .replaceAll('</type>', '</span>');
+
+    const codeEl = document.getElementById('code');
+    const tabs = document.querySelectorAll('.tab');
+    const status = document.getElementById('status');
+
+    function setTab(id){
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.id === id));
+      codeEl.innerHTML = highlight(snippets[id] || '');
+      status.textContent = `Showing: ${id}`;
+    }
+
+    tabs.forEach(t => t.addEventListener('click', () => setTab(t.dataset.id)));
+
+    setTab('simple');
+  </script>
+</body>
+</html>
