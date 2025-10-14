@@ -18,102 +18,40 @@
             --shadow:0 10px 30px rgba(0,0,0,.35);
             --radius:14px;
             --mono:'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            --purple:#a855f7;
-            --blue:#00aaff;
-            --green:#7ee787;
-            --yellow:#facc15;
+            --purple:#a855f7;  /* keywords */
+            --blue:#00aaff;    /* types */
+            --green:#7ee787;   /* strings */
+            --yellow:#facc15;  /* decorator */
         }
 
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+        html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
 
         body {
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-            background: var(--bg);
-            color: var(--text);
+            display: flex; justify-content: center; align-items: stretch;
+            background: var(--bg); color: var(--text);
             font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
         }
 
-        .code-demo {
-            display: flex;
-            flex-direction: column;
-            width: min(1100px, 92vw);
-            height: 100vh;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
+        .code-demo { display:flex; flex-direction:column; width:min(1100px,92vw); height:100vh; background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden }
 
-        .demo-header {
-            display: flex;
-            gap: 22px;
-            align-items: flex-end;
-            padding: 10px 20px 0;
-            background: var(--panel-2);
-            border-bottom: 1px solid var(--border);
-        }
+        .demo-header{display:flex; gap:22px; align-items:flex-end; padding:10px 20px 0; background:var(--panel-2); border-bottom:1px solid var(--border)}
+        .tabs{display:flex; gap:18px}
+        .tab{position:relative; padding:14px 6px; font-weight:600; letter-spacing:.2px; color:var(--muted); cursor:pointer; user-select:none}
+        .tab.active{color:var(--text)}
+        .tab.active:after{content:""; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); border-radius:3px 3px 0 0}
 
-        .tabs { display: flex; gap: 18px; }
-        .tab {
-            position: relative;
-            padding: 14px 6px;
-            font-weight: 600;
-            letter-spacing: .2px;
-            color: var(--muted);
-            cursor: pointer;
-            user-select: none;
-        }
-        .tab.active { color: var(--text); }
-        .tab.active:after {
-            content: "";
-            position: absolute;
-            left: 0; right: 0; bottom: -1px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-2));
-            border-radius: 3px 3px 0 0;
-        }
+        .editor{flex:1; background:#0d1117; overflow:hidden}
+        pre{margin:0; padding:20px; height:100%; overflow:auto; font-family:var(--mono); font-size:15px; line-height:1.6}
 
-        .editor { flex: 1; background: #0d1117; overflow: hidden; }
-        pre {
-            margin: 0;
-            padding: 20px;
-            height: 100%;
-            overflow: auto;
-            font-family: var(--mono);
-            font-size: 15px;
-            line-height: 1.6;
-        }
+        .tok-kw{color:var(--purple)}
+        .tok-type{color:var(--blue)}
+        .tok-str{color:var(--green)}
+        .tok-deco{color:var(--yellow)}
+        .tok-com{color:var(--muted)}
 
-        .tok-kw { color: var(--purple); }
-        .tok-type { color: var(--blue); }
-        .tok-str { color: var(--green); }
-        .tok-deco { color: var(--yellow); }
-        .tok-com { color:#7f9f7f; }
+        .demo-footer{display:flex; justify-content:space-between; align-items:center; padding:10px 20px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
 
-        .demo-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            border-top: 1px solid var(--border);
-            background: #0d1117;
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        @media (max-width: 720px) {
-            .tabs { gap: 10px; }
-            .tab { font-size: 14px; }
-            pre { font-size: 14px; }
-        }
+        @media (max-width:720px){ .tabs{gap:10px} .tab{font-size:14px} pre{font-size:14px} }
     </style>
 </head>
 <body>
@@ -121,7 +59,7 @@
     <div class="demo-header">
         <div class="tabs" role="tablist">
             <div class="tab active" data-id="resources">Resources</div>
-            <div class="tab" data-id="async">Asynchronous</div>
+            <div class="tab" data-id="components">Components</div>
             <div class="tab" data-id="oop">Object-oriented</div>
             <div class="tab" data-id="functional">Functional</div>
             <div class="tab" data-id="tests">Ideal for tests</div>
@@ -153,7 +91,22 @@ for it in [Bucket.photos, Bucket.videos] {
   println(it)
 }
 `,
-        async: `suspend fun fetchUsers() : List<User> { return http.get("/users") }`,
+        components: `import Bucket from "aws.s3.Bucket"
+
+component Frontend {
+     input string name = 'default-name'
+
+     resource Bucket logs { ... }
+     resource Bucket metrics { ... }
+
+     output string arn = Bucket.logs.arn
+}
+
+// create both buckets bucket
+component Frontend prod {
+     name = "prod-logs"
+}
+`,
         oop: `class Bucket(val name: String) { fun create() { println("creating $name") } }`,
         functional: `fun sum(xs: List<Int>) = xs.fold(0) { a, b -> a + b }`,
         tests: `test "bucket has a name" { val b = Bucket("prod"); assertEquals("prod", b.name) }`
@@ -161,28 +114,52 @@ for it in [Bucket.photos, Bucket.videos] {
 
     const footerMessages = {
         resources: 'Define and iterate over a list of resources',
-        async: 'Kite • Dummy footer message for Async',
+        components: 'Compose infrastructure into reusable components',
         oop: 'Kite • Dummy footer message for OOP',
         functional: 'Kite • Dummy footer message for Functional',
         tests: 'Kite • Dummy footer message for Tests'
     };
 
-    function escapeHtml(s) {
-        return s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+    function escapeHtml(s){
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    function highlightKite(src) {
-        const stringMatches = [];
-        let escaped = escapeHtml(src);
-        escaped = escaped.replace(/\"([^\"\\]|\\.)*\"/g, m => {
-            stringMatches.push(m);
-            return `@@STR${stringMatches.length - 1}@@`;
+    function highlightKite(src){
+        // Use private Unicode sentinels to avoid collisions
+        const STR_L = '\uE000', STR_R = '\uE001';
+        const COM_L = '\uE002', COM_R = '\uE003';
+
+        const strings = []; const comments = [];
+        let out = escapeHtml(src);
+
+        // 1) Extract strings (double OR single quotes)
+        out = out.replace(/"([^"\\]|\\.)*"|'([^'\\]|\\.)*'/g, m => {
+            const i = strings.push(m) - 1;
+            return STR_L + i + STR_R;
         });
-        escaped = escaped.replace(/@dependsOn\\b/g, '<span class="tok-deco">@dependsOn</span>');
-        escaped = escaped.replace(/\\b(import|from|resource|for|in)\\b/g, m => `<span class="tok-kw">${m}</span>`);
-        escaped = escaped.replace(/\\bBucket\\b/g, '<span class="tok-type">Bucket</span>');
-        escaped = escaped.replace(/@@STR(\\d+)@@/g, (_, i) => `<span class="tok-str">${stringMatches[i]}</span>`);
-        return escaped;
+
+        // 2) Extract line comments (// ... EOL)
+        out = out.replace(/(^|\n)\s*(\/\/.*?)(?=$|\n)/g, (m, pfx, body) => {
+            const i = comments.push(body) - 1;
+            return pfx + COM_L + i + COM_R;
+        });
+
+        // 3) Decorator
+        out = out.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
+
+        // 4) Keywords
+        out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g, m => `<span class="tok-kw">${m}</span>`);
+
+        // 5) Types
+        out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
+
+        // 6) Reinsert comments (first, so no further highlighting inside)
+        out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'), (_, i) => `<span class="tok-com">${comments[+i]}</span>`);
+
+        // 7) Reinsert strings
+        out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'), (_, i) => `<span class="tok-str">${strings[+i]}</span>`);
+
+        return out;
     }
 
     const codeEl = document.getElementById('code');
@@ -190,7 +167,7 @@ for it in [Bucket.photos, Bucket.videos] {
     const status = document.getElementById('status');
     const brandText = document.getElementById('brand-text');
 
-    function setTab(id) {
+    function setTab(id){
         tabs.forEach(t => t.classList.toggle('active', t.dataset.id === id));
         codeEl.innerHTML = highlightKite(snippets[id] || '');
         brandText.textContent = footerMessages[id] || 'Kite • Write once, deploy anywhere';
@@ -198,6 +175,7 @@ for it in [Bucket.photos, Bucket.videos] {
     }
 
     tabs.forEach(t => t.addEventListener('click', () => setTab(t.dataset.id)));
+
     setTab('resources');
 </script>
 </body>
