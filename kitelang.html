@@ -138,10 +138,10 @@ component Frontend prod {
             return STR_L + i + STR_R;
         });
 
-        // 2) Extract comments
-        out = out.replace(/(^|\n)\s*(\/\/.*?)(?=$|\n)/g, (m, pfx, body) => {
-            const i = comments.push(body) - 1;
-            return pfx + COM_L + i + COM_R;
+        // 2) Extract comments (matches // anywhere, not just at line start)
+        out = out.replace(/\/\/.*?(?=$|\n)/g, m => {
+            const i = comments.push(m) - 1;
+            return COM_L + i + COM_R;
         });
 
         // 3) Reinsert comments first so no further highlighting happens inside them
