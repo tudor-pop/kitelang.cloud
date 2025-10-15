@@ -62,7 +62,7 @@
             <div class="tab active" data-id="resources">Resources</div>
             <div class="tab" data-id="components">Components</div>
             <div class="tab" data-id="mixins">Mixins</div>
-            <div class="tab" data-id="import">Import resources</div>
+            <div class="tab" data-id="import">Existing resources</div>
             <div class="tab" data-id="tests">Easy refactors</div>
         </div>
     </div>
@@ -133,7 +133,7 @@ mixin Bucket { tags = { env: 'prod' } }
         import: `import Bucket from "aws.s3.Bucket"
 
 // adopt an existing bucket (no recreate)
-@existing
+@existing("arn:aws:s3:::company-assets")
 resource Bucket assets {
   name = "company-assets"
 }
@@ -147,7 +147,7 @@ mixin aws on assets { account_id = "421123456670" }
         resources: 'Define and iterate over a list of resources',
         components: 'Compose infrastructure into reusable components',
         mixins: 'Compose cross-cutting behavior with mixins',
-        import: 'Import existing resources',
+        import: 'Existing resources',
         tests: 'Easy refactors'
     };
 
