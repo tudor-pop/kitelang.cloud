@@ -125,32 +125,54 @@ component Frontend prod {
         return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    function highlightKite(src) {\n  const STR_L = '\\uE000', STR_R = '\\uE001';\n  const COM_L = '\\uE002', COM_R = '\\uE003';\n  const strings = [], comments = [];\n\n  let out = escapeHtml(src);\n\n  // 1) Extract strings (double OR single quotes)\n  out = out.replace(/\"([^\"\\]|\\.)*\"|'([^'\\]|\\.)*'/g, m => {\n    const i = strings.push(m) - 1;\n    return STR_L + i + STR_R;\n  });\n\n  // 2) Extract line comments (// ... EOL)\n  out = out.replace(/(^|\n)\s*(\/\/.*?)(?=$|\n)/g, (m, pfx, body) => {\n    const i = comments.push(body) - 1;\n    return pfx + COM_L + i + COM_R;\n  });\n\n  // 3) Reinsert comments first so no further highlighting happens inside them\n  out = out.replace(new RegExp(COM_L + '(\\\\d+)' + COM_R, 'g'), (_, i) =>\n    `<span class=\"tok-com\">${escapeHtml(comments[+i])}</span>`\n  );\n\n  // 4) Decorator\n  out = out.replace(/@dependsOn\\b/g, '<span class=\"tok-deco\">@dependsOn</span>');\n\n  // 5) Keywords\n  out = out.replace(/\\b(import|from|resource|for|in|component|input|output)\\b/g,\n    m => `<span class=\"tok-kw\">${m}</span>`\n  );\n\n  // 6) Types\n  out = out.replace(/\\bBucket\\b/g, '<span class=\"tok-type\">Bucket</span>');\n  out = out.replace(/\\bstring\\b/g, '<span class=\"tok-type\">string</span>');\n\n  // 7) Reinsert strings\n  out = out.replace(new RegExp(STR_L + '(\\\\d+)' + STR_R, 'g'), (_, i) =>\n    `<span class=\"tok-str\">${strings[+i]}</span>`\n  );\n\n  return out;\n});
+    function highlightKite(src) {
+        const STR_L = '\uE000', STR_R = '\uE001';
+        const COM_L = '\uE002', COM_R = '\uE003';
+        const strings = [], comments = [];
 
-        // 3) Reinsert comments first so no further highlighting happens inside them
-        out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'), (_, i) =>
-            `<span class="tok-com">${escapeHtml(comments[+i])}</span>`
+        let out = escapeHtml(src);
+
+        // 1) Extract strings (double OR single quotes)
+        out = out.replace(/"([^"\\]|\\.)*"|'([^'\\]|\\.)*'/g, m => {
+            const i = strings.push(m) - 1;
+            return STR_L + i + STR_R;
+        });
+
+        // 2) Extract line comments (// ... EOL)
+        out = out.replace(/(^|\n)\s*(\/\/.*?)(?=$|\n)/g, (m, pfx, body) => {
+            const i = comments.push(body) - 1;
+            return pfx + COM_L + i + COM_R;
+        });
+
+        // 3) Reinsert comments (lock them so nothing inside gets recolored)
+        out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
+            (_, i) => `<span class="tok-com">${escapeHtml(comments[+i])}</span>`
         );
 
         // 4) Decorator
         out = out.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
 
-        // 5) Keywords
+        // 5) Component names: first identifier after 'component' is a type
+        out = out.replace(/\bcomponent\s+([A-Za-z_][A-Za-z0-9_]*)/g, (m, name) =>
+            m.replace(name, `<span class="tok-type">${name}</span>`)
+        );
+
+        // 6) Types: Bucket and primitive 'string'
+        out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
+        out = out.replace(/\bstring\b/g, '<span class="tok-type">string</span>');
+
+        // 7) Keywords
         out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g,
             m => `<span class="tok-kw">${m}</span>`
         );
 
-        // 6) Types
-        out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
-        out = out.replace(/\bstring\b/g, '<span class="tok-type">string</span>');
-
-        // 7) Reinsert strings
-        out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'), (_, i) =>
-            `<span class="tok-str">${strings[+i]}</span>`
+        // 8) Reinsert strings
+        out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'),
+            (_, i) => `<span class="tok-str">${strings[+i]}</span>`
         );
 
         return out;
-    });
+    }
 
     // 2) Extract line comments (// ... EOL)
     out = out.replace(/(^|\n)\s*(\/\/.*?)(?=$|\n)/g, (m, pfx, body) => {
