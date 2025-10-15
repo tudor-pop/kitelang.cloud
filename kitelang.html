@@ -62,22 +62,22 @@
             <div class="tab active" data-id="resources">Resources</div>
             <div class="tab" data-id="components">Components</div>
             <div class="tab" data-id="mixins">Mixins</div>
-            <div class="tab" data-id="import">Import resources<\/div>
-                <div class="tab" data-id="tests">Ideal for tests</div>
-            </div>
-        </div>
-
-        <div class="editor"><pre id="code"></pre></div>
-
-        <div class="demo-footer">
-            <span id="brand-text">Kite • Write once, deploy anywhere</span>
-            <span id="status">Ready</span>
+            <div class="tab" data-id="functional">Functional</div>
+            <div class="tab" data-id="tests">Ideal for tests</div>
         </div>
     </div>
 
-    <script>
-        const snippets = {
-            resources: `import Bucket from "aws.s3.Bucket" // clean import statement
+    <div class="editor"><pre id="code"></pre></div>
+
+    <div class="demo-footer">
+        <span id="brand-text">Kite • Write once, deploy anywhere</span>
+        <span id="status">Ready</span>
+    </div>
+</div>
+
+<script>
+    const snippets = {
+        resources: `import Bucket from "aws.s3.Bucket" // clean import statement
 
 resource Bucket photos {
     name = "my-photos"
@@ -92,7 +92,7 @@ for bucket in [Bucket.photos, Bucket.videos] {
     println(bucket)
 }
 `,
-            components: `import Bucket from "aws.s3.Bucket"
+        components: `import Bucket from "aws.s3.Bucket"
 
 component Frontend {
     @allow(['client1', 'client2'])
@@ -109,7 +109,7 @@ component Frontend prod {
     name = "client2"
 }
 `,
-            mixins: `import Bucket from 'aws.s3.Bucket'
+        mixins: `import Bucket from 'aws.s3.Bucket'
 
 resource Bucket photos {
   name = "my-photos"
@@ -130,84 +130,84 @@ mixin aws on * { tags = { env: 'prod' } }
 // general properties for all buckets
 mixin Bucket { tags = { env: 'prod' } }
 `,
-            import: `fun sum(xs: List<Int>) = xs.fold(0) { a, b -> a + b }`,
-            tests: `test "bucket has a name" { val b = Bucket("prod"); assertEquals("prod", b.name) }`
-        };
+        functional: `fun sum(xs: List<Int>) = xs.fold(0) { a, b -> a + b }`,
+        tests: `test "bucket has a name" { val b = Bucket("prod"); assertEquals("prod", b.name) }`
+    };
 
-        const footerMessages = {
-            resources: 'Define and iterate over a list of resources',
-            components: 'Compose infrastructure into reusable components',
-            mixins: 'Compose cross-cutting behavior with mixins',
-            import: 'Import existing resources',
-            tests: 'Kite • Dummy footer message for Tests'
-        };
+    const footerMessages = {
+        resources: 'Define and iterate over a list of resources',
+        components: 'Compose infrastructure into reusable components',
+        mixins: 'Compose cross-cutting behavior with mixins',
+        functional: 'Kite • Dummy footer message for Functional',
+        tests: 'Kite • Dummy footer message for Tests'
+    };
 
-        function escapeHtml(s){
-            return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        }
+    function escapeHtml(s){
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
 
-        function highlightKite(src) {
-            const STR_L = '\uE000', STR_R = '\uE001';
-            const COM_L = '\uE002', COM_R = '\uE003';
-            const strings = [], comments = [];
+    function highlightKite(src) {
+        const STR_L = '\uE000', STR_R = '\uE001';
+        const COM_L = '\uE002', COM_R = '\uE003';
+        const strings = [], comments = [];
 
-            let out = escapeHtml(src);
+        let out = escapeHtml(src);
 
-            // 1) Extract strings (double OR single quotes)
-            out = out.replace(/\"([^\"\\]|\\.)*\"|'([^'\\]|\\.)*'/g, m => {
-                const i = strings.push(m) - 1;
-                return STR_L + i + STR_R;
-            });
+        // 1) Extract strings (double OR single quotes)
+        out = out.replace(/\"([^\"\\]|\\.)*\"|'([^'\\]|\\.)*'/g, m => {
+            const i = strings.push(m) - 1;
+            return STR_L + i + STR_R;
+        });
 
-            // 2) Extract comments (matches // anywhere, not just at line start)
-            out = out.replace(/\/\/.*?(?=$|\n)/g, m => {
-                const i = comments.push(m) - 1;
-                return COM_L + i + COM_R;
-            });
+        // 2) Extract comments (matches // anywhere, not just at line start)
+        out = out.replace(/\/\/.*?(?=$|\n)/g, m => {
+            const i = comments.push(m) - 1;
+            return COM_L + i + COM_R;
+        });
 
-            // 3) Decorator (any @identifier)
-            out = out.replace(/@[A-Za-z_][A-Za-z0-9_]*/g, m => `<span class="tok-deco">${m}</span>`);
+        // 3) Decorator (any @identifier)
+        out = out.replace(/@[A-Za-z_][A-Za-z0-9_]*/g, m => `<span class="tok-deco">${m}</span>`);
 
 
-            // 4) Keywords (core)
-            out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g,
-                m => `<span class="tok-kw">${m}</span>`
-            );
-            // 4b) Keywords for mixins
-            out = out.replace(/\b(mixin|on)\b/g, m => `<span class="tok-kw">${m}</span>`);
+        // 4) Keywords (core)
+        out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g,
+            m => `<span class="tok-kw">${m}</span>`
+        );
+        // 4b) Keywords for mixins
+        out = out.replace(/\b(mixin|on)\b/g, m => `<span class="tok-kw">${m}</span>`);
 
-            // 5) Types
-            out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
-            out = out.replace(/\bstring\b/g, '<span class="tok-type">string</span>');
+        // 5) Types
+        out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
+        out = out.replace(/\bstring\b/g, '<span class="tok-type">string</span>');
 
-            // 6) Reinsert strings
-            out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'),
-                (_, i) => `<span class="tok-str">${strings[+i]}</span>`
-            );
+        // 6) Reinsert strings
+        out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'),
+            (_, i) => `<span class="tok-str">${strings[+i]}</span>`
+        );
 
-            // 7) Reinsert comments LAST so nothing highlights inside them
-            out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
-                (_, i) => `<span class='tok-com'>${comments[+i]}</span>`
-            );
+        // 7) Reinsert comments LAST so nothing highlights inside them
+        out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
+            (_, i) => `<span class='tok-com'>${comments[+i]}</span>`
+        );
 
-            return out;
-        }
+        return out;
+    }
 
-        const codeEl = document.getElementById('code');
-        const tabs = document.querySelectorAll('.tab');
-        const status = document.getElementById('status');
-        const brandText = document.getElementById('brand-text');
+    const codeEl = document.getElementById('code');
+    const tabs = document.querySelectorAll('.tab');
+    const status = document.getElementById('status');
+    const brandText = document.getElementById('brand-text');
 
-        function setTab(id){
-            tabs.forEach(t => t.classList.toggle('active', t.dataset.id === id));
-            codeEl.innerHTML = highlightKite(snippets[id] || '');
-            brandText.textContent = footerMessages[id] || 'Kite • Write once, deploy anywhere';
-            status.textContent = `Showing: ${id}`;
-        }
+    function setTab(id){
+        tabs.forEach(t => t.classList.toggle('active', t.dataset.id === id));
+        codeEl.innerHTML = highlightKite(snippets[id] || '');
+        brandText.textContent = footerMessages[id] || 'Kite • Write once, deploy anywhere';
+        status.textContent = `Showing: ${id}`;
+    }
 
-        tabs.forEach(t => t.addEventListener('click', () => setTab(t.dataset.id)));
+    tabs.forEach(t => t.addEventListener('click', () => setTab(t.dataset.id)));
 
-        setTab('resources');
-    </script>
+    setTab('resources');
+</script>
 </body>
 </html>
