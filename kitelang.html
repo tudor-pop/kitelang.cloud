@@ -165,8 +165,8 @@ mixin Bucket { tags = { env: 'prod' } }
             return COM_L + i + COM_R;
         });
 
-        // 3) Decorator
-        out = out.replace(/@(dependsOn|allow)/g, m => `<span class="tok-deco">${m}</span>`);
+        // 3) Decorator (any @identifier)
+        out = out.replace(/@[A-Za-z_][A-Za-z0-9_]*/g, m => `<span class="tok-deco">${m}</span>`);
 
 
         // 4) Keywords (core)
