@@ -159,6 +159,7 @@ component Frontend prod {
 
         // 6) Types
         out = out.replace(/\bBucket\b/g, '<span class=\"tok-type\">Bucket</span>');
+        out = out.replace(/\bstring\b/g, '<span class=\"tok-type\">string</span>');
 
         // 7) Reinsert strings
         out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'),
@@ -166,30 +167,6 @@ component Frontend prod {
         );
 
         return out;
-    });
-
-    // 2) Extract line comments (// ... EOL)
-    out = out.replace(/(^|\n)\s*(\/\/.*?)(?=$|\n)/g, (m, pfx, body) => {
-        const i = comments.push(body) - 1;
-        return pfx + COM_L + i + COM_R;
-    });
-
-    // 3) Decorator
-    out = out.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
-
-    // 4) Keywords
-    out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g, m => `<span class="tok-kw">${m}</span>`);
-
-    // 5) Types
-    out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
-
-    // 6) Reinsert comments (first, so no further highlighting inside)
-    out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'), (_, i) => `<span class="tok-com">${comments[+i]}</span>`);
-
-    // 7) Reinsert strings
-    out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'), (_, i) => `<span class="tok-str">${strings[+i]}</span>`);
-
-    return out;
     }
 
     const codeEl = document.getElementById('code');
