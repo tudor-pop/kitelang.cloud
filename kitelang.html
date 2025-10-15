@@ -144,26 +144,26 @@ component Frontend prod {
             return COM_L + i + COM_R;
         });
 
-        // 3) Reinsert comments first so no further highlighting happens inside them
-        out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
-            (_, i) => `<span class='tok-com'>${escapeHtml(comments[+i])}</span>`
-        );
-
-        // 4) Decorator
+        // 3) Decorator
         out = out.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
 
-        // 5) Keywords
+        // 4) Keywords
         out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g,
             m => `<span class="tok-kw">${m}</span>`
         );
 
-        // 6) Types
+        // 5) Types
         out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
         out = out.replace(/\bstring\b/g, '<span class="tok-type">string</span>');
 
-        // 7) Reinsert strings
+        // 6) Reinsert strings
         out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'),
             (_, i) => `<span class="tok-str">${strings[+i]}</span>`
+        );
+
+        // 7) Reinsert comments last so no highlighting happens inside them
+        out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
+            (_, i) => `<span class='tok-com'>${comments[+i]}</span>`
         );
 
         return out;
