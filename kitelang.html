@@ -95,7 +95,8 @@ for bucket in [Bucket.photos, Bucket.videos] {
         components: `import Bucket from "aws.s3.Bucket"
 
 component Frontend {
-    input string name = 'default-name'
+    @allow(['client1, client2'])
+    input string name = 'client1'
 
     resource Bucket logs { ... }
     resource Bucket metrics { ... }
@@ -165,7 +166,8 @@ mixin Bucket { tags = { env: 'prod' } }
         });
 
         // 3) Decorator
-        out = out.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
+        out = out.replace(/@(dependsOn|allow)/g, m => `<span class="tok-deco">${m}</span>`);
+
 
         // 4) Keywords (core)
         out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g,
