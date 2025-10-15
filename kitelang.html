@@ -95,7 +95,7 @@ for bucket in [Bucket.photos, Bucket.videos] {
         components: `import Bucket from "aws.s3.Bucket"
 
 component Frontend {
-    @allow(['client1, client2'])
+    @allow(['client1', 'client2'])
     input string name = 'client1'
 
     resource Bucket logs { ... }
@@ -106,7 +106,7 @@ component Frontend {
 
 // create both buckets by using a component
 component Frontend prod {
-    name = "prod-buckets"
+    name = "client2"
 }
 `,
         mixins: `import Bucket from 'aws.s3.Bucket'
