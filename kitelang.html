@@ -80,12 +80,12 @@
         resources: `import Bucket from "aws.s3.Bucket" // clean import statement
 
 resource Bucket photos {
-  name = "my-photos"
+    name = "my-photos"
 }
 
 @dependsOn(Bucket.photos) // decorator and metadata are outside the resource block
 resource Bucket videos {
-  name = "my-videos"
+    name = "my-videos"
 }
 
 for it in [Bucket.photos, Bucket.videos] {
@@ -95,17 +95,17 @@ for it in [Bucket.photos, Bucket.videos] {
         components: `import Bucket from "aws.s3.Bucket"
 
 component Frontend {
-     input string name = 'default-name'
+    input string name = 'default-name'
 
-     resource Bucket logs { ... }
-     resource Bucket metrics { ... }
+    resource Bucket logs { ... }
+    resource Bucket metrics { ... }
 
-     output string arn = Bucket.logs.arn
+    output string arn = Bucket.logs.arn
 }
 
 // create both buckets by using a component
 component Frontend prod {
-     name = "prod-buckets"
+    name = "prod-buckets"
 }
 `,
         oop: `class Bucket(val name: String) { fun create() { println("creating $name") } }`,
