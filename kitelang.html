@@ -48,7 +48,7 @@
         .tok-type{color:var(--blue)}
         .tok-str{color:var(--green)}
         .tok-deco{color:var(--yellow)}
-        .tok-com{color:var(--grey)!important}
+        .tok-com{color:var(--grey)!important;}
 
         .demo-footer{display:flex; justify-content:space-between; align-items:center; padding:10px 20px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
 
@@ -62,7 +62,7 @@
             <div class="tab active" data-id="resources">Resources</div>
             <div class="tab" data-id="components">Components</div>
             <div class="tab" data-id="mixins">Mixins</div>
-            <div class="tab" data-id="functional">Functional</div>
+            <div class="tab" data-id="import">Import resources</div>
             <div class="tab" data-id="tests">Ideal for tests</div>
         </div>
     </div>
@@ -130,15 +130,24 @@ mixin aws on * { tags = { env: 'prod' } }
 // general properties for all buckets
 mixin Bucket { tags = { env: 'prod' } }
 `,
-        functional: `fun sum(xs: List<Int>) = xs.fold(0) { a, b -> a + b }`,
-        tests: `test "bucket has a name" { val b = Bucket("prod"); assertEquals("prod", b.name) }`
+        import: `import Bucket from "aws.s3.Bucket"
+
+// adopt an existing bucket (no recreate)
+@existing
+resource Bucket assets {
+  name = "company-assets"
+}
+
+// attach provider-specific metadata to the adopted resource
+mixin aws on assets { account_id = "421123456670" }
+`
     };
 
     const footerMessages = {
         resources: 'Define and iterate over a list of resources',
         components: 'Compose infrastructure into reusable components',
         mixins: 'Compose cross-cutting behavior with mixins',
-        functional: 'Kite • Dummy footer message for Functional',
+        import: 'Import existing resources',
         tests: 'Kite • Dummy footer message for Tests'
     };
 
@@ -168,7 +177,6 @@ mixin Bucket { tags = { env: 'prod' } }
         // 3) Decorator (any @identifier)
         out = out.replace(/@[A-Za-z_][A-Za-z0-9_]*/g, m => `<span class="tok-deco">${m}</span>`);
 
-
         // 4) Keywords (core)
         out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g,
             m => `<span class="tok-kw">${m}</span>`
@@ -185,7 +193,7 @@ mixin Bucket { tags = { env: 'prod' } }
             (_, i) => `<span class="tok-str">${strings[+i]}</span>`
         );
 
-        // 7) Reinsert comments LAST so nothing highlights inside them
+        // 7) Reinsert comments last so no highlighting happens inside them
         out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
             (_, i) => `<span class='tok-com'>${comments[+i]}</span>`
         );
