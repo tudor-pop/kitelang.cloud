@@ -22,7 +22,7 @@
             --blue:#00aaff;    /* types */
             --green:#7ee787;   /* strings */
             --yellow:#facc15;  /* decorator */
-            --grey:#7f848e;    /* comments */
+            --grey:#9aa5b1;    /* comments (lighter grey) */
         }
 
         html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
@@ -48,7 +48,7 @@
         .tok-type{color:var(--blue)}
         .tok-str{color:var(--green)}
         .tok-deco{color:var(--yellow)}
-        .tok-com{color:var(--grey)}
+        .tok-com{color:var(--grey)!important;}
 
         .demo-footer{display:flex; justify-content:space-between; align-items:center; padding:10px 20px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
 
@@ -146,24 +146,24 @@ component Frontend prod {
 
         // 3) Reinsert comments first so no further highlighting happens inside them
         out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
-            (_, i) => `<span class=\"tok-com\">${escapeHtml(comments[+i])}</span>`
+            (_, i) => `<span class='tok-com'>${escapeHtml(comments[+i])}</span>`
         );
 
         // 4) Decorator
-        out = out.replace(/@dependsOn\b/g, '<span class=\"tok-deco\">@dependsOn</span>');
+        out = out.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
 
         // 5) Keywords
         out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g,
-            m => `<span class=\"tok-kw\">${m}</span>`
+            m => `<span class="tok-kw">${m}</span>`
         );
 
         // 6) Types
-        out = out.replace(/\bBucket\b/g, '<span class=\"tok-type\">Bucket</span>');
-        out = out.replace(/\bstring\b/g, '<span class=\"tok-type\">string</span>');
+        out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
+        out = out.replace(/\bstring\b/g, '<span class="tok-type">string</span>');
 
         // 7) Reinsert strings
         out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'),
-            (_, i) => `<span class=\"tok-str\">${strings[+i]}</span>`
+            (_, i) => `<span class="tok-str">${strings[+i]}</span>`
         );
 
         return out;
