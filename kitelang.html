@@ -35,14 +35,14 @@
 
         .code-demo { display:flex; flex-direction:column; width:min(1100px,92vw); height:100vh; background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden }
 
-        .demo-header{display:flex; gap:22px; align-items:flex-end; padding:10px 20px 0; background:var(--panel-2); border-bottom:1px solid var(--border)}
+        $1 10px 20px 0; background:var(--panel-2); border-bottom:1px solid var(--border)}
         .tabs{display:flex; gap:18px}
         .tab{position:relative; padding:14px 6px; font-weight:600; letter-spacing:.2px; color:var(--muted); cursor:pointer; user-select:none}
         .tab.active{color:var(--text)}
         .tab.active:after{content:""; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); border-radius:3px 3px 0 0}
 
         .editor{flex:1; background:#0d1117; overflow:hidden}
-        pre{margin:0; padding:20px; height:100%; overflow:auto; font-family:var(--mono); font-size:15px; line-height:1.6}
+        pre{margin:0; padding:20px 8px; height:100%; overflow:auto; font-family:var(--mono); font-size:15px; line-height:1.6}
 
         .tok-kw{color:var(--purple)}
         .tok-type{color:var(--blue)}
@@ -50,7 +50,7 @@
         .tok-deco{color:var(--yellow)}
         .tok-com{color:var(--grey)!important;}
 
-        .demo-footer{display:flex; justify-content:space-between; align-items:center; padding:10px 20px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
+        $1 10px 20px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
 
         @media (max-width:720px){ .tabs{gap:10px} .tab{font-size:14px} pre{font-size:14px} }
     </style>
@@ -80,32 +80,32 @@
         resources: `import Bucket from "aws.s3.Bucket" // clean import statement
 
 resource Bucket photos {
-    name = "my-photos"
+  name = "my-photos"
 }
 
 @dependsOn(Bucket.photos) // decorator and metadata are outside the resource block
 resource Bucket videos {
-    name = "my-videos"
+  name = "my-videos"
 }
 
-for bucket in [Bucket.photos, Bucket.videos] {
-    println(bucket)
+for it in [Bucket.photos, Bucket.videos] {
+  println(it)
 }
 `,
         components: `import Bucket from "aws.s3.Bucket"
 
 component Frontend {
-    input string name = 'default-name'
+     input string name = 'default-name'
 
-    resource Bucket logs { ... }
-    resource Bucket metrics { ... }
+     resource Bucket logs { ... }
+     resource Bucket metrics { ... }
 
-    output string arn = Bucket.logs.arn
+     output string arn = Bucket.logs.arn
 }
 
 // create both buckets by using a component
 component Frontend prod {
-    name = "prod-buckets"
+     name = "prod-buckets"
 }
 `,
         oop: `class Bucket(val name: String) { fun create() { println("creating $name") } }`,
@@ -138,32 +138,32 @@ component Frontend prod {
             return STR_L + i + STR_R;
         });
 
-        // 2) Extract comments (matches // anywhere, not just at line start)
-        out = out.replace(/\/\/.*?(?=$|\n)/g, m => {
-            const i = comments.push(m) - 1;
-            return COM_L + i + COM_R;
+        // 2) Extract comments
+        out = out.replace(/(^|\n)\s*(\/\/.*?)(?=$|\n)/g, (m, pfx, body) => {
+            const i = comments.push(body) - 1;
+            return pfx + COM_L + i + COM_R;
         });
 
-        // 3) Decorator
+        // 3) Reinsert comments first so no further highlighting happens inside them
+        out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
+            (_, i) => `<span class='tok-com'>${escapeHtml(comments[+i])}</span>`
+        );
+
+        // 4) Decorator
         out = out.replace(/@dependsOn\b/g, '<span class="tok-deco">@dependsOn</span>');
 
-        // 4) Keywords
+        // 5) Keywords
         out = out.replace(/\b(import|from|resource|for|in|component|input|output)\b/g,
             m => `<span class="tok-kw">${m}</span>`
         );
 
-        // 5) Types
+        // 6) Types
         out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
         out = out.replace(/\bstring\b/g, '<span class="tok-type">string</span>');
 
-        // 6) Reinsert strings
+        // 7) Reinsert strings
         out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'),
             (_, i) => `<span class="tok-str">${strings[+i]}</span>`
-        );
-
-        // 7) Reinsert comments last so no highlighting happens inside them
-        out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
-            (_, i) => `<span class='tok-com'>${comments[+i]}</span>`
         );
 
         return out;
