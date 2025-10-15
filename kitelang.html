@@ -89,7 +89,7 @@ resource Bucket videos {
 }
 
 for bucket in [Bucket.photos, Bucket.videos] {
-  println(bucket)
+    println(bucket)
 }
 `,
         components: `import Bucket from "aws.s3.Bucket"
