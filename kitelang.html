@@ -133,7 +133,7 @@ mixin Bucket { tags = { env: 'prod' } }
         import: `import Bucket from "aws.s3.Bucket"
 
 // adopt an existing bucket (no recreate)
-@existing
+@existing("arn:aws:s3:::company-assets")
 resource Bucket assets {
   name = "company-assets"
 }
