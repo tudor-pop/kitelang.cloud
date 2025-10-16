@@ -23,6 +23,8 @@
             --green:#7ee787;   /* strings */
             --yellow:#facc15;  /* decorator */
             --grey:#9aa5b1;    /* comments (lighter grey) */
+            --red:#ff6b6b;     /* destroy */
+            --orange:#ffa500;  /* change */
         }
 
         html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
@@ -49,6 +51,10 @@
         .tok-str{color:var(--green)}
         .tok-deco{color:var(--yellow)}
         .tok-com{color:var(--grey)!important;}
+        .tok-red{color:var(--red)}
+        .tok-orange{color:var(--orange)}
+        .tok-green{color:var(--green)}
+        .tok-purple{color:var(--purple)}
 
         .demo-footer{display:flex; justify-content:space-between; align-items:center; padding:10px 20px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
 
@@ -140,7 +146,22 @@ resource Bucket assets {
 
 // attach provider-specific metadata to the adopted resource
 mixin aws on assets { account_id = "421123456670" }
-`
+`,
+        tests: `// file.kite
+resource Bucket example {
+    bucket = "logs"
+}
+// rename bucket 'example' to 'kite'. A simple resource name change is enough
+resource Bucket kite {
+    bucket = "logs"
+}
+
+// console output
+# DummyResource.example will be renamed to DummyResource.kite
+resource DummyResource example -> kite {
+    bucket = "kite-bucket"
+}
+Plan: 0 to add, 0 to change, 0 to destroy, 1 to rename.`
     };
 
     const footerMessages = {
@@ -155,7 +176,7 @@ mixin aws on assets { account_id = "421123456670" }
         return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    function highlightKite(src) {
+    function highlightKite(src, isRefactor = false) {
         const STR_L = '\uE000', STR_R = '\uE001';
         const COM_L = '\uE002', COM_R = '\uE003';
         const strings = [], comments = [];
@@ -174,6 +195,19 @@ mixin aws on assets { account_id = "421123456670" }
             return COM_L + i + COM_R;
         });
 
+        // 2b) Extract # comments
+        out = out.replace(/#.*?(?=$|\n)/g, m => {
+            const i = comments.push(m) - 1;
+            return COM_L + i + COM_R;
+        });
+
+        // Special handling for refactor tab plan line
+        if (isRefactor) {
+            out = out.replace(/Plan: (\d+) to add, (\d+) to change, (\d+) to destroy, (\d+) to rename\./g, (match, add, change, destroy, rename) => {
+                return `Plan: <span class="tok-green">${add}</span> to add, <span class="tok-orange">${change}</span> to change, <span class="tok-red">${destroy}</span> to destroy, <span class="tok-purple">${rename}</span> to rename.`;
+            });
+        }
+
         // 3) Decorator (any @identifier)
         out = out.replace(/@[A-Za-z_][A-Za-z0-9_]*/g, m => `<span class="tok-deco">${m}</span>`);
 
@@ -187,6 +221,7 @@ mixin aws on assets { account_id = "421123456670" }
         // 5) Types
         out = out.replace(/\bBucket\b/g, '<span class="tok-type">Bucket</span>');
         out = out.replace(/\bstring\b/g, '<span class="tok-type">string</span>');
+        out = out.replace(/\bDummyResource\b/g, '<span class="tok-type">DummyResource</span>');
 
         // 6) Reinsert strings
         out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'),
@@ -208,7 +243,8 @@ mixin aws on assets { account_id = "421123456670" }
 
     function setTab(id){
         tabs.forEach(t => t.classList.toggle('active', t.dataset.id === id));
-        codeEl.innerHTML = highlightKite(snippets[id] || '');
+        const isRefactor = id === 'tests';
+        codeEl.innerHTML = highlightKite(snippets[id] || '', isRefactor);
         brandText.textContent = footerMessages[id] || 'Kite • Write once, deploy anywhere';
         status.textContent = `Showing: ${id}`;
     }
