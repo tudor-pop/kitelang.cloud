@@ -16,7 +16,7 @@
             --accent-2:#9a4ef5;
             --border:rgba(255,255,255,.08);
             --shadow:0 10px 30px rgba(0,0,0,.35);
-            --radius:14px;
+            --radius:16px;
             --mono:'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             --purple:#a855f7;  /* keywords */
             --blue:#00aaff;    /* types */
@@ -30,12 +30,13 @@
         html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; }
 
         body {
-            display: flex; justify-content: center; align-items: stretch;
+            display: flex; justify-content: center; align-items: center;
             background: var(--bg); color: var(--text);
             font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            padding: 4px;
         }
 
-        .code-demo { display:flex; flex-direction:column; width:100%; height:100vh; background:var(--panel); border:none; border-radius:0; box-shadow:none; overflow:hidden }
+        .code-demo { display:flex; flex-direction:column; width:100%; height:100%; background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden }
 
         .demo-header{display:flex; gap:22px; align-items:flex-end; padding:10px 8px 0; background:var(--panel-2); border-bottom:1px solid var(--border)}
         .tabs{display:flex; gap:18px}
