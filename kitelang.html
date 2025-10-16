@@ -35,16 +35,16 @@
             font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
         }
 
-        .code-demo { display:flex; flex-direction:column; width:min(1100px,92vw); height:100vh; background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden }
+        .code-demo { display:flex; flex-direction:column; width:100%; height:100vh; background:var(--panel); border:none; border-radius:0; box-shadow:none; overflow:hidden }
 
-        .demo-header{display:flex; gap:22px; align-items:flex-end; padding:10px 20px 0; background:var(--panel-2); border-bottom:1px solid var(--border)}
+        .demo-header{display:flex; gap:22px; align-items:flex-end; padding:10px 8px 0; background:var(--panel-2); border-bottom:1px solid var(--border)}
         .tabs{display:flex; gap:18px}
         .tab{position:relative; padding:14px 6px; font-weight:600; letter-spacing:.2px; color:var(--muted); cursor:pointer; user-select:none}
         .tab.active{color:var(--text)}
         .tab.active:after{content:""; position:absolute; left:0; right:0; bottom:-1px; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); border-radius:3px 3px 0 0}
 
         .editor{flex:1; background:#0d1117; overflow:hidden}
-        pre{margin:0; padding:20px; height:100%; overflow:auto; font-family:var(--mono); font-size:15px; line-height:1.6}
+        pre{margin:0; padding:8px; height:100%; overflow:auto; font-family:var(--mono); font-size:15px; line-height:1.6}
 
         .tok-kw{color:var(--purple)}
         .tok-type{color:var(--blue)}
@@ -57,7 +57,7 @@
         .tok-green{color:var(--green)}
         .tok-purple{color:var(--purple)}
 
-        .demo-footer{display:flex; justify-content:space-between; align-items:center; padding:10px 20px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
+        .demo-footer{display:flex; justify-content:space-between; align-items:center; padding:10px 8px; border-top:1px solid var(--border); background:#0d1117; color:var(--muted); font-size:13px}
 
         @media (max-width:720px){ .tabs{gap:10px} .tab{font-size:14px} pre{font-size:14px} }
     </style>
