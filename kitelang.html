@@ -183,22 +183,16 @@ Plan: 0 to add, 0 to change, 0 to destroy, 1 to rename.`
 
         let out = escapeHtml(src);
 
-        // 1) Extract strings (double OR single quotes)
+        // 1) Extract comments FIRST (matches // and # anywhere, not just at line start)
+        out = out.replace(/\/\/.*?(?=$|\n)|#.*?(?=$|\n)/g, m => {
+            const i = comments.push(m) - 1;
+            return COM_L + i + COM_R;
+        });
+
+        // 2) Extract strings (double OR single quotes) - but only outside comments
         out = out.replace(/\"([^\"\\]|\\.)*\"|'([^'\\]|\\.)*'/g, m => {
             const i = strings.push(m) - 1;
             return STR_L + i + STR_R;
-        });
-
-        // 2) Extract comments (matches // anywhere, not just at line start)
-        out = out.replace(/\/\/.*?(?=$|\n)/g, m => {
-            const i = comments.push(m) - 1;
-            return COM_L + i + COM_R;
-        });
-
-        // 2b) Extract # comments
-        out = out.replace(/#.*?(?=$|\n)/g, m => {
-            const i = comments.push(m) - 1;
-            return COM_L + i + COM_R;
         });
 
         // Special handling for refactor tab plan line
