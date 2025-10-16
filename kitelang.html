@@ -51,6 +51,7 @@
         .tok-str{color:var(--green)}
         .tok-deco{color:var(--yellow)}
         .tok-com{color:var(--grey)!important;}
+        .tok-com-bold{color:var(--grey)!important; font-weight:600}
         .tok-red{color:var(--red)}
         .tok-orange{color:var(--orange)}
         .tok-green{color:var(--green)}
@@ -217,6 +218,14 @@ Plan: 0 to add, 0 to change, 0 to destroy, 1 to rename.`
         out = out.replace(/\bstring\b/g, '<span class="tok-type">string</span>');
         out = out.replace(/\bDummyResource\b/g, '<span class="tok-type">DummyResource</span>');
 
+        // 5b) Arrow operator - use placeholder to avoid escaping issues
+        const ARROW_L = '\uE004', ARROW_R = '\uE005';
+        const arrows = [];
+        out = out.replace(/->/g, m => {
+            const i = arrows.push(m) - 1;
+            return ARROW_L + i + ARROW_R;
+        });
+
         // 6) Reinsert strings
         out = out.replace(new RegExp(STR_L + '(\\d+)' + STR_R, 'g'),
             (_, i) => `<span class="tok-str">${strings[+i]}</span>`
@@ -224,7 +233,21 @@ Plan: 0 to add, 0 to change, 0 to destroy, 1 to rename.`
 
         // 7) Reinsert comments last so no highlighting happens inside them
         out = out.replace(new RegExp(COM_L + '(\\d+)' + COM_R, 'g'),
-            (_, i) => `<span class='tok-com'>${comments[+i]}</span>`
+            (_, i) => {
+                let commentText = comments[+i];
+                // Make "// console output" bold
+                if (commentText.includes('console output')) {
+                    return `<span class='tok-com-bold'>${commentText}</span>`;
+                }
+                // Allow arrow operator to be highlighted inside comments
+                commentText = commentText.replace(/->/g, '<span class="tok-purple">-></span>');
+                return `<span class='tok-com'>${commentText}</span>`;
+            }
+        );
+
+        // 8) Reinsert arrows
+        out = out.replace(new RegExp(ARROW_L + '(\\d+)' + ARROW_R, 'g'),
+            (_, i) => `<span class="tok-purple">${arrows[+i]}</span>`
         );
 
         return out;
