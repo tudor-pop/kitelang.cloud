@@ -79,7 +79,6 @@
 
     <div class="demo-footer">
         <span id="brand-text">Kite • Write once, deploy anywhere</span>
-        <span id="status">Ready</span>
     </div>
 </div>
 
@@ -258,7 +257,6 @@ Plan: 0 to add, 0 to change, 0 to destroy, 1 to rename.`
 
     const codeEl = document.getElementById('code');
     const tabs = document.querySelectorAll('.tab');
-    const status = document.getElementById('status');
     const brandText = document.getElementById('brand-text');
 
     function setTab(id){
@@ -266,7 +264,6 @@ Plan: 0 to add, 0 to change, 0 to destroy, 1 to rename.`
         const isRefactor = id === 'tests';
         codeEl.innerHTML = highlightKite(snippets[id] || '', isRefactor);
         brandText.textContent = footerMessages[id] || 'Kite • Write once, deploy anywhere';
-        status.textContent = `Showing: ${id}`;
     }
 
     tabs.forEach(t => t.addEventListener('click', () => setTab(t.dataset.id)));
