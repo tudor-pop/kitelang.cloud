@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Plans</title>
+</head>
+<body>
+<div class="pricing-grid">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1300px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .plan-card {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            flex: 1 1 320px;
+            min-width: 280px;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            padding: 28px;
+        }
+
+        .plan-header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .plan-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #5a3efc;
+            margin: 0;
+        }
+
+        .plan-subtitle {
+            font-size: 1rem;
+            color: #4b5563;
+            margin-top: 8px;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        .plan-price {
+            text-align: center;
+            margin: 24px 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #111827;
+            line-height: 1.2;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: #6b7280;
+            font-weight: 400;
+        }
+
+        .plan-list-intro {
+            font-size: 0.95rem;
+            color: #4b5563;
+            line-height: 1.4;
+            margin: 0 0 16px 0;
+            text-align: left;
+        }
+
+        .plan-features {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #374151;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 8px;
+        }
+
+        .feature-emoji {
+            flex-shrink: 0;
+            width: 1.25rem;
+            text-align: center;
+        }
+
+        .plan-cta {
+            margin-top: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .plan-button {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            background-color: #5a3efc;
+            color: #ffffff;
+            border-radius: 8px;
+            font-weight: 500;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .plan-button:hover {
+            background-color: #745cff;
+            box-shadow: 0 4px 12px rgba(90, 62, 252, 0.25);
+        }
+
+        @media (max-width: 1100px) {
+            .pricing-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .plan-card {
+                max-width: 500px;
+                width: 100%;
+            }
+        }
+    </style>
+
+    <!-- FREE PLAN -->
+    <div class="plan-card">
+        <div class="plan-header">
+            <h2 class="plan-title">Free</h2>
+            <p class="plan-subtitle">Full power. Your infrastructure, your rules.</p>
+        </div>
+
+        <div class="plan-price">
+            $0 <span>/ forever</span>
+        </div>
+
+        <div class="plan-features">
+            <p class="plan-list-intro">🧑‍💻 Applies to any individual or any team inside an organization</p>
+
+            <ul class="feature-list">
+                <li><span class="feature-emoji">♾️</span><span><strong>Unlimited usage</strong> — projects, resources, environments, modules, components</span></li>
+                <li><span class="feature-emoji">💽</span><span><strong>Bring your own state</strong> — you store and manage IaC state + PostgreSQL</span></li>
+                <li><span class="feature-emoji">☁️</span><span><strong>Multi-cloud ready</strong> — deploy to any provider with one workflow</span></li>
+                <li><span class="feature-emoji">💻</span><span><strong>Local-first</strong> — run it locally or in your own CI/CD, no SaaS required</span></li>
+                <li><span class="feature-emoji">🔌</span><span><strong>Extensible</strong> — plug in your own resource providers</span></li>
+                <li><span class="feature-emoji">🧠</span><span><strong>Consistent syntax</strong> — same language across all clouds</span></li>
+                <li><span class="feature-emoji">🔍</span><span><strong>Readable plans</strong> — review every change before it lands</span></li>
+                <li><span class="feature-emoji">🔒</span><span><strong>Privacy-first</strong> — zero telemetry by default</span></li>
+                <li><span class="feature-emoji">🚀</span><span><strong>Community support</strong> — docs, templates, shared modules</span></li>
+            </ul>
+        </div>
+
+        <div class="plan-cta">
+            <a class="plan-button" href="#get-started">✨ Get started free</a>
+        </div>
+    </div>
+
+    <!-- PRO PLAN -->
+    <div class="plan-card">
+        <div class="plan-header">
+            <h2 class="plan-title">Pro</h2>
+            <p class="plan-subtitle">Designed for mid-size* organizations</p>
+        </div>
+
+        <div class="plan-price">
+            $100 <span>/ month</span>
+        </div>
+
+        <div class="plan-features">
+            <p class="plan-list-intro">💼 Perfect for teams that need reliability and faster support</p>
+
+            <ul class="feature-list">
+                <li><span class="feature-emoji">💽</span><span><strong>Managed IaC state</strong> — let us handle your state and PostgreSQL backups</span></li>
+                <li><span class="feature-emoji">📧</span><span><strong>Email support</strong> — direct access for critical issues</span></li>
+                <li><span class="feature-emoji">⚡</span><span><strong>Priority features</strong> — your requests get bumped to the top of the queue</span></li>
+                <li><span class="feature-emoji">👥</span><span><strong>Team-friendly</strong> — optimized for growing organizations</span></li>
+            </ul>
+        </div>
+
+        <div class="plan-cta">
+            <a class="plan-button" href="#upgrade">🚀 Upgrade to Pro</a>
+        </div>
+    </div>
+
+    <!-- ENTERPRISE PLAN -->
+    <div class="plan-card">
+        <div class="plan-header">
+            <h2 class="plan-title">Enterprise</h2>
+            <p class="plan-subtitle">Customized solutions for large organizations</p>
+        </div>
+
+        <div class="plan-price">
+            Custom <span>pricing</span>
+        </div>
+
+        <div class="plan-features">
+            <p class="plan-list-intro">🏢 Tailored for enterprise-scale deployments and compliance needs</p>
+
+            <ul class="feature-list">
+                <li><span class="feature-emoji">✅</span><span><strong>Everything from Pro Plan</strong> — all Pro features included</span></li>
+                <li><span class="feature-emoji">🛟</span><span><strong>24/7 Support</strong> — round-the-clock assistance for critical infrastructure</span></li>
+                <li><span class="feature-emoji">🎓</span><span><strong>Personal training</strong> — dedicated onboarding and team training sessions</span></li>
+                <li><span class="feature-emoji">📊</span><span><strong>Audit Logs</strong> — comprehensive tracking for compliance and security</span></li>
+                <li><span class="feature-emoji">🔐</span><span><strong>SSO</strong> — single sign-on integration with your identity provider</span></li>
+            </ul>
+        </div>
+
+        <div class="plan-cta">
+            <a class="plan-button" href="#contact">💬 Contact Sales</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
