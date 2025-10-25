@@ -1619,6 +1619,12 @@
         if (firstLink && window.scrollY < 100) {
             firstLink.classList.add('active');
         }
+
+        // Initialize FAB position for home page (default)
+        const fabContainer = document.querySelector('.fab-container');
+        if (fabContainer) {
+            fabContainer.style.right = '90px';
+        }
     });
 
     // Page navigation system
@@ -1642,6 +1648,7 @@
         const tocSidebar = document.querySelector('.right-sidebar');
         const mainContent = document.querySelector('.main-content');
         const tocMenu = document.querySelector('.toc-menu');
+        const fabContainer = document.querySelector('.fab-container');
 
         // Set active nav item
         if (pageId === 'page-home') {
@@ -1649,11 +1656,13 @@
             // Hide TOC on home page and expand main content
             if (tocSidebar) tocSidebar.style.display = 'none';
             if (mainContent) mainContent.style.marginRight = '40px';
+            if (fabContainer) fabContainer.style.right = '90px';
         } else if (pageId === 'page-overview') {
             document.getElementById('nav-overview')?.classList.add('active');
             // Show TOC on overview page
             if (tocSidebar) tocSidebar.style.display = 'block';
             if (mainContent) mainContent.style.marginRight = '280px';
+            if (fabContainer) fabContainer.style.right = '330px';
             // Update TOC content for Overview
             if (tocMenu) {
                 tocMenu.innerHTML = `
@@ -1667,6 +1676,7 @@
             // Show TOC on basics page
             if (tocSidebar) tocSidebar.style.display = 'block';
             if (mainContent) mainContent.style.marginRight = '280px';
+            if (fabContainer) fabContainer.style.right = '330px';
             // Update TOC content for Basics
             if (tocMenu) {
                 tocMenu.innerHTML = `
@@ -1681,6 +1691,7 @@
             // Show TOC on basic syntax page and restore normal width
             if (tocSidebar) tocSidebar.style.display = 'block';
             if (mainContent) mainContent.style.marginRight = '280px';
+            if (fabContainer) fabContainer.style.right = '330px';
             // Update TOC content for Basic Syntax
             if (tocMenu) {
                 tocMenu.innerHTML = `
