@@ -53,6 +53,12 @@
             --info-bg: rgba(91, 180, 255, 0.1);
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg-primary);
@@ -95,17 +101,22 @@
         /* Left Sidebar with glassmorphism effect */
         .left-sidebar {
             width: 280px;
-            background: var(--bg-secondary);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid var(--border-color);
+            background: #FFFFFF;
+            border-right: 1px solid #E5E7EB;
             overflow-y: auto;
             position: fixed;
             left: 0;
             top: 0;
             bottom: 0;
             padding: 24px 0;
-            box-shadow: 2px 0 20px var(--shadow);
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.08);
             transition: background-color 0.3s ease;
+        }
+
+        [data-theme="dark"] .left-sidebar {
+            background: #1A1A1A;
+            border-color: #2A2A2A;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
         }
 
         /* Custom scrollbar */
@@ -247,24 +258,55 @@
             font-weight: 400;
         }
 
+        /* Page visibility system */
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Feature cards */
+        .feature-card a {
+            cursor: pointer;
+        }
+
+        .feature-card a:hover {
+            color: var(--primary-color) !important;
+        }
+
         /* Main Content Area - Island Style */
         .main-content {
             flex: 1;
             margin-left: 280px;
-            margin-right: 280px;
+            margin-right: 40px;
             padding: 0;
             background-color: transparent;
+            max-width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
         }
 
         .content-island {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(20px);
+            background: #FFFFFF;
             border-radius: 16px;
             padding: 48px 56px;
             margin: 24px 32px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 40px var(--shadow);
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow-x: auto;
+        }
+
+        [data-theme="dark"] .content-island {
+            background: #1A1A1A;
+            border-color: #2A2A2A;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
         }
 
         .content-island:hover {
@@ -429,15 +471,19 @@
 
         /* Footer styling - Island */
         .footer {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(20px);
+            background: #FFFFFF;
             border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 40px var(--shadow);
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
             padding: 48px;
             margin: 32px 32px 24px 32px;
             position: relative;
             transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .footer {
+            background: #1A1A1A;
+            border-color: #2A2A2A;
         }
 
         .footer:hover {
@@ -567,7 +613,6 @@
             position: relative;
             box-shadow: 0 8px 30px var(--shadow-strong);
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
         }
 
         .code-block:hover {
@@ -653,19 +698,26 @@
             top: 0;
             bottom: 0;
             overflow-y: auto;
-            padding: 24px 8px;
+            padding: 24px 24px 24px 8px;
             transition: background-color 0.3s ease;
+            z-index: 1;
         }
 
         .toc-island {
-            background: var(--bg-secondary);
-            backdrop-filter: blur(20px);
+            background: #FFFFFF;
+            background-color: #FFFFFF;
             border-radius: 16px;
             padding: 24px;
-            border: 1px solid var(--border-color);
-            box-shadow: none;
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
             position: sticky;
             top: 24px;
+        }
+
+        [data-theme="dark"] .toc-island {
+            background: #1A1A1A;
+            background-color: #1A1A1A;
+            border-color: #2A2A2A;
         }
 
         .toc-header {
@@ -764,7 +816,6 @@
         /* Info boxes - Island Cards */
         .info-box {
             background: var(--info-bg);
-            backdrop-filter: blur(20px);
             border-left: 4px solid #5BB4FF;
             border-radius: 12px;
             padding: 24px 28px;
@@ -869,10 +920,10 @@
         /* Responsive Design */
         @media (max-width: 1400px) {
             .right-sidebar {
-                display: none;
+                display: none !important;
             }
             .main-content {
-                margin-right: 40px;
+                margin-right: 40px !important;
             }
             .content-island {
                 margin: 24px 32px;
@@ -885,7 +936,15 @@
             }
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
+            .right-sidebar {
+                display: none !important;
+            }
+
+            .hamburger {
+                display: flex !important;
+            }
+
             .left-sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s;
@@ -898,17 +957,49 @@
 
             .main-content {
                 margin-left: 0;
+                margin-right: 16px !important;
+            }
+
+            .content-island {
+                margin: 24px 16px;
+                padding: 40px 32px;
+            }
+
+            .footer {
+                margin: 32px 16px 24px 16px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .right-sidebar {
+                display: none !important;
+            }
+
+            .left-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+                z-index: 100;
+            }
+
+            .left-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                margin-right: 0 !important;
                 padding: 0;
+                width: 100%;
             }
 
             .content-island {
                 margin: 16px;
-                padding: 24px;
+                padding: 32px 20px;
                 border-radius: 12px;
             }
 
             .hamburger {
-                display: flex;
+                display: flex !important;
             }
 
             .fab-container {
@@ -978,7 +1069,7 @@
         </div>
 
         <ul class="sidebar-menu">
-            <li><a href="#home">Home</a></li>
+            <li><a href="#" onclick="showPage('page-home'); return false;" id="nav-home" class="active">Home</a></li>
             <li><a href="#get-started">Get started</a></li>
             <li><a href="#tour">Take Kite tour</a></li>
             <li>
@@ -996,7 +1087,7 @@
             <li>
                 <div class="menu-item expandable expanded">Basics</div>
                 <ul class="nested show">
-                    <li><a href="#basic-syntax" class="active">Basic syntax</a></li>
+                    <li><a href="#" onclick="showPage('page-basic-syntax'); return false;" id="nav-basic-syntax">Basic syntax</a></li>
                     <li><a href="#idioms">Idioms</a></li>
                     <li><a href="#coding-conventions">Coding conventions</a></li>
                 </ul>
@@ -1033,78 +1124,174 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="content-island">
-            <div class="breadcrumb">
-                <a href="#basics">Basics</a>
-                <span class="breadcrumb-separator">/</span>
-                <span>Basic syntax</span>
-            </div>
+        <!-- Home Page -->
+        <div class="page-section active" id="page-home">
+            <div class="content-island">
+                <h1>Welcome to Kite</h1>
 
-            <h1>Basic syntax</h1>
+                <div class="edit-info">
+                    <span>Updated on January 2025</span>
+                </div>
 
-            <div class="edit-info">
-                <span>Updated on August 5, 2025</span>
-            </div>
-
-            <p>
-                This is a collection of basic syntax elements with examples. At the end of every section, you'll
-                find a link to a detailed description of the related topic.
-            </p>
-
-            <div class="info-box">
                 <p>
-                    💡 You can also learn all the Kite essentials with the free Kite Core track by JetBrains Academy.
+                    Kite is a new Infrastructure-as-Code language built for today's multi-cloud world. It lets you describe your resources once — clean, declarative, and portable — and then provision them across AWS, GCP, Azure, and beyond.
                 </p>
-            </div>
 
-            <h2 id="package-definition">Package definition and imports</h2>
+                <p>
+                    Kite isn't another layer of tooling glued onto YAML like Terraform or Pulumi. It's a purpose-built language, designed from the ground up with developer experience at its core.
+                </p>
 
-            <p>Package specification should be at the top of the source file:</p>
+                <ul style="list-style: none; padding-left: 0; margin: 24px 0;">
+                    <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>Clear syntax</strong> that feels familiar but powerful.
+                    </li>
+                    <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>Portability:</strong> write once, provision anywhere.
+                    </li>
+                    <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>Extensible</strong> via mixins and plugins, so teams can adapt it to their exact workflows.
+                    </li>
+                    <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>Safe by default:</strong> state tracked in a real database, making recovery and auditing straightforward.
+                    </li>
+                </ul>
 
-            <div class="code-block-wrapper">
-                <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                <div class="code-block">
-                    <code><span class="keyword">package</span> my.demo
+                <p>
+                    <strong>Kite's goal:</strong> give teams a language they actually enjoy using while cutting through provider lock-in and messy config sprawl.
+                </p>
 
-                        <span class="import">import</span> kite.text.*
+                <!-- Feature Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px;">
+                    <!-- Get Started Card -->
+                    <div class="feature-card" style="background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div style="font-size: 32px;">🗺️</div>
+                            <h3 style="margin: 0; font-size: 24px; font-weight: 600;">Get started</h3>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <a href="#overview" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                                <span style="color: #F59E0B;">✨</span> Overview
+                            </a>
+                            <a href="#install" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                                <span style="color: #F59E0B;">🔧</span> Install
+                            </a>
+                            <a href="#resources" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                                <span style="color: #F59E0B;">☀️</span> Resources
+                            </a>
+                        </div>
+                    </div>
 
-                        <span class="comment">// ...</span></code>
-                </div>
-            </div>
+                    <!-- Develop Providers Card -->
+                    <div class="feature-card" style="background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div style="font-size: 32px;">👷</div>
+                            <h3 style="margin: 0; font-size: 24px; font-weight: 600;">Develop providers</h3>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <a href="#develop-plugins" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                                <span style="color: #5BB4FF;">🎯</span> Develop provider plugins
+                            </a>
+                        </div>
+                    </div>
 
-            <p>
-                It is not required to match directories and packages: source files can be placed arbitrarily in
-                the file system.
-            </p>
-
-            <p><a href="#packages">See Packages →</a></p>
-
-            <div class="section-divider"></div>
-
-            <h2 id="program-entry">Program entry point</h2>
-
-            <p>An entry point of a Kite application is the <code>main</code> function:</p>
-
-            <div class="code-block-wrapper">
-                <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                <div class="code-block">
-                    <code><span class="keyword">fun</span> <span class="function">main</span>() {
-                        <span class="function">println</span>(<span class="string">"Hello world!"</span>)
-                        }</code>
-                </div>
-            </div>
-
-            <p>Another form of <code>main</code> accepts a variable number of String arguments:</p>
-
-            <div class="code-block-wrapper">
-                <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                <div class="code-block">
-                    <code><span class="keyword">fun</span> <span class="function">main</span>(args: Array&lt;String&gt;) {
-                        <span class="function">println</span>(args.contentToString())
-                        }</code>
+                    <!-- Reference Card -->
+                    <div class="feature-card" style="background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <div style="font-size: 32px;">📚</div>
+                            <h3 style="margin: 0; font-size: 24px; font-weight: 600;">Reference</h3>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <a href="#reference" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                                <span style="color: #10B981;">📚</span> Reference
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Basic Syntax Page -->
+        <div class="page-section" id="page-basic-syntax">
+            <div class="content-island">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('page-home'); return false;">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <a href="#basics">Basics</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Basic syntax</span>
+                </div>
+
+                <h1>Basic syntax</h1>
+
+                <div class="edit-info">
+                    <span>Updated on August 5, 2025</span>
+                </div>
+
+                <p>
+                    This is a collection of basic syntax elements with examples. At the end of every section, you'll
+                    find a link to a detailed description of the related topic.
+                </p>
+
+                <div class="info-box">
+                    <p>
+                        💡 You can also learn all the Kite essentials with the free Kite Core track by JetBrains Academy.
+                    </p>
+                </div>
+
+                <h2 id="package-definition">Package definition and imports</h2>
+
+                <p>Package specification should be at the top of the source file:</p>
+
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    <div class="code-block">
+                        <code><span class="keyword">package</span> my.demo
+
+                            <span class="import">import</span> kite.text.*
+
+                            <span class="comment">// ...</span></code>
+                    </div>
+                </div>
+
+                <p>
+                    It is not required to match directories and packages: source files can be placed arbitrarily in
+                    the file system.
+                </p>
+
+                <p><a href="#packages">See Packages →</a></p>
+
+                <div class="section-divider"></div>
+
+                <h2 id="program-entry">Program entry point</h2>
+
+                <p>An entry point of a Kite application is the <code>main</code> function:</p>
+
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    <div class="code-block">
+                        <code><span class="keyword">fun</span> <span class="function">main</span>() {
+                            <span class="function">println</span>(<span class="string">"Hello world!"</span>)
+                            }</code>
+                    </div>
+                </div>
+
+                <p>Another form of <code>main</code> accepts a variable number of String arguments:</p>
+
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    <div class="code-block">
+                        <code><span class="keyword">fun</span> <span class="function">main</span>(args: Array&lt;String&gt;) {
+                            <span class="function">println</span>(args.contentToString())
+                            }</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Basic Syntax Page -->
 
         <!-- Footer -->
         <footer class="footer">
@@ -1153,7 +1340,7 @@
     </main>
 
     <!-- Right Sidebar - Table of Contents -->
-    <aside class="right-sidebar">
+    <aside class="right-sidebar" style="display: none;">
         <div class="toc-island">
             <div class="toc-header">On This Page</div>
             <ul class="toc-menu">
@@ -1369,6 +1556,46 @@
             firstLink.classList.add('active');
         }
     });
+
+    // Page navigation system
+    function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll('.page-section').forEach(page => {
+            page.classList.remove('active');
+        });
+
+        // Show the selected page
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+            targetPage.classList.add('active');
+        }
+
+        // Update active menu item
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.classList.remove('active');
+        });
+
+        const tocSidebar = document.querySelector('.right-sidebar');
+        const mainContent = document.querySelector('.main-content');
+        const tocIsland = document.querySelector('.toc-island');
+
+        // Set active nav item
+        if (pageId === 'page-home') {
+            document.getElementById('nav-home')?.classList.add('active');
+            // Hide TOC on home page and expand main content
+            if (tocSidebar) tocSidebar.style.display = 'none';
+            if (mainContent) mainContent.style.marginRight = '40px';
+        } else if (pageId === 'page-basic-syntax') {
+            document.getElementById('nav-basic-syntax')?.classList.add('active');
+            // Show TOC on basic syntax page and restore normal width
+            if (tocSidebar) tocSidebar.style.display = 'block';
+            if (mainContent) mainContent.style.marginRight = '280px';
+        }
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
 </script>
 </body>
 </html>
