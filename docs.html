@@ -70,22 +70,8 @@
             font-size: 16px;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.01) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(91, 180, 255, 0.02) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        [data-theme="dark"] body::before {
-            background-image: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(91, 180, 255, 0.03) 0%, transparent 50%);
+        [data-theme="dark"] body {
+            background: #0A0A0A;
         }
 
         html {
@@ -109,7 +95,7 @@
             top: 0;
             bottom: 0;
             padding: 24px 0;
-            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.04);
             transition: background-color 0.3s ease;
         }
 
@@ -1070,28 +1056,11 @@
 
         <ul class="sidebar-menu">
             <li><a href="#" onclick="showPage('page-home'); return false;" id="nav-home" class="active">Home</a></li>
-            <li><a href="#get-started">Get started</a></li>
-            <li><a href="#tour">Take Kite tour</a></li>
-            <li>
-                <div class="menu-item expandable expanded">Kite overview</div>
-                <ul class="nested show">
-                    <li><a href="#overview">Overview</a></li>
-                </ul>
-            </li>
+            <li><a href="#" onclick="showPage('page-overview'); return false;" id="nav-overview">Overview</a></li>
             <li>
                 <div class="menu-item expandable">What's new in Kite</div>
             </li>
-            <li>
-                <div class="menu-item expandable">Kite evolution and roadmap</div>
-            </li>
-            <li>
-                <div class="menu-item expandable expanded">Basics</div>
-                <ul class="nested show">
-                    <li><a href="#" onclick="showPage('page-basic-syntax'); return false;" id="nav-basic-syntax">Basic syntax</a></li>
-                    <li><a href="#idioms">Idioms</a></li>
-                    <li><a href="#coding-conventions">Coding conventions</a></li>
-                </ul>
-            </li>
+            <li><a href="#" onclick="showPage('page-basics'); return false;" id="nav-basics">Basics</a></li>
             <li>
                 <div class="menu-item expandable expanded">Concepts</div>
                 <ul class="nested show">
@@ -1134,34 +1103,34 @@
                 </div>
 
                 <p>
-                    Kite is a new Infrastructure-as-Code language built for today's multi-cloud world. It lets you describe your resources once — clean, declarative, and portable — and then provision them across AWS, GCP, Azure, and beyond.
+                    Kite is a modern IaC language designed for the multi-cloud era. Write your infrastructure once using clean, declarative syntax — then provision seamlessly across AWS, Google Cloud, Azure, and more.
                 </p>
 
                 <p>
-                    Kite isn't another layer of tooling glued onto YAML like Terraform or Pulumi. It's a purpose-built language, designed from the ground up with developer experience at its core.
+                    Built from the ground up with simplicity and power in mind, Kite brings a fresh approach to infrastructure management. Every feature is thoughtfully designed to make your workflow faster, safer, and more intuitive.
                 </p>
 
                 <ul style="list-style: none; padding-left: 0; margin: 24px 0;">
                     <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>Clear syntax</strong> that feels familiar but powerful.
+                        <strong>Intuitive syntax.</strong> Familiar patterns combined with modern expressiveness.
                     </li>
                     <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>Portability:</strong> write once, provision anywhere.
+                        <strong>True portability.</strong> Define once, provision anywhere.
                     </li>
                     <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>Extensible</strong> via mixins and plugins, so teams can adapt it to their exact workflows.
+                        <strong>Built to extend.</strong> Mixins and plugins adapt seamlessly to your team's workflow.
                     </li>
                     <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>Safe by default:</strong> state tracked in a real database, making recovery and auditing straightforward.
+                        <strong>Secure and reliable.</strong> State management in a proper database ensures complete traceability.
                     </li>
                 </ul>
 
                 <p>
-                    <strong>Kite's goal:</strong> give teams a language they actually enjoy using while cutting through provider lock-in and messy config sprawl.
+                    Kite empowers teams to manage infrastructure with confidence and clarity, eliminating complexity without sacrificing control.
                 </p>
 
                 <!-- Feature Cards -->
@@ -1211,6 +1180,101 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Overview Page -->
+        <div class="page-section" id="page-overview">
+            <div class="content-island">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('page-home'); return false;">Home</a>
+                    <span class="breadcrumb-separator">›</span>
+                    <span>Overview</span>
+                </div>
+
+                <h1>Overview</h1>
+
+                <div class="edit-info">
+                    <span>Updated on January 2025</span>
+                </div>
+
+                <h2 id="what-is-kite">What is Kite?</h2>
+
+                <p>
+                    Kite is a declarative IaC language built to provision cloud infrastructure with precision and consistency.
+                </p>
+
+                <p>
+                    Define your resources once. Provision them anywhere. A single Kite configuration describes exactly what you need, then scales effortlessly across your entire development lifecycle, from staging to production.
+                </p>
+
+                <p>
+                    Clean syntax meets powerful type safety. Catch configuration errors before they reach the cloud. Share infrastructure modules across teams. The result? Infrastructure that's not just automated. It's remarkably simple to understand and maintain.
+                </p>
+
+                <h2 id="why-kite" style="margin-top: 64px; margin-bottom: 24px;">Why Kite?</h2>
+
+                <ul style="list-style: none; padding-left: 0; margin: 24px 0;">
+                    <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>One language. Every cloud.</strong> True portability without the pain.
+                    </li>
+                    <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>Designed to feel familiar.</strong> Kite's syntax draws from the best of Terraform, Bicep, and modern languages like TypeScript, C# and Java.
+                    </li>
+                    <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>Refactor fearlessly.</strong> Rename resources in code without ever losing the real ones in the cloud.
+                    </li>
+                    <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>Import with ease.</strong> Bring your existing cloud infrastructure into Kite. No rewrites, no headaches, just instant control.
+                    </li>
+                    <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>Build without limits.</strong> Extend resources effortlessly with annotations or mixins, and compose infrastructure the way you imagine it.
+                    </li>
+                    <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
+                        <strong>State that scales with you.</strong> Just a proper database managing everything automatically. Safe, fast, secure, and recoverable when things go wrong.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Basics Page -->
+        <div class="page-section" id="page-basics">
+            <div class="content-island">
+                <div class="breadcrumb">
+                    <a href="#" onclick="showPage('page-home'); return false;">Home</a>
+                    <span class="breadcrumb-separator">›</span>
+                    <span>Basics</span>
+                </div>
+
+                <h1>Basics</h1>
+
+                <div class="edit-info">
+                    <span>Updated on January 2025</span>
+                </div>
+
+                <h2 id="basic-syntax">Basic syntax</h2>
+                <p>
+                    Learn the fundamental syntax of Kite, including package definitions, functions, variables, and control flow.
+                </p>
+                <p>
+                    <a href="#" onclick="showPage('page-basic-syntax'); return false;" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">View Basic syntax →</a>
+                </p>
+
+                <h2 id="idioms" style="margin-top: 48px;">Idioms</h2>
+                <p>
+                    Discover common patterns and best practices for writing idiomatic Kite code.
+                </p>
+
+                <h2 id="coding-conventions" style="margin-top: 48px;">Coding conventions</h2>
+                <p>
+                    Follow established conventions for naming, formatting, and organizing your Kite projects.
+                </p>
             </div>
         </div>
 
@@ -1577,7 +1641,7 @@
 
         const tocSidebar = document.querySelector('.right-sidebar');
         const mainContent = document.querySelector('.main-content');
-        const tocIsland = document.querySelector('.toc-island');
+        const tocMenu = document.querySelector('.toc-menu');
 
         // Set active nav item
         if (pageId === 'page-home') {
@@ -1585,11 +1649,61 @@
             // Hide TOC on home page and expand main content
             if (tocSidebar) tocSidebar.style.display = 'none';
             if (mainContent) mainContent.style.marginRight = '40px';
+        } else if (pageId === 'page-overview') {
+            document.getElementById('nav-overview')?.classList.add('active');
+            // Show TOC on overview page
+            if (tocSidebar) tocSidebar.style.display = 'block';
+            if (mainContent) mainContent.style.marginRight = '280px';
+            // Update TOC content for Overview
+            if (tocMenu) {
+                tocMenu.innerHTML = `
+                        <li><a href="#" onclick="scrollToTop(); return false;" data-level="1">Overview</a></li>
+                        <li><a href="#what-is-kite" data-level="2">What is Kite?</a></li>
+                        <li><a href="#why-kite" data-level="2">Why Kite?</a></li>
+                    `;
+            }
+        } else if (pageId === 'page-basics') {
+            document.getElementById('nav-basics')?.classList.add('active');
+            // Show TOC on basics page
+            if (tocSidebar) tocSidebar.style.display = 'block';
+            if (mainContent) mainContent.style.marginRight = '280px';
+            // Update TOC content for Basics
+            if (tocMenu) {
+                tocMenu.innerHTML = `
+                        <li><a href="#" onclick="scrollToTop(); return false;" data-level="1">Basics</a></li>
+                        <li><a href="#basic-syntax" data-level="2">Basic syntax</a></li>
+                        <li><a href="#idioms" data-level="2">Idioms</a></li>
+                        <li><a href="#coding-conventions" data-level="2">Coding conventions</a></li>
+                    `;
+            }
         } else if (pageId === 'page-basic-syntax') {
             document.getElementById('nav-basic-syntax')?.classList.add('active');
             // Show TOC on basic syntax page and restore normal width
             if (tocSidebar) tocSidebar.style.display = 'block';
             if (mainContent) mainContent.style.marginRight = '280px';
+            // Update TOC content for Basic Syntax
+            if (tocMenu) {
+                tocMenu.innerHTML = `
+                        <li><a href="#" onclick="scrollToTop(); return false;" data-level="1">Basic syntax</a></li>
+                        <li><a href="#package-definition" data-level="2">Package definition and imports</a></li>
+                        <li><a href="#program-entry" data-level="2">Program entry point</a></li>
+                        <li><a href="#print-output" data-level="2">Print to the standard output</a></li>
+                        <li><a href="#read-input" data-level="2">Read from the standard input</a></li>
+                        <li><a href="#functions" data-level="2">Functions</a></li>
+                        <li><a href="#variables" data-level="2">Variables</a></li>
+                        <li><a href="#classes" data-level="2">Creating classes and instances</a></li>
+                        <li><a href="#comments" data-level="2">Comments</a></li>
+                        <li><a href="#string-templates" data-level="2">String templates</a></li>
+                        <li><a href="#conditional" data-level="2">Conditional expressions</a></li>
+                        <li><a href="#for-loop" data-level="2">for loop</a></li>
+                        <li><a href="#while-loop" data-level="2">while loop</a></li>
+                        <li><a href="#when-expression" data-level="2">when expression</a></li>
+                        <li><a href="#ranges" data-level="2">Ranges</a></li>
+                        <li><a href="#collections" data-level="2">Collections</a></li>
+                        <li><a href="#nullable" data-level="2">Nullable values and null checks</a></li>
+                        <li><a href="#type-checks" data-level="2">Type checks and automatic casts</a></li>
+                    `;
+            }
         }
 
         // Scroll to top
