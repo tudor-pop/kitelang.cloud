@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Syntax - Kite Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --bg-tertiary: rgba(255, 255, 255, 0.6);
+            --text-primary: #1A1A1A;
+            --text-secondary: #444;
+            --text-muted: #666;
+            --text-light: #888;
+            --primary-color: #7F52FF;
+            --primary-dark: #5C3FBF;
+            --primary-light: #A78BFA;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-color-strong: rgba(0, 0, 0, 0.12);
+            --code-bg: #F8F9FA;
+            --hover-bg: rgba(0, 0, 0, 0.04);
+            --active-bg: rgba(127, 82, 255, 0.08);
+            --shadow: rgba(0, 0, 0, 0.03);
+            --shadow-strong: rgba(0, 0, 0, 0.08);
+            --info-bg: rgba(91, 180, 255, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1A1A1A;
+            --bg-secondary: rgba(30, 30, 30, 0.95);
+            --bg-tertiary: rgba(30, 30, 30, 0.8);
+            --text-primary: #FFFFFF;
+            --text-secondary: #CCCCCC;
+            --text-muted: #999;
+            --text-light: #777;
+            --primary-color: #A78BFA;
+            --primary-dark: #7F52FF;
+            --primary-light: #C4B5FD;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-color-strong: rgba(255, 255, 255, 0.15);
+            --code-bg: #242424;
+            --hover-bg: rgba(255, 255, 255, 0.05);
+            --active-bg: rgba(127, 82, 255, 0.15);
+            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow-strong: rgba(0, 0, 0, 0.2);
+            --info-bg: rgba(91, 180, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            scroll-behavior: smooth;
+            position: relative;
+            font-size: 16px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.01) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(91, 180, 255, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        [data-theme="dark"] body::before {
+            background-image: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(91, 180, 255, 0.03) 0%, transparent 50%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Main Layout Container */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Left Sidebar with glassmorphism effect */
+        .left-sidebar {
+            width: 280px;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 24px 0;
+            box-shadow: 2px 0 20px var(--shadow);
+            transition: background-color 0.3s ease;
+        }
+
+        /* Custom scrollbar */
+        .left-sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .left-sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .left-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(127, 82, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .left-sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(127, 82, 255, 0.5);
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px 20px;
+            border-bottom: 2px solid rgba(127, 82, 255, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: rgba(127, 82, 255, 0.1);
+            color: var(--primary-color);
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin: 0;
+        }
+
+        .sidebar-menu a,
+        .sidebar-menu .menu-item {
+            display: block;
+            padding: 10px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border-radius: 8px;
+            margin: 2px 12px;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu .menu-item:hover {
+            background: rgba(127, 82, 255, 0.08);
+            color: var(--primary-color);
+        }
+
+        .sidebar-menu a.active {
+            background: rgba(127, 82, 255, 0.12);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .sidebar-menu .expandable {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .sidebar-menu .expandable::after {
+            content: '›';
+            position: absolute;
+            right: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+            color: var(--primary-color);
+        }
+
+        .sidebar-menu .expandable.expanded::after {
+            transform: rotate(90deg);
+        }
+
+        .sidebar-menu .nested {
+            display: none;
+            padding-left: 0;
+        }
+
+        .sidebar-menu .nested.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sidebar-menu .nested li a {
+            padding-left: 32px;
+            font-size: 13px;
+        }
+
+        .sidebar-menu .nested .nested li a {
+            padding-left: 48px;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        /* Main Content Area - Island Style */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            margin-right: 280px;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        .content-island {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 48px 56px;
+            margin: 24px 32px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 40px var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .content-island:hover {
+            box-shadow: 0 12px 60px var(--shadow-strong);
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--primary-dark);
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-light);
+        }
+
+        h1 {
+            font-size: 52px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.2;
+        }
+
+        .edit-info {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.04);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .edit-info::before {
+            content: '📅';
+            font-size: 14px;
+        }
+
+        h2 {
+            font-size: 36px;
+            color: var(--text-primary);
+            margin-top: 64px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 16px;
+            scroll-margin-top: 24px;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            margin-bottom: 24px;
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            letter-spacing: 0.2px;
+        }
+
+        /* Inline code styling */
+        code {
+            background: rgba(0, 0, 0, 0.06);
+            color: var(--primary-color);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.9em;
+            font-weight: 500;
+            letter-spacing: 0;
+        }
+
+        [data-theme="dark"] code {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Override inline code inside code blocks */
+        .code-block code {
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: var(--text-primary);
+        }
+
+        /* Section dividers */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--border-color) 50%, transparent 100%);
+            margin: 48px 0;
+            position: relative;
+        }
+
+        .section-divider::after {
+            content: '•';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-primary);
+            color: var(--primary-color);
+            padding: 0 12px;
+            font-size: 20px;
+        }
+
+        /* Improved link styling */
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+            position: relative;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+            border-bottom-color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        /* External link icon */
+        a[href^="http"]::after,
+        a[href^="https://"]::after {
+            content: '↗';
+            font-size: 0.85em;
+            margin-left: 4px;
+            opacity: 0.6;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        a[href^="http"]:hover::after,
+        a[href^="https://"]:hover::after {
+            opacity: 1;
+            transform: translate(2px, -2px);
+        }
+
+        /* Don't add icon to certain links */
+        .breadcrumb a::after,
+        .sidebar-menu a::after,
+        .toc-menu a::after {
+            content: none;
+        }
+
+        /* Footer styling - Island */
+        .footer {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 40px var(--shadow);
+            padding: 48px;
+            margin: 32px 32px 24px 32px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .footer:hover {
+            box-shadow: 0 12px 60px var(--shadow-strong);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 48px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            font-size: 14px;
+            border: none;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 32px;
+            margin-top: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer-bottom a {
+            color: var(--primary-color);
+            border: none;
+        }
+
+        /* Loading skeleton */
+        .skeleton {
+            animation: skeleton-loading 1.5s infinite ease-in-out;
+            background: linear-gradient(90deg,
+            var(--bg-secondary) 0%,
+            var(--bg-tertiary) 50%,
+            var(--bg-secondary) 100%);
+            background-size: 200% 100%;
+            border-radius: 8px;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-header {
+            height: 52px;
+            width: 60%;
+            margin-bottom: 20px;
+        }
+
+        .skeleton-text {
+            height: 20px;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-text:last-child {
+            width: 80%;
+        }
+
+        .content-loaded .skeleton {
+            display: none;
+        }
+
+        /* Smooth theme transition */
+        * {
+            transition: background-color 0.3s ease,
+            color 0.3s ease,
+            border-color 0.3s ease,
+            box-shadow 0.3s ease !important;
+        }
+
+        /* Disable transitions on page load */
+        .preload * {
+            transition: none !important;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+            border-bottom-color: var(--primary-light);
+        }
+
+        /* Enhanced Code Blocks - Island Cards */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color-strong);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            overflow-x: auto;
+            position: relative;
+            box-shadow: 0 8px 30px var(--shadow-strong);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .code-block:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 10px 40px var(--shadow-strong);
+            transform: translateY(-1px);
+        }
+
+        .code-block code {
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .keyword {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .import {
+            color: #5BB4FF;
+            font-weight: 600;
+        }
+
+        .string {
+            color: #0FA676;
+        }
+
+        .comment {
+            color: #999;
+            font-style: italic;
+        }
+
+        .function {
+            color: #00627A;
+            font-weight: 600;
+        }
+
+        /* Copy button for code blocks */
+        .code-block-wrapper {
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(217, 70, 239, 0.3);
+        }
+
+        .code-block-wrapper:hover .copy-button {
+            opacity: 1;
+        }
+
+        .copy-button:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 15px rgba(217, 70, 239, 0.4);
+        }
+
+        .copy-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Right Sidebar - Enhanced TOC */
+        .right-sidebar {
+            width: 280px;
+            background: transparent;
+            border-left: none;
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            padding: 24px 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .toc-island {
+            background: var(--bg-secondary);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: none;
+            position: sticky;
+            top: 24px;
+        }
+
+        .toc-header {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+
+        .toc-menu {
+            list-style: none;
+        }
+
+        .toc-menu li {
+            margin-bottom: 8px;
+        }
+
+        .toc-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* H1 level (main title) */
+        .toc-menu a[data-level="1"] {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        /* H2 level (sections) - indented */
+        .toc-menu a[data-level="2"] {
+            padding-left: 24px;
+            font-size: 13px;
+        }
+
+        /* H3 level (subsections) - more indented */
+        .toc-menu a[data-level="3"] {
+            padding-left: 32px;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        .toc-menu a:hover {
+            color: var(--primary-color);
+            background: rgba(127, 82, 255, 0.08);
+        }
+
+        .toc-menu a.active {
+            color: var(--primary-color);
+            background: rgba(127, 82, 255, 0.12);
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(127, 82, 255, 0.1);
+        }
+
+        /* Floating action buttons */
+        .fab-container {
+            position: fixed;
+            bottom: 30px;
+            right: 330px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .fab {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(127, 82, 255, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(127, 82, 255, 0.5);
+        }
+
+        /* Info boxes - Island Cards */
+        .info-box {
+            background: var(--info-bg);
+            backdrop-filter: blur(20px);
+            border-left: 4px solid #5BB4FF;
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin: 30px 0;
+            box-shadow: 0 6px 25px rgba(91, 180, 255, 0.1);
+            border: 1px solid rgba(91, 180, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .info-box:hover {
+            box-shadow: 0 8px 35px rgba(91, 180, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .info-box p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        /* Reading Progress Indicator */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: #5BB4FF;
+            z-index: 1000;
+            transition: width 0.1s ease;
+            box-shadow: 0 0 10px rgba(91, 180, 255, 0.5);
+        }
+
+        /* Hamburger Menu with Animation */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 101;
+            background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(127, 82, 255, 0.4);
+        }
+
+        .hamburger-icon {
+            width: 20px;
+            height: 16px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active .hamburger-icon span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active .hamburger-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .hamburger-icon span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Section fade-in animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-island > * {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .content-island h2 {
+            animation: fadeInUp 0.6s ease-out 0.1s backwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .right-sidebar {
+                display: none;
+            }
+            .main-content {
+                margin-right: 40px;
+            }
+            .content-island {
+                margin: 24px 32px;
+            }
+            .fab-container {
+                right: 40px;
+            }
+            .footer {
+                margin: 32px 32px 24px 32px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .left-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+                z-index: 100;
+            }
+
+            .left-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 0;
+            }
+
+            .content-island {
+                margin: 16px;
+                padding: 24px;
+                border-radius: 12px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .fab-container {
+                right: 20px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            .footer {
+                margin: 32px 16px 16px 16px;
+                padding: 32px 24px;
+                border-radius: 12px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 101;
+            background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(127, 82, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="preload">
+<!-- Reading Progress Indicator -->
+<div class="reading-progress" id="readingProgress"></div>
+
+<button class="hamburger" onclick="toggleSidebar()" id="hamburger">
+    <div class="hamburger-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <span>Menu</span>
+</button>
+
+<div class="container">
+    <!-- Left Sidebar Navigation -->
+    <aside class="left-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <div class="logo-text">Kite</div>
+                <span class="version-badge">v0.0.2</span>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#get-started">Get started</a></li>
+            <li><a href="#tour">Take Kite tour</a></li>
+            <li>
+                <div class="menu-item expandable expanded">Kite overview</div>
+                <ul class="nested show">
+                    <li><a href="#overview">Overview</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="menu-item expandable">What's new in Kite</div>
+            </li>
+            <li>
+                <div class="menu-item expandable">Kite evolution and roadmap</div>
+            </li>
+            <li>
+                <div class="menu-item expandable expanded">Basics</div>
+                <ul class="nested show">
+                    <li><a href="#basic-syntax" class="active">Basic syntax</a></li>
+                    <li><a href="#idioms">Idioms</a></li>
+                    <li><a href="#coding-conventions">Coding conventions</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="menu-item expandable expanded">Concepts</div>
+                <ul class="nested show">
+                    <li>
+                        <div class="menu-item expandable expanded">Types</div>
+                        <ul class="nested show">
+                            <li>
+                                <div class="menu-item expandable expanded">Basic types</div>
+                                <ul class="nested show">
+                                    <li><a href="#overview">Overview</a></li>
+                                    <li><a href="#numbers">Numbers</a></li>
+                                    <li><a href="#unsigned">Unsigned integer types</a></li>
+                                    <li><a href="#booleans">Booleans</a></li>
+                                    <li><a href="#characters">Characters</a></li>
+                                    <li><a href="#strings">Strings</a></li>
+                                    <li><a href="#arrays">Arrays</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#type-checks">Type checks and casts</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="menu-item expandable">Control flow</div>
+            </li>
+            <li><a href="#packages">Packages and imports</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-island">
+            <div class="breadcrumb">
+                <a href="#basics">Basics</a>
+                <span class="breadcrumb-separator">/</span>
+                <span>Basic syntax</span>
+            </div>
+
+            <h1>Basic syntax</h1>
+
+            <div class="edit-info">
+                <span>Updated on August 5, 2025</span>
+            </div>
+
+            <p>
+                This is a collection of basic syntax elements with examples. At the end of every section, you'll
+                find a link to a detailed description of the related topic.
+            </p>
+
+            <div class="info-box">
+                <p>
+                    💡 You can also learn all the Kite essentials with the free Kite Core track by JetBrains Academy.
+                </p>
+            </div>
+
+            <h2 id="package-definition">Package definition and imports</h2>
+
+            <p>Package specification should be at the top of the source file:</p>
+
+            <div class="code-block-wrapper">
+                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                <div class="code-block">
+                    <code><span class="keyword">package</span> my.demo
+
+                        <span class="import">import</span> kite.text.*
+
+                        <span class="comment">// ...</span></code>
+                </div>
+            </div>
+
+            <p>
+                It is not required to match directories and packages: source files can be placed arbitrarily in
+                the file system.
+            </p>
+
+            <p><a href="#packages">See Packages →</a></p>
+
+            <div class="section-divider"></div>
+
+            <h2 id="program-entry">Program entry point</h2>
+
+            <p>An entry point of a Kite application is the <code>main</code> function:</p>
+
+            <div class="code-block-wrapper">
+                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                <div class="code-block">
+                    <code><span class="keyword">fun</span> <span class="function">main</span>() {
+                        <span class="function">println</span>(<span class="string">"Hello world!"</span>)
+                        }</code>
+                </div>
+            </div>
+
+            <p>Another form of <code>main</code> accepts a variable number of String arguments:</p>
+
+            <div class="code-block-wrapper">
+                <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                <div class="code-block">
+                    <code><span class="keyword">fun</span> <span class="function">main</span>(args: Array&lt;String&gt;) {
+                        <span class="function">println</span>(args.contentToString())
+                        }</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Documentation</h3>
+                    <ul>
+                        <li><a href="#get-started">Get Started</a></li>
+                        <li><a href="#basics">Basics</a></li>
+                        <li><a href="#concepts">Concepts</a></li>
+                        <li><a href="#api-reference">API Reference</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="https://github.com/kite" target="_blank">GitHub</a></li>
+                        <li><a href="https://discord.gg/kite" target="_blank">Discord</a></li>
+                        <li><a href="https://twitter.com/kitelang" target="_blank">Twitter</a></li>
+                        <li><a href="https://stackoverflow.com/questions/tagged/kite" target="_blank">Stack Overflow</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#tutorials">Tutorials</a></li>
+                        <li><a href="#examples">Examples</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#changelog">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>More</h3>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Kite Programming Language. Licensed under <a href="https://faircode.io/" target="_blank">Fair Code</a>. Built with ❤️ from Europe 🇪🇺.</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Right Sidebar - Table of Contents -->
+    <aside class="right-sidebar">
+        <div class="toc-island">
+            <div class="toc-header">On This Page</div>
+            <ul class="toc-menu">
+                <li><a href="#" onclick="scrollToTop(); return false;" data-level="1">Basic syntax</a></li>
+                <li><a href="#package-definition" data-level="2">Package definition and imports</a></li>
+                <li><a href="#program-entry" data-level="2">Program entry point</a></li>
+                <li><a href="#print-output" data-level="2">Print to the standard output</a></li>
+                <li><a href="#read-input" data-level="2">Read from the standard input</a></li>
+                <li><a href="#functions" data-level="2">Functions</a></li>
+                <li><a href="#variables" data-level="2">Variables</a></li>
+                <li><a href="#classes" data-level="2">Creating classes and instances</a></li>
+                <li><a href="#comments" data-level="2">Comments</a></li>
+                <li><a href="#string-templates" data-level="2">String templates</a></li>
+                <li><a href="#conditional" data-level="2">Conditional expressions</a></li>
+                <li><a href="#for-loop" data-level="2">for loop</a></li>
+                <li><a href="#while-loop" data-level="2">while loop</a></li>
+                <li><a href="#when-expression" data-level="2">when expression</a></li>
+                <li><a href="#ranges" data-level="2">Ranges</a></li>
+                <li><a href="#collections" data-level="2">Collections</a></li>
+                <li><a href="#nullable" data-level="2">Nullable values and null checks</a></li>
+                <li><a href="#type-checks" data-level="2">Type checks and automatic casts</a></li>
+            </ul>
+        </div>
+    </aside>
+</div>
+
+<!-- Floating Action Buttons -->
+<div class="fab-container">
+    <button class="fab" title="Scroll to top" onclick="scrollToTop()">↑</button>
+    <button class="fab" title="Toggle theme" onclick="toggleTheme()">🌙</button>
+</div>
+
+<script>
+    // Reading Progress Indicator
+    function updateReadingProgress() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('readingProgress').style.width = scrolled + '%';
+    }
+
+    window.addEventListener('scroll', updateReadingProgress);
+    window.addEventListener('DOMContentLoaded', updateReadingProgress);
+
+    // Remove preload class to enable transitions
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            document.body.classList.remove('preload');
+        }, 100);
+    });
+
+    // System theme detection and management
+    function detectSystemTheme() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+        return 'light';
+    }
+
+    // Listen for system theme changes
+    if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            const savedTheme = localStorage.getItem('theme');
+            // Only apply system theme if user hasn't manually set a preference
+            if (!savedTheme) {
+                const newTheme = e.matches ? 'dark' : 'light';
+                applyTheme(newTheme);
+            }
+        });
+    }
+
+    // Apply theme function
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const themeButton = document.querySelector('.fab[title="Toggle theme"]');
+        if (themeButton) {
+            themeButton.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+    }
+
+    // Dark theme toggle
+    function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
+
+    // Load saved theme on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        // Check for saved preference, otherwise use system preference
+        const savedTheme = localStorage.getItem('theme');
+        const theme = savedTheme || detectSystemTheme();
+
+        applyTheme(theme);
+    });
+
+    // Toggle expandable menu items
+    document.querySelectorAll('.expandable').forEach(item => {
+        item.addEventListener('click', function() {
+            this.classList.toggle('expanded');
+            const nested = this.nextElementSibling;
+            if (nested && nested.classList.contains('nested')) {
+                nested.classList.toggle('show');
+            }
+        });
+    });
+
+    // Mobile sidebar toggle with hamburger animation
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.left-sidebar');
+        const hamburger = document.getElementById('hamburger');
+        sidebar.classList.toggle('open');
+        hamburger.classList.toggle('active');
+    }
+
+    // Scroll to top
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Copy code function with better feedback and bug fix
+    let copyTimeout = null;
+
+    function copyCode(button) {
+        // Prevent multiple clicks while "Copied!" is showing
+        if (button.classList.contains('copying')) {
+            return;
+        }
+
+        const codeBlock = button.nextElementSibling;
+        const code = codeBlock.textContent;
+
+        navigator.clipboard.writeText(code).then(() => {
+            // Clear any existing timeout
+            if (copyTimeout) {
+                clearTimeout(copyTimeout);
+            }
+
+            // Store original text if not already stored
+            if (!button.dataset.originalText) {
+                button.dataset.originalText = button.textContent;
+            }
+
+            // Mark as copying to prevent multiple clicks
+            button.classList.add('copying');
+            button.textContent = 'Copied!';
+            button.style.background = '#10B981';
+
+            copyTimeout = setTimeout(() => {
+                button.textContent = button.dataset.originalText;
+                button.style.background = '';
+                button.classList.remove('copying');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            button.textContent = 'Failed';
+            setTimeout(() => {
+                button.textContent = button.dataset.originalText || 'Copy';
+            }, 2000);
+        });
+    }
+
+    // Highlight active TOC item on scroll
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                document.querySelectorAll('.toc-menu a').forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                if (id) {
+                    const activeLink = document.querySelector(`.toc-menu a[href="#${id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Observe all h2 sections
+    document.querySelectorAll('h2[id]').forEach(heading => {
+        observer.observe(heading);
+    });
+
+    // Handle scroll to top for "Basic syntax" link
+    window.addEventListener('scroll', () => {
+        if (window.scrollY < 100) {
+            document.querySelectorAll('.toc-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            const firstLink = document.querySelector('.toc-menu a[href="#"]');
+            if (firstLink) {
+                firstLink.classList.add('active');
+            }
+        }
+    });
+
+    // Set first item as active initially
+    window.addEventListener('DOMContentLoaded', () => {
+        const firstLink = document.querySelector('.toc-menu a[href="#"]');
+        if (firstLink && window.scrollY < 100) {
+            firstLink.classList.add('active');
+        }
+    });
+</script>
+</body>
+</html>
