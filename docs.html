@@ -13,44 +13,45 @@
 
         :root {
             --bg-primary: #FFFFFF;
-            --bg-secondary: rgba(255, 255, 255, 0.8);
-            --bg-tertiary: rgba(255, 255, 255, 0.6);
-            --text-primary: #1A1A1A;
-            --text-secondary: #444;
-            --text-muted: #666;
-            --text-light: #888;
-            --primary-color: #7F52FF;
-            --primary-dark: #5C3FBF;
-            --primary-light: #A78BFA;
-            --border-color: rgba(0, 0, 0, 0.08);
-            --border-color-strong: rgba(0, 0, 0, 0.12);
-            --code-bg: #F8F9FA;
-            --hover-bg: rgba(0, 0, 0, 0.04);
-            --active-bg: rgba(127, 82, 255, 0.08);
-            --shadow: rgba(0, 0, 0, 0.03);
-            --shadow-strong: rgba(0, 0, 0, 0.08);
-            --info-bg: rgba(91, 180, 255, 0.05);
+            --bg-secondary: #F5F5F5;
+            --bg-tertiary: #E0E0E0;
+            --text-primary: #000000;
+            --text-secondary: #000000;
+            --text-muted: #333333;
+            --text-light: #666666;
+            --primary-color: #A855F7;
+            --primary-dark: #9333EA;
+            --primary-light: #C084FC;
+            --border-color: #000000;
+            --border-color-strong: #000000;
+            --code-bg: #F5F5F5;
+            --code-text: #000000;
+            --hover-bg: #FFFF00;
+            --active-bg: #A855F7;
+            --shadow: transparent;
+            --shadow-strong: transparent;
+            --info-bg: #FFF9E6;
         }
 
         [data-theme="dark"] {
-            --bg-primary: #1A1A1A;
-            --bg-secondary: rgba(30, 30, 30, 0.95);
-            --bg-tertiary: rgba(30, 30, 30, 0.8);
+            --bg-primary: #000000;
+            --bg-secondary: #1A1A1A;
+            --bg-tertiary: #333333;
             --text-primary: #FFFFFF;
-            --text-secondary: #CCCCCC;
-            --text-muted: #999;
-            --text-light: #777;
-            --primary-color: #A78BFA;
-            --primary-dark: #7F52FF;
-            --primary-light: #C4B5FD;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --border-color-strong: rgba(255, 255, 255, 0.15);
-            --code-bg: #242424;
-            --hover-bg: rgba(255, 255, 255, 0.05);
-            --active-bg: rgba(127, 82, 255, 0.15);
-            --shadow: rgba(0, 0, 0, 0.3);
-            --shadow-strong: rgba(0, 0, 0, 0.2);
-            --info-bg: rgba(91, 180, 255, 0.1);
+            --text-secondary: #FFFFFF;
+            --text-muted: #CCCCCC;
+            --text-light: #999999;
+            --primary-color: #A855F7;
+            --primary-dark: #9333EA;
+            --primary-light: #C084FC;
+            --border-color: #FFFFFF;
+            --border-color-strong: #FFFFFF;
+            --code-bg: #1A1A1A;
+            --hover-bg: #A855F7;
+            --active-bg: #A855F7;
+            --shadow: transparent;
+            --shadow-strong: transparent;
+            --info-bg: #FFF9E6;
         }
 
         * {
@@ -60,22 +61,23 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.7;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            scroll-behavior: smooth;
+            line-height: 1.6;
+            transition: none;
+            scroll-behavior: auto;
             position: relative;
             font-size: 16px;
+            font-weight: 400;
         }
 
         [data-theme="dark"] body {
-            background: #0A0A0A;
+            background: var(--bg-primary);
         }
 
         html {
-            scroll-behavior: smooth;
+            scroll-behavior: auto;
         }
 
         /* Main Layout Container */
@@ -84,25 +86,23 @@
             min-height: 100vh;
         }
 
-        /* Left Sidebar with glassmorphism effect */
+        /* Left Sidebar - Brutalist */
         .left-sidebar {
             width: 280px;
-            background: #FFFFFF;
-            border-right: 1px solid #E5E7EB;
+            background: var(--bg-primary);
+            border-right: 2px solid var(--border-color);
             overflow-y: auto;
             position: fixed;
             left: 0;
             top: 0;
             bottom: 0;
             padding: 24px 0;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.04);
-            transition: background-color 0.3s ease;
+            transition: none;
         }
 
         [data-theme="dark"] .left-sidebar {
-            background: #1A1A1A;
-            border-color: #2A2A2A;
-            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+            background: var(--bg-primary);
+            border-color: var(--border-color);
         }
 
         /* Custom scrollbar */
@@ -111,21 +111,21 @@
         }
 
         .left-sidebar::-webkit-scrollbar-track {
-            background: transparent;
+            background: var(--bg-secondary);
         }
 
         .left-sidebar::-webkit-scrollbar-thumb {
-            background: rgba(127, 82, 255, 0.3);
-            border-radius: 3px;
+            background: var(--primary-color);
+            border-radius: 0;
         }
 
         .left-sidebar::-webkit-scrollbar-thumb:hover {
-            background: rgba(127, 82, 255, 0.5);
+            background: var(--primary-dark);
         }
 
         .sidebar-header {
             padding: 0 20px 20px 20px;
-            border-bottom: 2px solid rgba(127, 82, 255, 0.1);
+            border-bottom: 2px solid var(--border-color);
             margin-bottom: 20px;
             display: flex;
             justify-content: center;
@@ -140,23 +140,23 @@
         }
 
         .logo-text {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .version-badge {
             display: inline-block;
-            background: rgba(127, 82, 255, 0.1);
-            color: var(--primary-color);
-            font-size: 11px;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            background: var(--primary-color);
+            color: var(--bg-primary);
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 0;
+            font-weight: 900;
+            letter-spacing: 1px;
+            border: 2px solid var(--border-color);
         }
 
         .sidebar-menu {
@@ -179,12 +179,18 @@
             position: relative;
             border-radius: 8px;
             margin: 2px 12px;
+            box-shadow: none;
         }
 
-        .sidebar-menu a:hover,
+        .sidebar-menu a:hover {
+            background: rgba(127, 82, 255, 0.08);
+            color: var(--primary-color);
+        }
+
         .sidebar-menu .menu-item:hover {
             background: rgba(127, 82, 255, 0.08);
             color: var(--primary-color);
+            box-shadow: none;
         }
 
         .sidebar-menu a.active {
@@ -196,6 +202,7 @@
         .sidebar-menu .expandable {
             cursor: pointer;
             user-select: none;
+            box-shadow: none !important;
         }
 
         .sidebar-menu .expandable::after {
@@ -236,12 +243,22 @@
         .sidebar-menu .nested li a {
             padding-left: 32px;
             font-size: 13px;
+            box-shadow: none !important;
+        }
+
+        .sidebar-menu .nested li a:hover {
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5) !important;
         }
 
         .sidebar-menu .nested .nested li a {
             padding-left: 48px;
             font-size: 13px;
             font-weight: 400;
+            box-shadow: none !important;
+        }
+
+        .sidebar-menu .nested .nested li a:hover {
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5) !important;
         }
 
         /* Page visibility system */
@@ -281,8 +298,8 @@
             border-radius: 16px;
             padding: 48px 56px;
             margin: 24px 32px;
-            border: 1px solid #E5E7EB;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--border-color);
+            box-shadow: none;
             transition: all 0.3s ease;
             max-width: 100%;
             box-sizing: border-box;
@@ -377,7 +394,7 @@
             color: var(--primary-color);
             padding: 3px 8px;
             border-radius: 6px;
-            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-family: 'Roboto Mono', 'Consolas', monospace;
             font-size: 0.9em;
             font-weight: 500;
             letter-spacing: 0;
@@ -397,22 +414,9 @@
 
         /* Section dividers */
         .section-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, var(--border-color) 50%, transparent 100%);
+            height: 2px;
+            background: #666666;
             margin: 48px 0;
-            position: relative;
-        }
-
-        .section-divider::after {
-            content: '•';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--bg-primary);
-            color: var(--primary-color);
-            padding: 0 12px;
-            font-size: 20px;
         }
 
         /* Improved link styling */
@@ -459,12 +463,13 @@
         .footer {
             background: #FFFFFF;
             border-radius: 16px;
-            border: 1px solid #E5E7EB;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--border-color);
+            box-shadow: none;
             padding: 48px;
             margin: 32px 32px 24px 32px;
             position: relative;
             transition: all 0.3s ease;
+            font-family: 'Roboto Mono', 'Consolas', monospace;
         }
 
         [data-theme="dark"] .footer {
@@ -473,7 +478,7 @@
         }
 
         .footer:hover {
-            box-shadow: 0 12px 60px var(--shadow-strong);
+            box-shadow: none;
         }
 
         .footer-content {
@@ -539,8 +544,12 @@
         }
 
         @keyframes skeleton-loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
         }
 
         .skeleton-header {
@@ -591,7 +600,7 @@
         /* Enhanced Code Blocks - Island Cards */
         .code-block {
             background: var(--code-bg);
-            border: 1px solid var(--border-color-strong);
+            border: none;
             border-radius: 16px;
             padding: 30px;
             margin: 30px 0;
@@ -604,38 +613,62 @@
         .code-block:hover {
             border-color: var(--primary-light);
             box-shadow: 0 10px 40px var(--shadow-strong);
-            transform: translateY(-1px);
+            transform: none;
         }
 
         .code-block code {
-            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-family: 'Roboto Mono', 'Consolas', monospace;
             font-size: 14px;
             line-height: 1.8;
-            color: var(--text-primary);
+            color: var(--code-text);
+        }
+
+        [data-theme="dark"] .code-block code {
+            color: #FFFFFF;
         }
 
         .keyword {
-            color: var(--primary-color);
+            color: #7C3AED;
             font-weight: 700;
         }
 
+        [data-theme="dark"] .keyword {
+            color: #C084FC;
+        }
+
         .import {
-            color: #5BB4FF;
+            color: #0284C7;
             font-weight: 600;
+        }
+
+        [data-theme="dark"] .import {
+            color: #5BB4FF;
         }
 
         .string {
-            color: #0FA676;
+            color: #059669;
+        }
+
+        [data-theme="dark"] .string {
+            color: #34D399;
         }
 
         .comment {
-            color: #999;
+            color: #6B7280;
             font-style: italic;
         }
 
+        [data-theme="dark"] .comment {
+            color: #9CA3AF;
+        }
+
         .function {
-            color: #00627A;
+            color: #0369A1;
             font-weight: 600;
+        }
+
+        [data-theme="dark"] .function {
+            color: #60A5FA;
         }
 
         /* Copy button for code blocks */
@@ -648,17 +681,17 @@
             top: 20px;
             right: 20px;
             background: var(--primary-color);
-            border: none;
+            border: 2px solid var(--border-color);
             color: white;
             padding: 8px 16px;
-            border-radius: 8px;
+            border-radius: 4px;
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 900;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: box-shadow 0.2s ease;
             opacity: 0;
             z-index: 10;
-            box-shadow: 0 2px 10px rgba(217, 70, 239, 0.3);
+            box-shadow: none;
         }
 
         .code-block-wrapper:hover .copy-button {
@@ -667,11 +700,11 @@
 
         .copy-button:hover {
             background: var(--primary-dark);
-            box-shadow: 0 4px 15px rgba(217, 70, 239, 0.4);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);
         }
 
         .copy-button:active {
-            transform: scale(0.95);
+            transform: none;
         }
 
         /* Right Sidebar - Enhanced TOC */
@@ -694,8 +727,8 @@
             background-color: #FFFFFF;
             border-radius: 16px;
             padding: 24px;
-            border: 1px solid #E5E7EB;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--border-color);
+            box-shadow: none;
             position: sticky;
             top: 24px;
         }
@@ -781,22 +814,24 @@
         .fab {
             width: 50px;
             height: 50px;
-            background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
+            background: var(--primary-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: var(--bg-primary);
             font-size: 20px;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(127, 82, 255, 0.4);
-            transition: all 0.3s ease;
-            border: none;
+            box-shadow: none;
+            transition: box-shadow 0.2s ease;
+            border: 2px solid var(--border-color);
+            font-weight: 900;
         }
 
         .fab:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(127, 82, 255, 0.5);
+            background: var(--primary-dark);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);
+            transform: none;
         }
 
         /* Info boxes - Island Cards */
@@ -806,14 +841,14 @@
             border-radius: 12px;
             padding: 24px 28px;
             margin: 30px 0;
-            box-shadow: 0 6px 25px rgba(91, 180, 255, 0.1);
-            border: 1px solid rgba(91, 180, 255, 0.2);
-            transition: all 0.3s ease;
+            box-shadow: none;
+            border: none;
+            transition: none;
         }
 
         .info-box:hover {
-            box-shadow: 0 8px 35px rgba(91, 180, 255, 0.15);
-            transform: translateY(-1px);
+            box-shadow: none;
+            transform: none;
         }
 
         .info-box p {
@@ -908,15 +943,19 @@
             .right-sidebar {
                 display: none !important;
             }
+
             .main-content {
                 margin-right: 40px !important;
             }
+
             .content-island {
                 margin: 24px 32px;
             }
+
             .fab-container {
                 right: 40px;
             }
+
             .footer {
                 margin: 32px 32px 24px 32px;
             }
@@ -1057,9 +1096,6 @@
         <ul class="sidebar-menu">
             <li><a href="#" onclick="showPage('page-home'); return false;" id="nav-home" class="active">Home</a></li>
             <li><a href="#" onclick="showPage('page-overview'); return false;" id="nav-overview">Overview</a></li>
-            <li>
-                <div class="menu-item expandable">What's new in Kite</div>
-            </li>
             <li><a href="#" onclick="showPage('page-basics'); return false;" id="nav-basics">Basics</a></li>
             <li>
                 <div class="menu-item expandable expanded">Concepts</div>
@@ -1103,11 +1139,14 @@
                 </div>
 
                 <p>
-                    Kite is a modern IaC language designed for the multi-cloud era. Write your infrastructure once using clean, declarative syntax — then provision seamlessly across AWS, Google Cloud, Azure, and more.
+                    Kite is a modern IaC language designed for the multi-cloud era. Write your infrastructure once using
+                    clean, declarative syntax — then provision seamlessly across AWS, Google Cloud, Azure, and more.
                 </p>
 
                 <p>
-                    Built from the ground up with simplicity and power in mind, Kite brings a fresh approach to infrastructure management. Every feature is thoughtfully designed to make your workflow faster, safer, and more intuitive.
+                    Built from the ground up with simplicity and power in mind, Kite brings a fresh approach to
+                    infrastructure management. Every feature is thoughtfully designed to make your workflow faster,
+                    safer, and more intuitive.
                 </p>
 
                 <ul style="list-style: none; padding-left: 0; margin: 24px 0;">
@@ -1125,56 +1164,66 @@
                     </li>
                     <li style="margin-bottom: 12px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>Secure and reliable.</strong> State management in a proper database ensures complete traceability.
+                        <strong>Secure and reliable.</strong> State management in a proper database ensures complete
+                        traceability.
                     </li>
                 </ul>
 
                 <p>
-                    Kite empowers teams to manage infrastructure with confidence and clarity, eliminating complexity without sacrificing control.
+                    Kite empowers teams to manage infrastructure with confidence and clarity, eliminating complexity
+                    without sacrificing control.
                 </p>
 
                 <!-- Feature Cards -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px;">
                     <!-- Get Started Card -->
-                    <div class="feature-card" style="background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px;">
+                    <div class="feature-card"
+                         style="background: #FAF5FF; border: none; border-radius: 16px; padding: 32px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                             <div style="font-size: 32px;">🗺️</div>
                             <h3 style="margin: 0; font-size: 24px; font-weight: 600;">Get started</h3>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 12px;">
-                            <a href="#overview" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                            <a href="#overview"
+                               style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
                                 <span style="color: #F59E0B;">✨</span> Overview
                             </a>
-                            <a href="#install" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                            <a href="#install"
+                               style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
                                 <span style="color: #F59E0B;">🔧</span> Install
                             </a>
-                            <a href="#resources" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                            <a href="#resources"
+                               style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
                                 <span style="color: #F59E0B;">☀️</span> Resources
                             </a>
                         </div>
                     </div>
 
                     <!-- Develop Providers Card -->
-                    <div class="feature-card" style="background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px;">
+                    <div class="feature-card"
+                         style="background: #FAF5FF; border: none; border-radius: 16px; padding: 32px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                             <div style="font-size: 32px;">👷</div>
                             <h3 style="margin: 0; font-size: 24px; font-weight: 600;">Develop providers</h3>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 12px;">
-                            <a href="#develop-plugins" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                            <a href="#develop-plugins"
+                               style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
                                 <span style="color: #5BB4FF;">🎯</span> Develop provider plugins
                             </a>
                         </div>
                     </div>
 
                     <!-- Reference Card -->
-                    <div class="feature-card" style="background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px;">
+                    <div class="feature-card"
+                         style="background: #FAF5FF; border: none; border-radius: 16px; padding: 32px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                             <div style="font-size: 32px;">📚</div>
                             <h3 style="margin: 0; font-size: 24px; font-weight: 600;">Reference</h3>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 12px;">
-                            <a href="#reference" style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
+                            <a href="#reference"
+                               style="display: flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-size: 15px; transition: color 0.2s;">
                                 <span style="color: #10B981;">📚</span> Reference
                             </a>
                         </div>
@@ -1201,15 +1250,20 @@
                 <h2 id="what-is-kite">What is Kite?</h2>
 
                 <p>
-                    Kite is a declarative IaC language built to provision cloud infrastructure with precision and consistency.
+                    Kite is a declarative IaC language built to provision cloud infrastructure with precision and
+                    consistency.
                 </p>
 
                 <p>
-                    Define your resources once. Provision them anywhere. A single Kite configuration describes exactly what you need, then scales effortlessly across your entire development lifecycle, from staging to production.
+                    Define your resources once. Provision them anywhere. A single Kite configuration describes exactly
+                    what you need, then scales effortlessly across your entire development lifecycle, from staging to
+                    production.
                 </p>
 
                 <p>
-                    Clean syntax meets powerful type safety. Catch configuration errors before they reach the cloud. Share infrastructure modules across teams. The result? Infrastructure that's not just automated. It's remarkably simple to understand and maintain.
+                    Clean syntax meets powerful type safety. Catch configuration errors before they reach the cloud.
+                    Share infrastructure modules across teams. The result? Infrastructure that's not just automated.
+                    It's remarkably simple to understand and maintain.
                 </p>
 
                 <h2 id="why-kite" style="margin-top: 64px; margin-bottom: 24px;">Why Kite?</h2>
@@ -1221,23 +1275,28 @@
                     </li>
                     <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>Designed to feel familiar.</strong> Kite's syntax draws from the best of Terraform, Bicep, and modern languages like TypeScript, C# and Java.
+                        <strong>Designed to feel familiar.</strong> Kite's syntax draws from the best of Terraform,
+                        Bicep, and modern languages like TypeScript, C# and Java.
                     </li>
                     <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>Refactor fearlessly.</strong> Rename resources in code without ever losing the real ones in the cloud.
+                        <strong>Refactor fearlessly.</strong> Rename resources in code without ever losing the real ones
+                        in the cloud.
                     </li>
                     <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>Import with ease.</strong> Bring your existing cloud infrastructure into Kite. No rewrites, no headaches, just instant control.
+                        <strong>Import with ease.</strong> Bring your existing cloud infrastructure into Kite. No
+                        rewrites, no headaches, just instant control.
                     </li>
                     <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>Build without limits.</strong> Extend resources effortlessly with annotations or mixins, and compose infrastructure the way you imagine it.
+                        <strong>Build without limits.</strong> Extend resources effortlessly with annotations or mixins,
+                        and compose infrastructure the way you imagine it.
                     </li>
                     <li style="margin-bottom: 16px; padding-left: 24px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--text-primary); font-size: 20px; line-height: 1;">•</span>
-                        <strong>State that scales with you.</strong> Just a proper database managing everything automatically. Safe, fast, secure, and recoverable when things go wrong.
+                        <strong>State that scales with you.</strong> Just a proper database managing everything
+                        automatically. Safe, fast, secure, and recoverable when things go wrong.
                     </li>
                 </ul>
             </div>
@@ -1260,10 +1319,13 @@
 
                 <h2 id="basic-syntax">Basic syntax</h2>
                 <p>
-                    Learn the fundamental syntax of Kite, including package definitions, functions, variables, and control flow.
+                    Learn the fundamental syntax of Kite, including package definitions, functions, variables, and
+                    control flow.
                 </p>
                 <p>
-                    <a href="#" onclick="showPage('page-basic-syntax'); return false;" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">View Basic syntax →</a>
+                    <a href="#" onclick="showPage('page-basic-syntax'); return false;"
+                       style="color: var(--primary-color); text-decoration: none; font-weight: 500;">View Basic syntax
+                        →</a>
                 </p>
 
                 <h2 id="idioms" style="margin-top: 48px;">Idioms</h2>
@@ -1302,7 +1364,7 @@
 
                 <div class="info-box">
                     <p>
-                        💡 You can also learn all the Kite essentials with the free Kite Core track by JetBrains Academy.
+                        💡 You can also learn all the Kite essentials with the free Kite Core track by
                     </p>
                 </div>
 
@@ -1348,7 +1410,8 @@
                 <div class="code-block-wrapper">
                     <button class="copy-button" onclick="copyCode(this)">Copy</button>
                     <div class="code-block">
-                        <code><span class="keyword">fun</span> <span class="function">main</span>(args: Array&lt;String&gt;) {
+                        <code><span class="keyword">fun</span> <span class="function">main</span>(args: Array&lt;String&gt;)
+                            {
                             <span class="function">println</span>(args.contentToString())
                             }</code>
                     </div>
@@ -1375,7 +1438,8 @@
                         <li><a href="https://github.com/kite" target="_blank">GitHub</a></li>
                         <li><a href="https://discord.gg/kite" target="_blank">Discord</a></li>
                         <li><a href="https://twitter.com/kitelang" target="_blank">Twitter</a></li>
-                        <li><a href="https://stackoverflow.com/questions/tagged/kite" target="_blank">Stack Overflow</a></li>
+                        <li><a href="https://stackoverflow.com/questions/tagged/kite" target="_blank">Stack Overflow</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -1398,7 +1462,8 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2025 Kite Programming Language. Licensed under <a href="https://faircode.io/" target="_blank">Fair Code</a>. Built with ❤️ from Europe 🇪🇺.</p>
+                <p>© 2025 Kite Programming Language. Licensed under <a href="https://faircode.io/" target="_blank">Fair
+                    Code</a>. Built with ❤️ from Europe 🇪🇺.</p>
             </div>
         </footer>
     </main>
@@ -1506,7 +1571,7 @@
 
     // Toggle expandable menu items
     document.querySelectorAll('.expandable').forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function () {
             this.classList.toggle('expanded');
             const nested = this.nextElementSibling;
             if (nested && nested.classList.contains('nested')) {
@@ -1525,7 +1590,7 @@
 
     // Scroll to top
     function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     // Copy code function with better feedback and bug fix
@@ -1718,7 +1783,7 @@
         }
 
         // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
 </script>

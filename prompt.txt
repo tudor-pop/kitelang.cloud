@@ -1,0 +1,16 @@
+help me generate detailed style guide from docs.html.
+You should include the following:
+- overview
+- color palette
+- typography
+- spacing system
+- component styles
+- shadows and elevations
+- animations and transitions
+- border radius
+- grid
+- layout
+- media queries
+- etc.
+
+In a word, a detailed analysis and description of the project style system, and don't miss any important details.
