@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './docs.css';
 import TableOfContents from './TableOfContents';
 import Sidebar from './Sidebar';
-import Footer from './Footer';
+import MainContent from './MainContent';
 
 export default function DocsPage() {
     const [activePage, setActivePage] = useState('page-home');
