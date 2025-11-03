@@ -12,9 +12,9 @@
         }
 
         :root {
-            --bg-primary: #FFFFFF;
-            --bg-secondary: #F5F5F5;
-            --bg-tertiary: #E0E0E0;
+            --bg-primary: #FFF1CB;
+            --bg-secondary: #FFE8A3;
+            --bg-tertiary: #FFD96A;
             --text-primary: #000000;
             --text-secondary: #000000;
             --text-muted: #333333;
@@ -22,15 +22,18 @@
             --primary-color: #A855F7;
             --primary-dark: #9333EA;
             --primary-light: #C084FC;
+            --accent-blue: #7DD3FC;
+            --accent-yellow: #FDE047;
+            --accent-teal: #2DD4BF;
             --border-color: #000000;
             --border-color-strong: #000000;
-            --code-bg: #F5F5F5;
+            --code-bg: #FFFFFF;
             --code-text: #000000;
-            --hover-bg: #FFFF00;
+            --hover-bg: #FDE047;
             --active-bg: #A855F7;
-            --shadow: transparent;
-            --shadow-strong: transparent;
-            --info-bg: #FFF9E6;
+            --shadow: #000000;
+            --shadow-strong: #000000;
+            --info-bg: #FEF9C3;
         }
 
         [data-theme="dark"] {
@@ -157,6 +160,13 @@
             font-weight: 900;
             letter-spacing: 1px;
             border: 2px solid var(--border-color);
+            box-shadow: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .version-badge:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0 var(--shadow);
         }
 
         .sidebar-menu {
@@ -272,6 +282,17 @@
         }
 
         /* Feature cards */
+        .feature-card {
+            border: 2px solid var(--border-color) !important;
+            box-shadow: none !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .feature-card:hover {
+            transform: translate(-6px, -6px) scale(1.02);
+            box-shadow: 6px 6px 0 var(--shadow) !important;
+        }
+
         .feature-card a {
             cursor: pointer;
         }
@@ -301,7 +322,7 @@
             margin: 24px 32px;
             border: 2px solid var(--border-color);
             box-shadow: none;
-            transition: all 0.3s ease;
+            transition: none;
             max-width: 100%;
             box-sizing: border-box;
             overflow-x: auto;
@@ -310,11 +331,7 @@
         [data-theme="dark"] .content-island {
             background: #1A1A1A;
             border-color: #2A2A2A;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .content-island:hover {
-            box-shadow: 0 12px 60px var(--shadow-strong);
+            box-shadow: none;
         }
 
         .breadcrumb {
@@ -475,16 +492,13 @@
             padding: 48px 48px 24px 48px;
             margin: 32px 32px 24px 32px;
             position: relative;
-            transition: all 0.3s ease;
+            transition: none;
             font-family: 'Roboto Mono', 'Consolas', monospace;
         }
 
         [data-theme="dark"] .footer {
             background: #1A1A1A;
             border-color: #2A2A2A;
-        }
-
-        .footer:hover {
             box-shadow: none;
         }
 
@@ -607,20 +621,19 @@
         /* Enhanced Code Blocks - Island Cards */
         .code-block {
             background: var(--code-bg);
-            border: none;
+            border: 2px solid var(--border-color);
             border-radius: 16px;
             padding: 30px;
             margin: 30px 0;
             overflow-x: auto;
             position: relative;
-            box-shadow: 0 8px 30px var(--shadow-strong);
-            transition: all 0.3s ease;
+            box-shadow: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .code-block:hover {
-            border-color: var(--primary-light);
-            box-shadow: 0 10px 40px var(--shadow-strong);
-            transform: none;
+            transform: translate(-6px, -6px);
+            box-shadow: 6px 6px 0 var(--shadow);
         }
 
         .code-block code {
@@ -738,6 +751,12 @@
             box-shadow: none;
             position: sticky;
             top: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toc-island:hover {
+            transform: translate(-6px, -6px);
+            box-shadow: 6px 6px 0 var(--shadow);
         }
 
         [data-theme="dark"] .toc-island {
@@ -844,18 +863,19 @@
         /* Info boxes - Island Cards */
         .info-box {
             background: var(--info-bg);
-            border-left: 4px solid #5BB4FF;
             border-radius: 12px;
             padding: 24px 28px;
             margin: 30px 0;
             box-shadow: none;
-            border: none;
-            transition: none;
+            border: 2px solid var(--border-color);
+            border-left-width: 6px;
+            border-left-color: var(--accent-blue);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .info-box:hover {
-            box-shadow: none;
-            transform: none;
+            transform: translate(-6px, -6px);
+            box-shadow: 6px 6px 0 var(--shadow);
         }
 
         .info-box p {
@@ -1180,6 +1200,13 @@
                     Kite empowers teams to manage infrastructure with confidence and clarity, eliminating complexity
                     without sacrificing control.
                 </p>
+
+                <!-- Accent Section -->
+                <div style="background: var(--accent-yellow); border: 2px solid var(--border-color); border-radius: 16px; padding: 32px; margin: 48px 0; box-shadow: -8px 8px 0 var(--shadow); transform: rotate(-1deg);">
+                    <p style="margin: 0; font-size: 20px; font-weight: 700; text-align: center; color: #000;">
+                        Ready to transform your infrastructure workflow? Explore Kite today!
+                    </p>
+                </div>
 
                 <!-- Feature Cards -->
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px;">

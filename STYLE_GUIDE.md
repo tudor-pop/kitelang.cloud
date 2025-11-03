@@ -2,13 +2,15 @@
 
 ## Overview
 
-The Kite documentation uses a **brutalist design system** featuring bold typography, high contrast, hard edges, and minimal decorative effects. The design emphasizes clarity, directness, and functional aesthetics with Material Design 3 purple accents. The styling is built entirely with vanilla CSS using CSS custom properties for theming.
+The Kite documentation uses a **MotherDuck-inspired playful brutalist design system** featuring bold typography, high contrast, hard drop shadows, and playful hover animations. The design emphasizes clarity, fun, and functional aesthetics with Material Design 3 purple accents on a warm pink background. The styling is built entirely with vanilla CSS using CSS custom properties for theming.
 
 **Design Philosophy:**
-- **Brutalism first**: Bold, uncompromising, high-contrast design
-- **Island-based layout**: Content separated into distinct bordered sections
-- **No shadows or elevations**: Flat design with 2px solid borders
-- **Hard edges**: Minimal border radius, rectangular forms
+- **Playful brutalism**: Bold design with whimsical hover effects and hard shadows
+- **Island-based layout**: Content separated into distinct bordered sections that lift on hover
+- **Hard drop shadows**: -6px 6px 0 and -12px 12px 0 shadows (no blur)
+- **Warm color palette**: Warm pink background (#FFF5F7) that complements purple
+- **Playful animations**: Transform lifts, scales, and rotations on hover
+- **Colorful accents**: Yellow (#FDE047), Sky Blue (#7DD3FC), and Teal (#2DD4BF)
 - **Bold typography**: Heavy font weights (900 for emphasis)
 - **Roboto font family**: Modern, geometric typeface
 - **Fully responsive**: Mobile-first with hamburger menu
@@ -21,9 +23,9 @@ The Kite documentation uses a **brutalist design system** featuring bold typogra
 
 ### Light Theme
 ```css
---bg-primary: #FFFFFF           /* Pure white background */
---bg-secondary: #F5F5F5         /* Light gray surfaces */
---bg-tertiary: #E0E0E0          /* Darker gray backgrounds */
+--bg-primary: #FFF1CB           /* Warm yellowish background (complements purple) */
+--bg-secondary: #FFE8A3         /* Light yellow surfaces */
+--bg-tertiary: #FFD96A          /* Darker yellow backgrounds */
 
 --text-primary: #000000         /* Pure black text */
 --text-secondary: #000000       /* Black secondary text */
@@ -34,18 +36,22 @@ The Kite documentation uses a **brutalist design system** featuring bold typogra
 --primary-dark: #9333EA         /* Darker purple for hover states */
 --primary-light: #C084FC        /* Lighter purple for accents */
 
+--accent-blue: #7DD3FC          /* Sky blue accent */
+--accent-yellow: #FDE047        /* Warm yellow accent */
+--accent-teal: #2DD4BF          /* Turquoise accent */
+
 --border-color: #000000         /* Black borders (brutalist) */
 --border-color-strong: #000000  /* Black strong borders */
 
---code-bg: #F5F5F5              /* Light gray code background */
+--code-bg: #FFFFFF              /* White code background */
 --code-text: #000000            /* Black code text */
---hover-bg: #FFFF00             /* Yellow hover background */
+--hover-bg: #FDE047             /* Yellow hover background */
 --active-bg: #A855F7            /* Purple active state */
 
---shadow: transparent           /* No shadows in brutalism */
---shadow-strong: transparent    /* No strong shadows */
+--shadow: #000000               /* Black hard shadows */
+--shadow-strong: #000000        /* Black strong shadows */
 
---info-bg: #FFF9E6              /* Warm yellow info background */
+--info-bg: #FEF9C3              /* Light yellow info background */
 ```
 
 ### Dark Theme
