@@ -161,12 +161,7 @@
             letter-spacing: 1px;
             border: 2px solid var(--border-color);
             box-shadow: none;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .version-badge:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 4px 4px 0 var(--shadow);
+            pointer-events: none;
         }
 
         .sidebar-menu {
@@ -867,15 +862,7 @@
             padding: 24px 28px;
             margin: 30px 0;
             box-shadow: none;
-            border: 2px solid var(--border-color);
-            border-left-width: 6px;
-            border-left-color: var(--accent-blue);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .info-box:hover {
-            transform: translate(-6px, -6px);
-            box-shadow: 6px 6px 0 var(--shadow);
+            border: none;
         }
 
         .info-box p {
@@ -1202,7 +1189,7 @@
                 </p>
 
                 <!-- Accent Section -->
-                <div style="background: var(--accent-yellow); border: 2px solid var(--border-color); border-radius: 16px; padding: 32px; margin: 48px 0; box-shadow: -8px 8px 0 var(--shadow); transform: rotate(-1deg);">
+                <div style="background: #FBFBFB; border: 2px solid var(--border-color); border-radius: 16px; padding: 32px; margin: 48px 0; box-shadow: -8px 8px 0 var(--shadow);">
                     <p style="margin: 0; font-size: 20px; font-weight: 700; text-align: center; color: #000;">
                         Ready to transform your infrastructure workflow? Explore Kite today!
                     </p>
