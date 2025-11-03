@@ -21,9 +21,23 @@ export default function DocsPage() {
     const [tocContent, setTocContent] = useState<React.ReactNode>(null);
     const [showToc, setShowToc] = useState(false);
     const [copyStatus, setCopyStatus] = useState<{ [key: string]: boolean }>({});
+    const [pageDates, setPageDates] = useState<Record<string, string>>({
+        'page-home': 'January 2025',
+        'page-overview': 'January 2025',
+        'page-basics': 'January 2025',
+        'page-basic-syntax': 'January 2025',
+    });
 
     // Refs
     const mainContentRef = useRef<HTMLElement>(null);
+
+    // Fetch page modification dates on mount
+    useEffect(() => {
+        fetch('/api/page-dates')
+            .then(res => res.json())
+            .then(dates => setPageDates(dates))
+            .catch(err => console.error('Failed to fetch page dates:', err));
+    }, []);
 
     // Detect system theme on mount
     useEffect(() => {
@@ -210,6 +224,7 @@ export default function DocsPage() {
                     copyStatus={copyStatus}
                     contentRef={mainContentRef}
                     showToc={showToc}
+                    pageDates={pageDates}
                 />
 
                 {/* Right Sidebar - Table of Contents */}
