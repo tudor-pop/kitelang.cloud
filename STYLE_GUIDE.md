@@ -2,14 +2,14 @@
 
 ## Overview
 
-The Kite documentation uses a **MotherDuck-inspired playful brutalist design system** featuring bold typography, high contrast, hard drop shadows, and playful hover animations. The design emphasizes clarity, fun, and functional aesthetics with Material Design 3 purple accents on a warm pink background. The styling is built entirely with vanilla CSS using CSS custom properties for theming.
+The Kite documentation uses a **clean brutalist design system** featuring bold typography, high contrast, and minimal animations. The design emphasizes clarity and functional aesthetics with Material Design 3 purple accents on a light slate-gray background. The styling is built entirely with vanilla CSS using CSS custom properties for theming.
 
 **Design Philosophy:**
-- **Playful brutalism**: Bold design with whimsical hover effects and hard shadows
-- **Island-based layout**: Content separated into distinct bordered sections that lift on hover
-- **Hard drop shadows**: -6px 6px 0 and -12px 12px 0 shadows (no blur)
-- **Warm color palette**: Warm pink background (#FFF5F7) that complements purple
-- **Playful animations**: Transform lifts, scales, and rotations on hover
+- **Clean brutalism**: Bold design with minimalist aesthetics and hard edges
+- **Island-based layout**: Content separated into distinct bordered white sections
+- **No soft shadows**: Flat design with only hard-edged drop shadows where needed
+- **Neutral color palette**: Light slate-gray background (#F8FAFC) with white content islands
+- **Minimal animations**: Simple transitions for essential feedback only
 - **Colorful accents**: Yellow (#FDE047), Sky Blue (#7DD3FC), and Teal (#2DD4BF)
 - **Bold typography**: Heavy font weights (900 for emphasis)
 - **Roboto font family**: Modern, geometric typeface
@@ -23,9 +23,9 @@ The Kite documentation uses a **MotherDuck-inspired playful brutalist design sys
 
 ### Light Theme
 ```css
---bg-primary: #FFF1CB           /* Warm yellowish background (complements purple) */
---bg-secondary: #FFE8A3         /* Light yellow surfaces */
---bg-tertiary: #FFD96A          /* Darker yellow backgrounds */
+--bg-primary: #F8FAFC           /* Very light blue-gray background */
+--bg-secondary: #E2E8F0         /* Light slate surfaces */
+--bg-tertiary: #CBD5E1          /* Medium slate backgrounds */
 
 --text-primary: #000000         /* Pure black text */
 --text-secondary: #000000       /* Black secondary text */
@@ -43,7 +43,7 @@ The Kite documentation uses a **MotherDuck-inspired playful brutalist design sys
 --border-color: #000000         /* Black borders (brutalist) */
 --border-color-strong: #000000  /* Black strong borders */
 
---code-bg: #FFFFFF              /* White code background */
+--code-bg: #F8FAFC              /* Very light blue-gray code background */
 --code-text: #000000            /* Black code text */
 --hover-bg: #FDE047             /* Yellow hover background */
 --active-bg: #A855F7            /* Purple active state */
@@ -850,7 +850,7 @@ All major content sections are "islands" - bordered sections with:
 7. **Changed to Roboto** → From Inter to Roboto font family
 8. **Added Roboto Mono to footer and content links** → Technical, monospace aesthetic (sidebar menu kept regular Roboto)
 9. **Simplified divider** → From gradient with bullet to simple 2px gray line
-10. **Made code blocks readable** → Light theme: #F5F5F5 bg, Dark theme: proper contrast
+10. **Made code blocks readable** → Light theme: #F8FAFC bg (same as page background), Dark theme: proper contrast
 11. **Changed primary color** → From #7F52FF to Material Design 3 #A855F7
 12. **Removed scale animations** → FAB and buttons no longer scale
 13. **Square scrollbar** → Removed border-radius from scrollbar thumb
