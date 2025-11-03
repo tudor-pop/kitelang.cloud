@@ -115,6 +115,13 @@ font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
 /* Code/Monospace - Clean monospace */
 font-family: 'Roboto Mono', 'Consolas', monospace;
 
+/* Content Links - Monospace for technical aesthetic */
+font-family: 'Roboto Mono', 'Consolas', monospace;
+font-size: 0.9em;
+
+/* Sidebar Menu Links - Regular Roboto (NOT monospace) */
+font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
 /* Footer Text - Monospace for technical aesthetic */
 font-family: 'Roboto Mono', 'Consolas', monospace;
 ```
@@ -135,7 +142,7 @@ h2 {
   font-weight: 600;
   letter-spacing: -0.5px;
   line-height: 1.3;
-  margin-top: 64px;
+  margin-top: 32px;  /* Reduced from 64px for tighter spacing */
   margin-bottom: 16px;
   padding-bottom: 16px;
   scroll-margin-top: 24px;
@@ -245,11 +252,14 @@ padding: 3px 8px;   /* Inline code */
 margin: 24px 32px;  /* Standard island margin */
 
 /* Heading Spacing */
-margin-top: 64px;   /* h2 top margin */
+margin-top: 32px;    /* h2 top margin (tighter spacing) */
 margin-bottom: 16px; /* h1, h2 bottom */
 
 /* Paragraph Spacing */
 margin-bottom: 24px;
+
+/* Edit Info Badge */
+margin-bottom: 24px; /* Reduced from 40px for tighter spacing */
 
 /* Code Blocks & Info Boxes */
 margin: 30px 0;
@@ -259,6 +269,9 @@ margin: 48px 0;  /* Section divider */
 
 /* Breadcrumbs */
 margin-bottom: 32px;
+
+/* TOC Right Sidebar */
+padding: 16px 24px 24px 8px;  /* Tighter top padding (16px instead of 24px) */
 ```
 
 ### Gaps (Flexbox/Grid)
@@ -825,17 +838,23 @@ All major content sections are "islands" - bordered sections with:
 1. **Removed all soft shadows** → Transparent shadows, hard-edged drop shadows only
 2. **Removed gradients** → Solid colors (except hamburger menu legacy)
 3. **Removed hover lifts** → `transform: none` on all elements
-4. **Added bold borders** → 2px solid borders on all islands
+4. **Added bold borders** → 2px solid borders on all islands (later reduced to 1px for FAB/copy button)
 5. **Removed borders from some elements** → Code blocks, info boxes, feature cards
 6. **Increased font weights** → 900 for emphasis (logo, badges, buttons)
 7. **Changed to Roboto** → From Inter to Roboto font family
-8. **Added Roboto Mono to footer** → Technical, monospace aesthetic
+8. **Added Roboto Mono to footer and content links** → Technical, monospace aesthetic (sidebar menu kept regular Roboto)
 9. **Simplified divider** → From gradient with bullet to simple 2px gray line
 10. **Made code blocks readable** → Light theme: #F5F5F5 bg, Dark theme: proper contrast
 11. **Changed primary color** → From #7F52FF to Material Design 3 #A855F7
 12. **Removed scale animations** → FAB and buttons no longer scale
 13. **Square scrollbar** → Removed border-radius from scrollbar thumb
 14. **Hard-edged copy button** → Matches FAB styling with 900 font-weight
+15. **Rounded copy button** → Changed border-radius from 4px to 20px for pill shape
+16. **Reduced button borders** → FAB and copy button borders from 2px to 1px for subtlety
+17. **Tighter spacing** → h2 top margin from 64px to 32px, edit-info bottom margin from 40px to 24px
+18. **Tighter TOC spacing** → Right sidebar top padding from 24px to 16px, toc-island sticky top from 24px to 8px
+19. **Monospace content links** → All content links now use Roboto Mono at 0.9em for technical aesthetic
+20. **Regular sidebar links** → Sidebar menu explicitly uses regular Roboto (not monospace)
 
 ### Design Philosophy Shift
 - **From**: Glassmorphism, soft shadows, smooth animations, rounded corners
