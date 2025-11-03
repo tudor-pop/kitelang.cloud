@@ -2,15 +2,18 @@
 
 ## Overview
 
-The Kite documentation uses a modern, clean design system featuring an "island" layout pattern with glassmorphism effects. The design emphasizes readability, smooth interactions, and excellent dark mode support. The styling is built entirely with vanilla CSS using CSS custom properties for theming.
+The Kite documentation uses a **brutalist design system** featuring bold typography, high contrast, hard edges, and minimal decorative effects. The design emphasizes clarity, directness, and functional aesthetics with Material Design 3 purple accents. The styling is built entirely with vanilla CSS using CSS custom properties for theming.
 
 **Design Philosophy:**
-- Island-based layout with elevated cards
-- Glassmorphism and modern visual effects
-- Smooth transitions and subtle animations
-- Fully responsive with mobile-first approach
-- System-aware dark mode with manual override
-- Accessibility-focused with proper semantic HTML
+- **Brutalism first**: Bold, uncompromising, high-contrast design
+- **Island-based layout**: Content separated into distinct bordered sections
+- **No shadows or elevations**: Flat design with 2px solid borders
+- **Hard edges**: Minimal border radius, rectangular forms
+- **Bold typography**: Heavy font weights (900 for emphasis)
+- **Roboto font family**: Modern, geometric typeface
+- **Fully responsive**: Mobile-first with hamburger menu
+- **System-aware dark mode**: With manual override capability
+- **Material Design 3 purple**: #A855F7 as primary accent color
 
 ---
 
@@ -18,67 +21,87 @@ The Kite documentation uses a modern, clean design system featuring an "island" 
 
 ### Light Theme
 ```css
---bg-primary: #FFFFFF           /* Main background */
---bg-secondary: rgba(255, 255, 255, 0.8)  /* Secondary surfaces */
---bg-tertiary: rgba(255, 255, 255, 0.6)   /* Tertiary backgrounds */
+--bg-primary: #FFFFFF           /* Pure white background */
+--bg-secondary: #F5F5F5         /* Light gray surfaces */
+--bg-tertiary: #E0E0E0          /* Darker gray backgrounds */
 
---text-primary: #1A1A1A         /* Primary text */
---text-secondary: #444          /* Secondary text */
---text-muted: #666              /* Muted text */
---text-light: #888              /* Light text */
+--text-primary: #000000         /* Pure black text */
+--text-secondary: #000000       /* Black secondary text */
+--text-muted: #333333           /* Dark gray muted text */
+--text-light: #666666           /* Medium gray light text */
 
---primary-color: #7F52FF        /* Primary brand purple */
---primary-dark: #5C3FBF         /* Darker purple for hover states */
---primary-light: #A78BFA        /* Lighter purple for accents */
+--primary-color: #A855F7        /* Material Design 3 purple */
+--primary-dark: #9333EA         /* Darker purple for hover states */
+--primary-light: #C084FC        /* Lighter purple for accents */
 
---border-color: rgba(0, 0, 0, 0.08)       /* Subtle borders */
---border-color-strong: rgba(0, 0, 0, 0.12) /* Stronger borders */
+--border-color: #000000         /* Black borders (brutalist) */
+--border-color-strong: #000000  /* Black strong borders */
 
---code-bg: #F8F9FA              /* Code block background */
---hover-bg: rgba(0, 0, 0, 0.04) /* Hover backgrounds */
---active-bg: rgba(127, 82, 255, 0.08)  /* Active/selected state */
+--code-bg: #F5F5F5              /* Light gray code background */
+--code-text: #000000            /* Black code text */
+--hover-bg: #FFFF00             /* Yellow hover background */
+--active-bg: #A855F7            /* Purple active state */
 
---shadow: rgba(0, 0, 0, 0.03)   /* Subtle shadows */
---shadow-strong: rgba(0, 0, 0, 0.08)   /* Pronounced shadows */
+--shadow: transparent           /* No shadows in brutalism */
+--shadow-strong: transparent    /* No strong shadows */
 
---info-bg: rgba(91, 180, 255, 0.05)    /* Info box background */
+--info-bg: #FFF9E6              /* Warm yellow info background */
 ```
 
 ### Dark Theme
 ```css
---bg-primary: #1A1A1A           /* Main dark background */
---bg-secondary: rgba(30, 30, 30, 0.95)  /* Secondary dark surfaces */
---bg-tertiary: rgba(30, 30, 30, 0.8)    /* Tertiary backgrounds */
+--bg-primary: #000000           /* Pure black background */
+--bg-secondary: #1A1A1A         /* Very dark gray surfaces */
+--bg-tertiary: #333333          /* Dark gray backgrounds */
 
---text-primary: #FFFFFF         /* Primary white text */
---text-secondary: #CCCCCC       /* Secondary lighter gray */
---text-muted: #999              /* Muted gray */
---text-light: #777              /* Light gray */
+--text-primary: #FFFFFF         /* Pure white text */
+--text-secondary: #FFFFFF       /* White secondary text */
+--text-muted: #CCCCCC           /* Light gray muted text */
+--text-light: #999999           /* Medium gray light text */
 
---primary-color: #A78BFA        /* Lighter purple for dark mode */
---primary-dark: #7F52FF         /* Reverse: darker becomes hover */
---primary-light: #C4B5FD        /* Lightest purple */
+--primary-color: #A855F7        /* Material Design 3 purple (consistent) */
+--primary-dark: #9333EA         /* Darker purple hover */
+--primary-light: #C084FC        /* Lighter purple accents */
 
---border-color: rgba(255, 255, 255, 0.1)
---border-color-strong: rgba(255, 255, 255, 0.15)
+--border-color: #FFFFFF         /* White borders for dark mode */
+--border-color-strong: #FFFFFF  /* White strong borders */
 
---code-bg: #242424
---hover-bg: rgba(255, 255, 255, 0.05)
---active-bg: rgba(127, 82, 255, 0.15)
+--code-bg: #1A1A1A              /* Very dark code background */
+--hover-bg: #A855F7             /* Purple hover in dark mode */
+--active-bg: #A855F7            /* Purple active state */
 
---shadow: rgba(0, 0, 0, 0.3)
---shadow-strong: rgba(0, 0, 0, 0.2)
+--shadow: transparent           /* No shadows */
+--shadow-strong: transparent    /* No strong shadows */
 
---info-bg: rgba(91, 180, 255, 0.1)
+--info-bg: #FFF9E6              /* Same warm yellow (high contrast) */
 ```
 
 ### Semantic Colors
-- **Info/Accent Blue**: `#5BB4FF` (used for info boxes, external links)
+- **Primary Purple**: `#A855F7` (Material Design 3 purple, used for all interactive elements)
+- **Info/Accent Blue**: `#5BB4FF` (used for info boxes, reading progress)
 - **Success Green**: `#10B981` (used for success states, copy confirmation)
-- **Code String Green**: `#0FA676` (syntax highlighting)
-- **Code Function Teal**: `#00627A` (syntax highlighting)
-- **Warning Amber**: `#F59E0B` (used in feature cards)
-- **Background Overlay**: `#0A0A0A` (dark theme body background)
+- **Warning Amber**: `#F59E0B` (used in feature card icons)
+- **Divider Gray**: `#666666` (used for section dividers)
+
+### Syntax Highlighting Colors
+
+#### Light Theme Syntax
+```css
+.keyword: #7C3AED   /* Dark purple */
+.import: #0284C7    /* Dark blue */
+.string: #059669    /* Dark green */
+.comment: #6B7280   /* Gray */
+.function: #0369A1  /* Dark cyan */
+```
+
+#### Dark Theme Syntax
+```css
+.keyword: #C084FC   /* Light purple */
+.import: #5BB4FF    /* Light blue */
+.string: #34D399    /* Emerald */
+.comment: #9CA3AF   /* Light gray */
+.function: #60A5FA  /* Sky blue */
+```
 
 ---
 
@@ -86,11 +109,14 @@ The Kite documentation uses a modern, clean design system featuring an "island" 
 
 ### Font Families
 ```css
-/* Body Text */
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+/* Body Text - Brutalist geometric sans-serif */
+font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
-/* Code/Monospace */
-font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+/* Code/Monospace - Clean monospace */
+font-family: 'Roboto Mono', 'Consolas', monospace;
+
+/* Footer Text - Monospace for technical aesthetic */
+font-family: 'Roboto Mono', 'Consolas', monospace;
 ```
 
 ### Heading Scale
@@ -101,6 +127,7 @@ h1 {
   letter-spacing: -1.5px;
   line-height: 1.2;
   margin-bottom: 16px;
+  color: var(--text-primary);
 }
 
 h2 {
@@ -111,6 +138,7 @@ h2 {
   margin-top: 64px;
   margin-bottom: 16px;
   padding-bottom: 16px;
+  scroll-margin-top: 24px;
 }
 
 h3 {
@@ -123,8 +151,10 @@ h3 {
 ### Body Text
 ```css
 body {
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
-  line-height: 1.7;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
 p {
@@ -135,16 +165,38 @@ p {
 }
 ```
 
-### Small Text Sizes
-- Breadcrumbs: `13px`
-- Edit info: `13px`
-- TOC header: `11px` (uppercase, letter-spacing: `1.5px`)
-- TOC links: `14px` / `13px` / `12px` (based on heading level)
-- Footer text: `13px` / `14px`
-- Navigation items: `14px` / `13px`
-- Version badge: `11px` (letter-spacing: `0.5px`)
-- Code inline: `0.9em` (relative to parent)
-- Code blocks: `14px`
+### Bold Typography (Brutalist)
+```css
+/* Logo text */
+.logo-text {
+  font-size: 32px;
+  font-weight: 900;  /* Extra bold */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Version badge */
+.version-badge {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+/* FAB buttons */
+.fab {
+  font-weight: 900;
+}
+
+/* Copy button */
+.copy-button {
+  font-weight: 900;
+}
+
+/* Keyword syntax */
+.keyword {
+  font-weight: 700;
+}
+```
 
 ### Responsive Typography
 ```css
@@ -165,7 +217,6 @@ padding: 48px 56px;
 
 /* Sidebars */
 padding: 24px 0;  /* Left sidebar */
-padding: 24px 24px 24px 8px;  /* Right sidebar */
 
 /* TOC Island */
 padding: 24px;
@@ -182,12 +233,9 @@ padding: 48px;
 /* Navigation Items */
 padding: 10px 16px;
 
-/* FAB Buttons */
-padding: 12px 18px;
-
 /* Small Elements */
-padding: 8px 16px;  /* Edit info badge */
-padding: 4px 10px;  /* Version badge */
+padding: 8px 16px;  /* Edit info badge, copy button */
+padding: 6px 12px;  /* Version badge */
 padding: 3px 8px;   /* Inline code */
 ```
 
@@ -211,61 +259,35 @@ margin: 48px 0;  /* Section divider */
 
 /* Breadcrumbs */
 margin-bottom: 32px;
-
-/* Lists */
-margin: 24px 0;
-margin-bottom: 8px;   /* List items */
-margin-bottom: 12px;  /* Inline list items */
-margin-bottom: 16px;  /* Feature list items */
 ```
 
 ### Gaps (Flexbox/Grid)
 ```css
-gap: 8px;   /* Small gaps (breadcrumb, logo, FAB toggle) */
-gap: 12px;  /* Medium gaps (feature cards links, footer sections) */
+gap: 8px;   /* Small gaps (breadcrumb, logo) */
+gap: 12px;  /* Medium gaps (feature cards links) */
 gap: 15px;  /* FAB container */
-gap: 24px;  /* Large gaps (grid layouts, footer grid) */
+gap: 24px;  /* Large gaps (grid layouts, feature cards) */
 gap: 48px;  /* Extra large (main footer grid) */
-```
-
-### Responsive Spacing
-```css
-@media (max-width: 1100px) {
-  .content-island {
-    margin: 24px 16px;
-    padding: 40px 32px;
-  }
-}
-
-@media (max-width: 900px) {
-  .content-island {
-    margin: 16px;
-    padding: 32px 20px;
-  }
-  .footer {
-    padding: 32px 24px;
-  }
-}
 ```
 
 ---
 
 ## Component Styles
 
-### Island Pattern (Core Design)
+### Island Pattern (Brutalist)
 ```css
 .content-island {
   background: #FFFFFF;
   border-radius: 16px;
   padding: 48px 56px;
   margin: 24px 32px;
-  border: 1px solid #E5E7EB;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+  border: 2px solid var(--border-color);  /* Bold 2px border */
+  box-shadow: none;  /* No shadows in brutalism */
   transition: all 0.3s ease;
 }
 
 .content-island:hover {
-  box-shadow: 0 12px 60px var(--shadow-strong);
+  box-shadow: 0 12px 60px var(--shadow-strong);  /* Still no shadow (transparent) */
 }
 ```
 
@@ -274,27 +296,20 @@ gap: 48px;  /* Extra large (main footer grid) */
 .left-sidebar {
   width: 280px;
   position: fixed;
-  background: #FFFFFF;
-  border-right: 1px solid #E5E7EB;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.04);
+  background: var(--bg-primary);
+  border-right: 2px solid var(--border-color);  /* Bold border */
+  transition: none;  /* No smooth transitions in brutalism */
 }
 ```
 
 ### Right Sidebar (TOC)
 ```css
-.right-sidebar {
-  width: 280px;
-  position: fixed;
-  right: 0;
-  background: transparent;
-}
-
 .toc-island {
   background: #FFFFFF;
   border-radius: 16px;
   padding: 24px;
-  border: 1px solid #E5E7EB;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 2px solid var(--border-color);  /* Bold border */
+  box-shadow: none;  /* No shadow */
   position: sticky;
   top: 24px;
 }
@@ -311,6 +326,7 @@ gap: 48px;  /* Extra large (main footer grid) */
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 8px;
   margin: 2px 12px;
+  box-shadow: none;
 }
 
 .sidebar-menu a:hover {
@@ -325,26 +341,26 @@ gap: 48px;  /* Extra large (main footer grid) */
 }
 ```
 
-### Code Blocks
+### Code Blocks (Brutalist)
 ```css
 .code-block {
   background: var(--code-bg);
-  border: 1px solid var(--border-color-strong);
+  border: none;  /* No border on code blocks */
   border-radius: 16px;
   padding: 30px;
   margin: 30px 0;
-  box-shadow: 0 8px 30px var(--shadow-strong);
+  box-shadow: 0 8px 30px var(--shadow-strong);  /* Transparent shadow */
   transition: all 0.3s ease;
 }
 
 .code-block:hover {
   border-color: var(--primary-light);
-  box-shadow: 0 10px 40px var(--shadow-strong);
-  transform: translateY(-1px);
+  box-shadow: 0 10px 40px var(--shadow-strong);  /* Transparent */
+  transform: none;  /* No lift on hover (brutalist) */
 }
 ```
 
-### Info Boxes
+### Info Boxes (Brutalist)
 ```css
 .info-box {
   background: var(--info-bg);
@@ -352,49 +368,58 @@ gap: 48px;  /* Extra large (main footer grid) */
   border-radius: 12px;
   padding: 24px 28px;
   margin: 30px 0;
-  box-shadow: 0 6px 25px rgba(91, 180, 255, 0.1);
-  border: 1px solid rgba(91, 180, 255, 0.2);
+  box-shadow: none;  /* No shadow */
+  border: none;  /* No additional border */
+  transition: none;  /* No transitions */
 }
 
 .info-box:hover {
-  box-shadow: 0 8px 35px rgba(91, 180, 255, 0.15);
-  transform: translateY(-1px);
+  box-shadow: none;
+  transform: none;  /* No lift */
 }
 ```
 
-### Floating Action Buttons (FAB)
+### Floating Action Buttons (FAB) - Brutalist Style
 ```css
 .fab {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
+  background: var(--primary-color);  /* Solid purple, no gradient */
   border-radius: 50%;
-  color: white;
+  border: 2px solid var(--border-color);  /* Bold black border */
+  color: var(--bg-primary);
   font-size: 20px;
-  box-shadow: 0 4px 20px rgba(127, 82, 255, 0.4);
-  transition: all 0.3s ease;
+  font-weight: 900;  /* Extra bold */
+  box-shadow: none;  /* No initial shadow */
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
 }
 
 .fab:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 30px rgba(127, 82, 255, 0.5);
+  background: var(--primary-dark);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);  /* Hard-edged drop shadow */
+  transform: none;  /* No scale animation */
 }
 ```
 
-### Copy Button
+### Copy Button (Brutalist - Matches FAB)
 ```css
 .copy-button {
   position: absolute;
   top: 20px;
   right: 20px;
   background: var(--primary-color);
+  border: 2px solid var(--border-color);  /* Bold border */
   color: white;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 4px;  /* Minimal rounding */
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 900;  /* Extra bold */
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
   opacity: 0;
-  box-shadow: 0 2px 10px rgba(217, 70, 239, 0.3);
+  z-index: 10;
+  box-shadow: none;  /* No initial shadow */
 }
 
 .code-block-wrapper:hover .copy-button {
@@ -403,90 +428,99 @@ gap: 48px;  /* Extra large (main footer grid) */
 
 .copy-button:hover {
   background: var(--primary-dark);
-  box-shadow: 0 4px 15px rgba(217, 70, 239, 0.4);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);  /* Hard-edged shadow */
+}
+
+.copy-button:active {
+  transform: none;  /* No scale animation */
 }
 ```
 
-### Hamburger Menu
+### Feature Cards (No Borders)
 ```css
-.hamburger {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 101;
-  background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
-  color: white;
-  padding: 12px 18px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(127, 82, 255, 0.4);
-  display: none; /* Hidden on desktop */
+.feature-card {
+  background: #FAF5FF;  /* Light purple background */
+  border: none;  /* No borders on feature cards */
+  border-radius: 16px;
+  padding: 32px;
 }
 ```
 
 ---
 
-## Shadows and Elevations
+## Borders and Shadows (Brutalist Approach)
 
-### Shadow Hierarchy
+### Border Strategy
 ```css
-/* Level 1 - Subtle */
-box-shadow: 0 2px 10px rgba(127, 82, 255, 0.1);
+/* All islands and major components use 2px solid borders */
+border: 2px solid var(--border-color);
 
-/* Level 2 - Light */
-box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-box-shadow: 2px 0 10px rgba(0, 0, 0, 0.04);  /* Sidebar */
+/* No borders on specific elements */
+border: none;  /* Code blocks, info boxes, feature cards */
 
-/* Level 3 - Medium */
-box-shadow: 0 6px 25px rgba(91, 180, 255, 0.1);  /* Info box */
-box-shadow: 0 8px 30px var(--shadow-strong);      /* Code blocks */
-box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);       /* Content island */
-
-/* Level 4 - Strong (Hover) */
-box-shadow: 0 10px 40px var(--shadow-strong);     /* Code hover */
-box-shadow: 0 12px 60px var(--shadow-strong);     /* Island hover */
-
-/* Level 5 - FAB Glow */
-box-shadow: 0 4px 20px rgba(127, 82, 255, 0.4);
-box-shadow: 0 6px 30px rgba(127, 82, 255, 0.5);   /* FAB hover */
-
-/* Reading Progress Glow */
-box-shadow: 0 0 10px rgba(91, 180, 255, 0.5);
-
-/* Dark Theme Shadows */
-[data-theme="dark"] {
-  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);  /* Sidebar */
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);  /* Islands */
-}
+/* Border colors */
+--border-color: #000000;  /* Light theme - black */
+--border-color: #FFFFFF;  /* Dark theme - white */
 ```
 
-### Elevation Strategy
-- **Level 0**: Base page background (no shadow)
-- **Level 1**: Sidebar (2-4px blur)
-- **Level 2**: TOC island (4-16px blur)
-- **Level 3**: Content islands, code blocks (8-40px blur)
-- **Level 4**: Hover states (12-60px blur)
-- **Level 5**: Interactive elements (FABs with colored glow)
+### Shadow Philosophy: **No Shadows**
+```css
+/* All shadows are transparent in brutalism */
+--shadow: transparent;
+--shadow-strong: transparent;
+
+/* Exception: Hard-edged drop shadows on hover */
+box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);  /* FAB and copy button hover */
+
+/* Reading progress indicator glow (functional, not decorative) */
+box-shadow: 0 0 10px rgba(91, 180, 255, 0.5);
+```
+
+---
+
+## Border Radius (Hard Edges)
+
+### Border Radius Scale
+```css
+/* Minimal radius - almost square */
+border-radius: 0;     /* Fully square (version badge) */
+border-radius: 4px;   /* Copy button (minimal) */
+border-radius: 8px;   /* Navigation items, inline code */
+border-radius: 12px;  /* Info boxes */
+border-radius: 16px;  /* Content islands, code blocks, feature cards */
+
+/* Circular */
+border-radius: 50%;   /* FAB buttons only */
+border-radius: 20px;  /* Edit info badge (pill shape) */
+```
+
+### Border Strategy
+- **0-4px**: Brutalist hard edges
+- **8px**: Small interactive elements
+- **12px**: Medium containers
+- **16px**: Large content containers
+- **50%**: Only for circular FAB buttons
+- **20px+**: Pill shapes for badges
 
 ---
 
 ## Animations and Transitions
 
-### Global Transitions
-```css
-* {
-  transition: background-color 0.3s ease,
-              color 0.3s ease,
-              border-color 0.3s ease,
-              box-shadow 0.3s ease !important;
-}
-```
+### Brutalist Animation Philosophy
+- **Minimal animations**: No scale, no float, no complex transforms
+- **Fast transitions**: 0.2s for most interactions
+- **Hard edges**: No easing curves for shadows
+- **Functional only**: Animations serve purpose, not decoration
 
 ### Component-Specific Transitions
 ```css
 /* Standard Interactive Elements */
 transition: all 0.2s;
-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);  /* Navigation */
-transition: all 0.3s ease;  /* Islands, buttons */
+transition: box-shadow 0.2s ease;  /* FAB and buttons */
+transition: all 0.3s ease;  /* Islands */
+
+/* NO transitions for brutalist elements */
+transition: none;  /* Info boxes, brutalist content */
 
 /* Sidebar Toggle */
 transition: transform 0.3s;
@@ -495,219 +529,228 @@ transition: transform 0.3s;
 transition: width 0.1s ease;
 ```
 
-### Keyframe Animations
-
-#### Slide Down (Menu Expansion)
+### Disabled Transforms
 ```css
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* No hover lifts in brutalism */
+.code-block:hover {
+  transform: none;  /* Was: translateY(-1px) */
 }
 
-.nested.show {
-  animation: slideDown 0.3s ease-out;
-}
-```
-
-#### Fade In Up (Content)
-```css
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.content-island > * {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-.content-island h2 {
-  animation: fadeInUp 0.6s ease-out 0.1s backwards;
-}
-```
-
-#### Skeleton Loading
-```css
-@keyframes skeleton-loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.skeleton {
-  animation: skeleton-loading 1.5s infinite ease-in-out;
-  background: linear-gradient(90deg,
-    var(--bg-secondary) 0%,
-    var(--bg-tertiary) 50%,
-    var(--bg-secondary) 100%);
-  background-size: 200% 100%;
-}
-```
-
-### Hover Transforms
-```css
-/* FAB Scale */
-.fab:hover {
-  transform: scale(1.1);
-}
-
-/* Button Active */
-.copy-button:active {
-  transform: scale(0.95);
-}
-
-/* Subtle Lift */
-.code-block:hover,
 .info-box:hover {
-  transform: translateY(-1px);
+  transform: none;  /* No movement */
 }
 
-/* External Link Icon */
+.fab:hover {
+  transform: none;  /* Was: scale(1.1) */
+}
+
+.copy-button:active {
+  transform: none;  /* Was: scale(0.95) */
+}
+```
+
+---
+
+## Special Features
+
+### Custom Scrollbar
+```css
+.left-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.left-sidebar::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+.left-sidebar::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 0;  /* Square scrollbar (brutalist) */
+}
+
+.left-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+```
+
+### Reading Progress Indicator
+```css
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;  /* Updated via JavaScript */
+  height: 3px;
+  background: #5BB4FF;
+  z-index: 1000;
+  transition: width 0.1s ease;
+  box-shadow: 0 0 10px rgba(91, 180, 255, 0.5);  /* Functional glow */
+}
+```
+
+### Section Divider (Brutalist - Simplified)
+```css
+.section-divider {
+  height: 2px;  /* Thicker line */
+  background: #666666;  /* Simple dark gray */
+  margin: 48px 0;
+  /* No gradient, no decorative elements */
+}
+```
+
+### Theme Toggle System
+- Auto-detects system preference: `prefers-color-scheme`
+- Manual override saved to `localStorage`
+- Smooth 0.3s transitions on color properties only
+- Icon changes: 🌙 (light mode) ↔ ☀️ (dark mode)
+
+### External Link Indicator
+```css
+a[href^="http"]::after,
+a[href^="https://"]::after {
+  content: '↗';
+  font-size: 0.85em;
+  margin-left: 4px;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+
 a[href^="http"]:hover::after {
+  opacity: 1;
   transform: translate(2px, -2px);
 }
 
-/* Hamburger Animation */
-.hamburger.active .hamburger-icon span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.hamburger.active .hamburger-icon span:nth-child(2) {
-  opacity: 0;
-}
-.hamburger.active .hamburger-icon span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+/* Exceptions */
+.breadcrumb a::after,
+.sidebar-menu a::after,
+.toc-menu a::after {
+  content: none;
 }
 ```
-
-### Transition Timing
-- **Instant**: `0.1s` (reading progress)
-- **Fast**: `0.2s` (links, navigation hovers)
-- **Standard**: `0.3s` (most UI elements, theme toggle)
-- **Smooth**: `0.6s` (content fade-in)
-- **Extended**: `1.5s` (skeleton loading loop)
 
 ---
 
-## Border Radius
+## Syntax Highlighting (Code)
 
-### Border Radius Scale
+### Theme-Specific Syntax Colors
 ```css
-/* Small Elements */
-border-radius: 3px;   /* Scrollbar thumb */
-border-radius: 6px;   /* Inline code */
-border-radius: 8px;   /* Navigation items, buttons, copy button */
+/* Light Theme - Darker colors for readability */
+.keyword {
+  color: #7C3AED;  /* Dark purple */
+  font-weight: 700;
+}
 
-/* Medium Components */
-border-radius: 12px;  /* Info boxes, hamburger, footer (mobile), badges, content islands (mobile) */
+[data-theme="dark"] .keyword {
+  color: #C084FC;  /* Light purple */
+}
 
-/* Large Islands */
-border-radius: 16px;  /* Content islands, code blocks, TOC island, footer, feature cards */
+.import {
+  color: #0284C7;  /* Dark blue */
+  font-weight: 600;
+}
 
-/* Circular */
-border-radius: 50%;   /* FAB buttons */
-border-radius: 12px;  /* Version badge (pill shape with small padding) */
-border-radius: 20px;  /* Edit info badge (pill shape) */
+[data-theme="dark"] .import {
+  color: #5BB4FF;  /* Light blue */
+}
+
+.string {
+  color: #059669;  /* Dark green */
+}
+
+[data-theme="dark"] .string {
+  color: #34D399;  /* Emerald */
+}
+
+.comment {
+  color: #6B7280;  /* Gray */
+  font-style: italic;
+}
+
+[data-theme="dark"] .comment {
+  color: #9CA3AF;  /* Light gray */
+}
+
+.function {
+  color: #0369A1;  /* Dark cyan */
+  font-weight: 600;
+}
+
+[data-theme="dark"] .function {
+  color: #60A5FA;  /* Sky blue */
+}
 ```
 
-### Border Strategy
-- **3-6px**: Inline elements, small UI components
-- **8px**: Interactive elements (buttons, nav items)
-- **12px**: Medium containers, mobile variants
-- **16px**: Large content containers (islands)
-- **50%**: Circular buttons
-- **High px with small size**: Pill shapes
+### Inline Code
+```css
+code {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--primary-color);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-family: 'Roboto Mono', 'Consolas', monospace;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+[data-theme="dark"] code {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Override in code blocks */
+.code-block code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  color: var(--code-text);
+}
+
+[data-theme="dark"] .code-block code {
+  color: #FFFFFF;
+}
+```
 
 ---
 
-## Grid and Layout
+## Design Patterns Summary
 
-### Main Layout Structure
-```css
-.container {
-  display: flex;
-  min-height: 100vh;
-}
+### Brutalist Design Principles
+All design follows brutalist principles:
+- **High contrast**: Black borders, bold typography, pure colors
+- **No shadows**: Flat design with transparent shadows
+- **Hard edges**: Minimal border radius, rectangular forms
+- **Bold borders**: 2px solid borders on all islands
+- **No gradients**: Solid colors only (except hamburger menu)
+- **Heavy typography**: Font-weight 900 for emphasis
+- **Functional aesthetics**: Design serves purpose, not decoration
+- **Material Design 3 purple**: #A855F7 as sole accent color
 
-/* Three-column layout */
-- Left sidebar: 280px fixed
-- Main content: flex: 1
-- Right sidebar: 280px fixed
-```
+### Island Design (Brutalist)
+All major content sections are "islands" - bordered sections with:
+- 16px border radius (compromise for usability)
+- 2px solid black/white borders
+- No shadows (box-shadow: none)
+- No hover elevation effects
+- White/black backgrounds (theme-dependent)
 
-### Grid Layouts
+### Color Philosophy
+- **Primary Purple**: #A855F7 (Material Design 3) for all interactive elements
+- **Pure Black/White**: #000000 / #FFFFFF for maximum contrast
+- **Neutral Grays**: Four levels of gray for text hierarchy
+- **Accent Blue**: #5BB4FF for information and progress
+- **No transparency**: Solid colors (except for hover states)
 
-#### Footer Grid
-```css
-.footer-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 48px;
-}
+### Spacing Philosophy
+- **8px Base Unit**: Multiples of 8 for most spacing
+- **Progressive Scale**: 8, 12, 16, 24, 32, 48, 56, 64
+- **Generous Whitespace**: Especially in content areas
+- **2px Borders**: Consistent bold borders throughout
 
-@media (max-width: 900px) {
-  grid-template-columns: 1fr;
-  gap: 24px;
-}
-```
-
-#### Feature Cards Grid
-```css
-/* Home page feature cards */
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-gap: 24px;
-```
-
-### Flexbox Patterns
-
-#### Sidebar Logo
-```css
-.sidebar-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-```
-
-#### Breadcrumb
-```css
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-```
-
-#### FAB Container
-```css
-.fab-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-```
-
-#### Navigation
-```css
-.sidebar-menu a {
-  display: block;  /* Full-width clickable area */
-}
-
-.toc-menu a {
-  display: block;
-}
-```
+### Interaction Philosophy
+- **Minimal feedback**: 0.2s transitions for essential changes only
+- **No scale effects**: No transform scale animations
+- **No lift effects**: No translateY hover animations
+- **Hard shadows only**: 0 4px 0 rgba(0, 0, 0, 0.5) for FAB/button hovers
+- **Functional only**: Animations serve purpose, not decoration
 
 ---
 
@@ -741,229 +784,12 @@ gap: 24px;
 @media (max-width: 900px) {
   - All sidebars hidden
   - Hamburger menu visible
-  - Main content: full width, margin 0
-  - Content island: margin 16px, padding 32px 20px, border-radius 12px
+  - Main content: full width
+  - Content island: margin 16px, padding 32px 20px
   - h1: 36px (from 52px)
   - h2: 26px (from 36px)
   - Footer: padding 32px 24px
-  - Footer grid: 1 column
   - FAB: right 20px
-}
-```
-
-### Responsive Patterns
-
-#### Sidebar Toggle (Mobile)
-```css
-.left-sidebar {
-  transform: translateX(-100%);
-  transition: transform 0.3s;
-}
-
-.left-sidebar.open {
-  transform: translateX(0);
-}
-```
-
-#### Content Width Adjustment
-```css
-/* Desktop */
-.main-content {
-  margin-left: 280px;   /* Left sidebar width */
-  margin-right: 40px;
-}
-
-/* Tablet */
-@media (max-width: 1100px) {
-  margin-left: 0;
-  margin-right: 16px;
-}
-
-/* Mobile */
-@media (max-width: 900px) {
-  margin: 0;
-  width: 100%;
-}
-```
-
----
-
-## Special Features
-
-### Custom Scrollbar
-```css
-.left-sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.left-sidebar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.left-sidebar::-webkit-scrollbar-thumb {
-  background: rgba(127, 82, 255, 0.3);
-  border-radius: 3px;
-}
-
-.left-sidebar::-webkit-scrollbar-thumb:hover {
-  background: rgba(127, 82, 255, 0.5);
-}
-```
-
-### Reading Progress Indicator
-```css
-.reading-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0%;  /* Updated via JavaScript */
-  height: 3px;
-  background: #5BB4FF;
-  z-index: 1000;
-  transition: width 0.1s ease;
-  box-shadow: 0 0 10px rgba(91, 180, 255, 0.5);
-}
-```
-
-### Theme Toggle System
-- Auto-detects system preference: `prefers-color-scheme`
-- Manual override saved to `localStorage`
-- Smooth 0.3s transitions on all color properties
-- Icon changes: 🌙 (light mode) ↔ ☀️ (dark mode)
-
-### Section Divider
-```css
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    var(--border-color) 50%,
-    transparent 100%);
-  margin: 48px 0;
-  position: relative;
-}
-
-.section-divider::after {
-  content: '•';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--bg-primary);
-  color: var(--primary-color);
-  padding: 0 12px;
-  font-size: 20px;
-}
-```
-
-### External Link Indicator
-```css
-a[href^="http"]::after,
-a[href^="https://"]::after {
-  content: '↗';
-  font-size: 0.85em;
-  margin-left: 4px;
-  opacity: 0.6;
-  transition: all 0.2s;
-}
-
-a[href^="http"]:hover::after {
-  opacity: 1;
-  transform: translate(2px, -2px);
-}
-
-/* Exceptions */
-.breadcrumb a::after,
-.sidebar-menu a::after,
-.toc-menu a::after {
-  content: none;
-}
-```
-
-### Gradient Effects
-
-#### Logo Gradient
-```css
-.logo-text {
-  background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-```
-
-#### Button Gradient
-```css
-background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);
-```
-
-### TOC Active State
-```css
-.toc-menu a.active {
-  color: var(--primary-color);
-  background: rgba(127, 82, 255, 0.12);
-  font-weight: 600;
-  box-shadow: 0 2px 10px rgba(127, 82, 255, 0.1);
-}
-```
-
-### Nested Navigation Indentation
-```css
-/* Level 1 - Base */
-padding: 10px 16px;
-
-/* Level 2 - Nested once */
-padding-left: 32px;
-
-/* Level 3 - Nested twice */
-padding-left: 48px;
-```
-
----
-
-## Syntax Highlighting (Code)
-
-### Syntax Colors
-```css
-.keyword {
-  color: var(--primary-color);  /* #7F52FF / #A78BFA */
-  font-weight: 700;
-}
-
-.import {
-  color: #5BB4FF;
-  font-weight: 600;
-}
-
-.string {
-  color: #0FA676;  /* Green */
-}
-
-.comment {
-  color: #999;
-  font-style: italic;
-}
-
-.function {
-  color: #00627A;  /* Teal */
-  font-weight: 600;
-}
-```
-
-### Inline Code
-```css
-code {
-  background: rgba(0, 0, 0, 0.06);
-  color: var(--primary-color);
-  padding: 3px 8px;
-  border-radius: 6px;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 0.9em;
-  font-weight: 500;
-}
-
-[data-theme="dark"] code {
-  background: rgba(255, 255, 255, 0.1);
 }
 ```
 
@@ -973,98 +799,77 @@ code {
 
 1. **Semantic HTML**: Proper use of `<aside>`, `<main>`, `<nav>`, `<footer>`
 2. **Scroll Margin**: `scroll-margin-top: 24px` on headings for anchor jumps
-3. **Smooth Scrolling**: `scroll-behavior: smooth` on `html` and `body`
-4. **Focus States**: Maintained through hover states
-5. **Color Contrast**: WCAG compliant text colors
-6. **Keyboard Navigation**: All interactive elements are keyboard accessible
-7. **aria-labels**: Can be added to icon-only buttons (FABs)
-
----
-
-## Performance Optimizations
-
-1. **Preload Class**: Disables transitions on page load
-   ```css
-   .preload * { transition: none !important; }
-   ```
-   Removed after 100ms via JavaScript
-
-2. **CSS Containment**: `box-sizing: border-box` on all elements
-
-3. **Transform-based Animations**: Using `transform` for smooth 60fps animations
-
-4. **Intersection Observer**: For TOC active state tracking (JS)
-
-5. **Sticky Positioning**: For TOC island instead of complex JS
-
-6. **Fixed Positioning**: For sidebars and FABs
-
----
-
-## Design Patterns Summary
-
-### Island Design
-All major content sections are "islands" - elevated white (or dark) cards with:
-- 16px border radius
-- Subtle borders
-- Layered shadows
-- Hover elevation effect
-- Glassmorphism-inspired transparency
-
-### Color Philosophy
-- **Primary Purple**: Brand identity, interactive elements
-- **Neutral Grays**: Text hierarchy with 4 levels
-- **Accent Blue**: Information, external links
-- **Semantic Colors**: Success, warning, info states
-- **Transparency**: Layering and depth (glassmorphism)
-
-### Spacing Philosophy
-- **8px Base Unit**: Multiples of 8 for most spacing
-- **Progressive Scale**: 8, 12, 16, 24, 32, 48, 56, 64
-- **Generous Whitespace**: Especially in content areas
-- **Responsive Compression**: Reduces on smaller screens
-
-### Interaction Philosophy
-- **Instant Feedback**: 0.2s transitions for hovers
-- **Smooth Motion**: cubic-bezier easing for natural feel
-- **Subtle Lifts**: translateY(-1px) on hover
-- **Progressive Enhancement**: Works without JS, enhanced with it
+3. **Smooth Scrolling**: `scroll-behavior: auto` (brutalist preference)
+4. **High Contrast**: WCAG AAA compliant with black/white text on backgrounds
+5. **Keyboard Navigation**: All interactive elements are keyboard accessible
+6. **Focus States**: Maintained through hover states
+7. **No motion sickness**: Minimal animations reduce vestibular issues
 
 ---
 
 ## Implementation Notes
 
-1. **CSS Variables**: All colors and key values use CSS custom properties for easy theming
-2. **Mobile-First Considerations**: Although desktop is default, responsive adjustments are comprehensive
-3. **Dark Mode Strategy**: Full variable override, not filters
-4. **JavaScript Dependencies**: Minimal - only for theme toggle, TOC tracking, and menu interactions
-5. **Browser Support**: Modern browsers (CSS variables, grid, flexbox required)
-6. **Font Loading**: System fonts as fallbacks for performance
+1. **CSS Variables**: All colors use CSS custom properties for easy theming
+2. **Roboto Font Family**: Modern, geometric sans-serif for brutalist aesthetic
+3. **Roboto Mono**: Used for code and footer (technical aesthetic)
+4. **Dark Mode Strategy**: Full variable override, high contrast maintained
+5. **No JavaScript for styles**: All styling is pure CSS
+6. **Browser Support**: Modern browsers (CSS variables, grid, flexbox required)
+7. **Material Design 3 Purple**: #A855F7 used consistently across all themes
+
+---
+
+## Key Brutalist Changes from Previous Design
+
+### What Changed
+1. **Removed all soft shadows** → Transparent shadows, hard-edged drop shadows only
+2. **Removed gradients** → Solid colors (except hamburger menu legacy)
+3. **Removed hover lifts** → `transform: none` on all elements
+4. **Added bold borders** → 2px solid borders on all islands
+5. **Removed borders from some elements** → Code blocks, info boxes, feature cards
+6. **Increased font weights** → 900 for emphasis (logo, badges, buttons)
+7. **Changed to Roboto** → From Inter to Roboto font family
+8. **Added Roboto Mono to footer** → Technical, monospace aesthetic
+9. **Simplified divider** → From gradient with bullet to simple 2px gray line
+10. **Made code blocks readable** → Light theme: #F5F5F5 bg, Dark theme: proper contrast
+11. **Changed primary color** → From #7F52FF to Material Design 3 #A855F7
+12. **Removed scale animations** → FAB and buttons no longer scale
+13. **Square scrollbar** → Removed border-radius from scrollbar thumb
+14. **Hard-edged copy button** → Matches FAB styling with 900 font-weight
+
+### Design Philosophy Shift
+- **From**: Glassmorphism, soft shadows, smooth animations, rounded corners
+- **To**: Brutalism, high contrast, minimal animation, bold borders, functional design
 
 ---
 
 ## Quick Reference
 
 ### Most Common Values
-- **Border Radius**: 8px (small), 12px (medium), 16px (large)
-- **Shadow**: `0 8px 40px rgba(0, 0, 0, 0.08)`
-- **Transition**: `all 0.3s ease` or `all 0.2s`
-- **Primary Color**: `#7F52FF` (light) / `#A78BFA` (dark)
+- **Border**: `2px solid var(--border-color)`
+- **Border Radius**: 4px (minimal), 8px (small), 16px (large)
+- **Shadow**: `none` or `transparent` (brutalist)
+- **Hard Shadow**: `0 4px 0 rgba(0, 0, 0, 0.5)` (FAB hover only)
+- **Transition**: `box-shadow 0.2s ease` or `none`
+- **Primary Color**: `#A855F7` (both themes)
+- **Font Weight**: `400` (normal), `600` (semibold), `700` (bold), `900` (black)
 - **Gap**: 8px (tight), 12px (normal), 24px (loose)
 - **Padding**: 24px (compact), 32px (normal), 48px (spacious)
-- **Font Size**: 14px (small UI), 17px (body), 36px (h2), 52px (h1)
 
 ### Key CSS Classes
-- `.content-island` - Main content container
-- `.code-block` - Code display
-- `.info-box` - Information callouts
-- `.fab` - Floating action buttons
-- `.toc-island` - Table of contents
+- `.content-island` - Main content container with 2px border
+- `.code-block` - Code display, no border
+- `.info-box` - Information callouts, no border
+- `.fab` - Floating action buttons, hard-edged shadow on hover
+- `.copy-button` - Code copy button, matches FAB style
+- `.toc-island` - Table of contents, 2px border
 - `.sidebar-menu` - Navigation menu
-- `.skeleton` - Loading state
+- `.section-divider` - Simple 2px gray line
 
 ---
 
-**Document Version**: 1.0
+**Document Version**: 2.0 (Brutalist)
 **Last Updated**: January 2025
-**Based on**: docs.html design system
+**Based on**: docs.html brutalist design system
+**Primary Color**: Material Design 3 Purple (#A855F7)
+**Design Philosophy**: Brutalism with high contrast and minimal decoration
