@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Footer from './Footer';
+import EditInfo from './EditInfo';
 
 interface MainContentProps {
     activePage: string;
@@ -33,9 +34,7 @@ export default function MainContent({
                 <div className="content-island">
                     <h1>Welcome to Kite</h1>
 
-                    <div className="edit-info">
-                        <span>Updated on January 2025</span>
-                    </div>
+                    <EditInfo date="January 2025" />
 
                     <p>
                         Kite is a modern IaC language designed for the multi-cloud era. Write your infrastructure once using
@@ -149,9 +148,7 @@ export default function MainContent({
 
                     <h1>Overview</h1>
 
-                    <div className="edit-info">
-                        <span>Updated on January 2025</span>
-                    </div>
+                    <EditInfo date="January 2025" />
 
                     <h2 id="what-is-kite">What is Kite?</h2>
 
@@ -219,9 +216,7 @@ export default function MainContent({
 
                     <h1>Basic syntax</h1>
 
-                    <div className="edit-info">
-                        <span>Updated on August 5, 2025</span>
-                    </div>
+                    <EditInfo date="August 5, 2025" />
 
                     <p>
                         This is a collection of basic syntax elements with examples. At the end of every section, you&apos;ll
@@ -323,9 +318,7 @@ export default function MainContent({
 
                     <h1>Basic syntax</h1>
 
-                    <div className="edit-info">
-                        <span>Updated on August 5, 2025</span>
-                    </div>
+                    <EditInfo date="August 5, 2025" />
 
                     <p>
                         This is a collection of basic syntax elements with examples. At the end of every section, you&apos;ll
