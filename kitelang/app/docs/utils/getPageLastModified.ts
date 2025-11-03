@@ -21,9 +21,11 @@ export function getPageLastModified(pageId: string): string {
         }
 
         // Get the last commit date for this file
-        const gitCommand = `git log -1 --format=%cd --date=format:%B\\ %Y ${filePath}`;
+        // Run git from the repository root (parent directory of kitelang)
+        const gitCommand = `cd .. && git log -1 --format=%cd --date=format:%B\\ %Y ${filePath}`;
         const lastModified = execSync(gitCommand, {
-            encoding: 'utf-8'
+            encoding: 'utf-8',
+            shell: '/bin/bash'
         }).trim();
 
         return lastModified || 'January 2025';

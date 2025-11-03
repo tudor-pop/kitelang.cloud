@@ -11,6 +11,7 @@ interface MainContentProps {
     copyStatus: { [key: string]: boolean };
     contentRef: React.RefObject<HTMLElement>;
     showToc: boolean;
+    pageDates: Record<string, string>;
 }
 
 export default function MainContent({
@@ -19,7 +20,8 @@ export default function MainContent({
     onCopyCode,
     copyStatus,
     contentRef,
-    showToc
+    showToc,
+    pageDates
 }: MainContentProps) {
     return (
         <main
@@ -34,7 +36,7 @@ export default function MainContent({
                 <div className="content-island">
                     <h1>Welcome to Kite</h1>
 
-                    <EditInfo date="January 2025" />
+                    <EditInfo date={pageDates['page-home']} />
 
                     <p>
                         Kite is a modern IaC language designed for the multi-cloud era. Write your infrastructure once using
@@ -148,7 +150,7 @@ export default function MainContent({
 
                     <h1>Overview</h1>
 
-                    <EditInfo date="January 2025" />
+                    <EditInfo date={pageDates['page-overview']} />
 
                     <h2 id="what-is-kite">What is Kite?</h2>
 
@@ -216,7 +218,7 @@ export default function MainContent({
 
                     <h1>Basic syntax</h1>
 
-                    <EditInfo date="August 5, 2025" />
+                    <EditInfo date={pageDates['page-basics']} />
 
                     <p>
                         This is a collection of basic syntax elements with examples. At the end of every section, you&apos;ll
@@ -318,7 +320,7 @@ export default function MainContent({
 
                     <h1>Basic syntax</h1>
 
-                    <EditInfo date="August 5, 2025" />
+                    <EditInfo date={pageDates['page-basic-syntax']} />
 
                     <p>
                         This is a collection of basic syntax elements with examples. At the end of every section, you&apos;ll
