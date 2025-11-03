@@ -893,8 +893,223 @@ All major content sections are "islands" - bordered sections with:
 
 ---
 
-**Document Version**: 2.0 (Brutalist)
+## Next.js Component Architecture
+
+### Project Migration (docs.html → Next.js)
+
+The documentation has been migrated from a static HTML file (`docs.html`) to a **Next.js 16** application using the App Router. The original single-file architecture has been refactored into reusable React components.
+
+### Component Structure
+
+```
+kitelang/app/docs/
+├── page.tsx                    # Main orchestrator (client component)
+├── MainContent.tsx             # All page content sections (client component)
+├── Sidebar.tsx                 # Left navigation sidebar (client component)
+├── TableOfContents.tsx         # Right TOC sidebar (client component)
+├── Footer.tsx                  # Page footer with dynamic year (client component)
+├── EditInfo.tsx                # "Updated on" badge (client component)
+├── docs.css                    # Global styles and theme variables
+├── utils/
+│   └── getPageLastModified.ts  # Git utility for fetching modification dates (server-side)
+└── api/
+    └── page-dates/
+        └── route.ts            # API endpoint for dynamic dates (server component)
+```
+
+### Component Responsibilities
+
+#### page.tsx
+- **Client Component** (`'use client'`)
+- Main orchestrator for state management
+- Handles theme toggling, sidebar visibility, page navigation
+- Manages reading progress, TOC content, copy status
+- Fetches dynamic page dates from API on mount
+- Passes props to child components
+
+#### MainContent.tsx
+- **Client Component** (`'use client'`)
+- Contains all page content sections (Home, Overview, Basics, Basic Syntax)
+- Receives `pageDates` prop and passes to EditInfo components
+- Includes Footer component
+- Uses `<style jsx global>` for extensive nested content styles (777 lines)
+
+#### Sidebar.tsx
+- **Client Component** (`'use client'`)
+- Left navigation menu with expandable sections
+- Logo, version badge, navigation links
+- Responsive hamburger menu integration
+- Uses `<style jsx>` for scoped styles (267 lines)
+
+#### TableOfContents.tsx
+- **Client Component** (`'use client'`)
+- Right sidebar with "On this page" navigation
+- Conditionally rendered based on `show` prop
+- Island design with hover effects
+- Uses `<style jsx>` for scoped styles (118 lines)
+
+#### Footer.tsx
+- **Client Component** (`'use client'`)
+- Footer with links and copyright
+- Dynamic year calculation: `new Date().getFullYear()`
+- Uses `<style jsx>` for scoped styles (135 lines)
+
+#### EditInfo.tsx
+- **Client Component** (`'use client'`)
+- Displays "Updated on [date]" badge
+- Receives date as prop (dynamically fetched from git)
+- Calendar emoji (📅) prefix
+- Uses `<style jsx>` for scoped styles (37 lines)
+
+### Dynamic Date System
+
+The documentation pages display their last modification date from git history:
+
+#### How It Works
+
+1. **Client Request** (`page.tsx`)
+   - On component mount, fetches from `/api/page-dates`
+   - Stores dates in state with fallback: `'January 2025'`
+
+2. **API Route** (`app/api/page-dates/route.ts`)
+   - Server-side endpoint using Next.js Route Handlers
+   - Calls `getAllPageDates()` utility function
+   - Returns JSON with page ID → date mapping
+
+3. **Git Utility** (`utils/getPageLastModified.ts`)
+   - **Server-side only** (uses Node.js `execSync`)
+   - Maps page IDs to file paths: `'page-home' → 'kitelang/app/docs/MainContent.tsx'`
+   - Executes: `cd .. && git log -1 --format=%cd --date=format:%B\ %Y [filepath]`
+   - Returns formatted date string (e.g., "January 2025")
+   - Falls back to "January 2025" if git command fails
+
+4. **Rendering** (EditInfo components)
+   - MainContent passes `pageDates[pageId]` to each EditInfo
+   - Displays: "Updated on [dynamic date from git]"
+
+#### Git Date Extraction
+
+```typescript
+// File: utils/getPageLastModified.ts
+const gitCommand = `cd .. && git log -1 --format=%cd --date=format:%B\\ %Y ${filePath}`;
+const lastModified = execSync(gitCommand, {
+    encoding: 'utf-8',
+    shell: '/bin/bash'
+}).trim();
+```
+
+**Why `cd ..`?** The Next.js app runs from `/kitelang` directory, but git root is parent directory (`/Users/mimedia/IdeaProjects/kitelang.cloud`).
+
+### Styling Architecture
+
+#### CSS-in-JS with styled-jsx
+
+All components use Next.js's built-in `styled-jsx` for component-scoped styles:
+
+```tsx
+<style jsx>{`
+  .component-class {
+    /* scoped styles */
+  }
+`}</style>
+```
+
+**Scoped vs Global:**
+- **Scoped** (`<style jsx>`): Most components (Sidebar, TableOfContents, Footer, EditInfo)
+- **Global** (`<style jsx global>`): MainContent only (due to complex nested HTML)
+
+**Accessing child elements:**
+```css
+:global(.footer-section h4) {
+  /* Styles child elements within scoped component */
+}
+```
+
+**Dark theme support:**
+```css
+:global([data-theme="dark"]) .component {
+  /* Dark theme overrides */
+}
+```
+
+#### Global Styles (docs.css)
+
+Contains:
+- CSS custom properties (theme variables)
+- Body and root styles
+- Global resets
+- Theme switching logic
+- Shared utilities (breadcrumbs, hamburger menu, FAB, reading progress)
+
+**Does NOT contain:**
+- Component-specific styles (moved to component files)
+
+### Component Props Reference
+
+```typescript
+// page.tsx → MainContent
+interface MainContentProps {
+  activePage: string;
+  onShowPage: (pageId: string) => void;
+  onCopyCode: (code: string, blockId: string) => void;
+  copyStatus: { [key: string]: boolean };
+  contentRef: React.RefObject<HTMLElement>;
+  showToc: boolean;
+  pageDates: Record<string, string>; // NEW: dynamic dates
+}
+
+// page.tsx → Sidebar
+interface SidebarProps {
+  isOpen: boolean;
+  expandedMenus: { [key: string]: boolean };
+  onToggleMenu: (menuKey: string) => void;
+  onShowPage: (pageId: string) => void;
+}
+
+// page.tsx → TableOfContents
+interface TableOfContentsProps {
+  content: React.ReactNode;
+  show: boolean;
+}
+
+// MainContent → EditInfo
+interface EditInfoProps {
+  date: string; // Dynamic date from git
+}
+```
+
+### Key Implementation Details
+
+1. **All components are client components** (`'use client'`) due to interactivity requirements
+2. **Styles co-located with components** for easier maintenance and identification
+3. **Dynamic year in Footer**: `new Date().getFullYear()` (no hardcoded year)
+4. **Dynamic dates in EditInfo**: Fetched from git via API route
+5. **API route is server-side**: Uses Node.js APIs (execSync) unavailable in client
+6. **Fallback handling**: If git fails, falls back to "January 2025"
+7. **Single source of truth**: All page content lives in MainContent.tsx
+
+### Migration Benefits
+
+- **Component reusability**: Each piece can be used independently
+- **Better maintainability**: Styles co-located with components
+- **Type safety**: TypeScript interfaces for all props
+- **Modern architecture**: Next.js 16 with App Router
+- **Dynamic content**: Git-based modification dates
+- **Scoped styles**: No CSS conflicts between components
+
+### Future Considerations
+
+- Components are ready for extraction to separate pages
+- Easy to add new documentation pages (just add to MainContent)
+- Git utility can be extended to track individual page files (not just MainContent.tsx)
+- API route can be cached for better performance
+- Consider moving to Server Components for static pages (if interactivity is reduced)
+
+---
+
+**Document Version**: 2.1 (Brutalist + Next.js Components)
 **Last Updated**: January 2025
-**Based on**: docs.html brutalist design system
+**Based on**: Next.js 16 component architecture with styled-jsx
 **Primary Color**: Material Design 3 Purple (#A855F7)
 **Design Philosophy**: Brutalism with high contrast and minimal decoration
+**Framework**: Next.js 16 (App Router) + TypeScript + styled-jsx
