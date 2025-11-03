@@ -1311,32 +1311,71 @@
                     <span>Basics</span>
                 </div>
 
-                <h1>Basics</h1>
+                <h1>Basic syntax</h1>
 
                 <div class="edit-info">
-                    <span>Updated on January 2025</span>
+                    <span>Updated on August 5, 2025</span>
                 </div>
 
-                <h2 id="basic-syntax">Basic syntax</h2>
                 <p>
-                    Learn the fundamental syntax of Kite, including package definitions, functions, variables, and
-                    control flow.
-                </p>
-                <p>
-                    <a href="#" onclick="showPage('page-basic-syntax'); return false;"
-                       style="color: var(--primary-color); text-decoration: none; font-weight: 500;">View Basic syntax
-                        →</a>
+                    This is a collection of basic syntax elements with examples. At the end of every section, you'll
+                    find a link to a detailed description of the related topic.
                 </p>
 
-                <h2 id="idioms" style="margin-top: 48px;">Idioms</h2>
+                <div class="info-box">
+                    <p>
+                        💡 You can also learn all the Kite essentials with the free Kite Core track by
+                    </p>
+                </div>
+
+                <h2 id="package-definition">Package definition and imports</h2>
+
+                <p>Package specification should be at the top of the source file:</p>
+
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    <div class="code-block">
+                        <code><span class="keyword">package</span> my.demo
+
+                            <span class="import">import</span> kite.text.*
+
+                            <span class="comment">// ...</span></code>
+                    </div>
+                </div>
+
                 <p>
-                    Discover common patterns and best practices for writing idiomatic Kite code.
+                    It is not required to match directories and packages: source files can be placed arbitrarily in
+                    the file system.
                 </p>
 
-                <h2 id="coding-conventions" style="margin-top: 48px;">Coding conventions</h2>
-                <p>
-                    Follow established conventions for naming, formatting, and organizing your Kite projects.
-                </p>
+                <p><a href="#packages">See Packages →</a></p>
+
+                <div class="section-divider"></div>
+
+                <h2 id="program-entry">Program entry point</h2>
+
+                <p>An entry point of a Kite application is the <code>main</code> function:</p>
+
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    <div class="code-block">
+                        <code><span class="keyword">fun</span> <span class="function">main</span>() {
+                            <span class="function">println</span>(<span class="string">"Hello world!"</span>)
+                            }</code>
+                    </div>
+                </div>
+
+                <p>Another form of <code>main</code> accepts a variable number of String arguments:</p>
+
+                <div class="code-block-wrapper">
+                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                    <div class="code-block">
+                        <code><span class="keyword">fun</span> <span class="function">main</span>(args: Array&lt;String&gt;)
+                            {
+                            <span class="function">println</span>(args.contentToString())
+                            }</code>
+                    </div>
+                </div>
             </div>
         </div>
 
