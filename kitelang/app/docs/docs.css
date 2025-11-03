@@ -60,6 +60,8 @@
     position: relative;
     font-size: 16px;
     font-weight: 400;
+    min-height: 100vh;
+    isolation: isolate;
 }
 
 .html {
@@ -744,13 +746,13 @@
 
 /* Floating action buttons */
 .fab-container {
-    position: fixed;
-    bottom: 30px;
+    position: fixed !important;
+    bottom: 30px !important;
     right: 330px;
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 15px;
-    z-index: 100;
+    z-index: 100 !important;
 }
 
 .fab {

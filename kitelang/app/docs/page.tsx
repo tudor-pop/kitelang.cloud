@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import './docs.css';
+import TableOfContents from './TableOfContents';
+import Sidebar from './Sidebar';
+import Footer from './Footer';
 
 export default function DocsPage() {
     const [activePage, setActivePage] = useState('page-home');
@@ -192,88 +195,12 @@ export default function DocsPage() {
 
             <div className="container">
                 {/* Left Sidebar Navigation */}
-                <aside className={`left-sidebar ${sidebarOpen ? 'open' : ''}`}>
-                    <div className="sidebar-header">
-                        <div className="sidebar-logo">
-                            <div className="logo-text">Kite</div>
-                            <span className="version-badge">v0.0.2</span>
-                        </div>
-                    </div>
-
-                    <ul className="sidebar-menu">
-                        <li>
-                            <a
-                                href="#"
-                                onClick={(e) => { e.preventDefault(); showPage('page-home'); }}
-                                className={activePage === 'page-home' ? 'active' : ''}
-                            >
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                onClick={(e) => { e.preventDefault(); showPage('page-overview'); }}
-                                className={activePage === 'page-overview' ? 'active' : ''}
-                            >
-                                Overview
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                onClick={(e) => { e.preventDefault(); showPage('page-basics'); }}
-                                className={activePage === 'page-basics' ? 'active' : ''}
-                            >
-                                Basics
-                            </a>
-                        </li>
-                        <li>
-                            <div
-                                className={`menu-item expandable ${expandedMenus['concepts'] ? 'expanded' : ''}`}
-                                onClick={() => toggleMenu('concepts')}
-                            >
-                                Concepts
-                            </div>
-                            <ul className={`nested ${expandedMenus['concepts'] ? 'show' : ''}`}>
-                                <li>
-                                    <div
-                                        className={`menu-item expandable ${expandedMenus['types'] ? 'expanded' : ''}`}
-                                        onClick={() => toggleMenu('types')}
-                                    >
-                                        Types
-                                    </div>
-                                    <ul className={`nested ${expandedMenus['types'] ? 'show' : ''}`}>
-                                        <li>
-                                            <div
-                                                className={`menu-item expandable ${expandedMenus['basicTypes'] ? 'expanded' : ''}`}
-                                                onClick={() => toggleMenu('basicTypes')}
-                                            >
-                                                Basic types
-                                            </div>
-                                            <ul className={`nested ${expandedMenus['basicTypes'] ? 'show' : ''}`}>
-                                                <li><a href="#overview">Overview</a></li>
-                                                <li><a href="#numbers">Numbers</a></li>
-                                                <li><a href="#unsigned">Unsigned integer types</a></li>
-                                                <li><a href="#booleans">Booleans</a></li>
-                                                <li><a href="#characters">Characters</a></li>
-                                                <li><a href="#strings">Strings</a></li>
-                                                <li><a href="#arrays">Arrays</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a href="#type-checks">Type checks and casts</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <div className="menu-item expandable">
-                                Control flow
-                            </div>
-                        </li>
-                        <li><a href="#packages">Packages and imports</a></li>
-                    </ul>
-                </aside>
+                <Sidebar
+                    isOpen={sidebarOpen}
+                    expandedMenus={expandedMenus}
+                    onToggleMenu={toggleMenu}
+                    onShowPage={showPage}
+                />
 
                 {/* Main Content */}
                 <main
@@ -670,70 +597,18 @@ export default function DocsPage() {
                     </div>
 
                     {/* Footer */}
-                    <footer className="footer">
-                        <div className="footer-content">
-                            <div className="footer-section">
-                                <h3>Documentation</h3>
-                                <ul>
-                                    <li><a href="#get-started">Get Started</a></li>
-                                    <li><a href="#basics">Basics</a></li>
-                                    <li><a href="#concepts">Concepts</a></li>
-                                    <li><a href="#api-reference">API Reference</a></li>
-                                </ul>
-                            </div>
-                            <div className="footer-section">
-                                <h3>Community</h3>
-                                <ul>
-                                    <li><a href="https://github.com/kite" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                                    <li><a href="https://discord.gg/kite" target="_blank" rel="noopener noreferrer">Discord</a></li>
-                                    <li><a href="https://twitter.com/kitelang" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-                                    <li><a href="https://stackoverflow.com/questions/tagged/kite" target="_blank" rel="noopener noreferrer">Stack Overflow</a></li>
-                                </ul>
-                            </div>
-                            <div className="footer-section">
-                                <h3>Resources</h3>
-                                <ul>
-                                    <li><a href="#tutorials">Tutorials</a></li>
-                                    <li><a href="#examples">Examples</a></li>
-                                    <li><a href="#blog">Blog</a></li>
-                                    <li><a href="#changelog">Changelog</a></li>
-                                </ul>
-                            </div>
-                            <div className="footer-section">
-                                <h3>More</h3>
-                                <ul>
-                                    <li><a href="#about">About</a></li>
-                                    <li><a href="#team">Team</a></li>
-                                    <li><a href="#privacy">Privacy Policy</a></li>
-                                    <li><a href="#terms">Terms of Service</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="footer-bottom">
-                            <p>© 2025 Kite Programming Language. Licensed under <a href="https://faircode.io/" target="_blank" rel="noopener noreferrer">Fair
-                                Code</a>. Built with ❤️ from Europe 🇪🇺.</p>
-                        </div>
-                    </footer>
+                    <Footer />
                 </main>
 
                 {/* Right Sidebar - Table of Contents */}
-                {showToc && (
-                    <aside className="right-sidebar">
-                        <div className="toc-island">
-                            <div className="toc-header">On This Page</div>
-                            <ul className="toc-menu">
-                                {tocContent}
-                            </ul>
-                        </div>
-                    </aside>
-                )}
+                <TableOfContents content={tocContent} show={showToc} />
             </div>
 
             {/* Floating Action Buttons */}
             <div
                 className="fab-container"
                 style={{
-                    right: showToc ? '330px' : '90px'
+                    right: showToc ? '40px' : '90px'
                 }}
             >
                 <button className="fab" title="Scroll to top" onClick={scrollToTop}>↑</button>
