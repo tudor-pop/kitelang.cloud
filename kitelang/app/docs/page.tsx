@@ -259,9 +259,6 @@ export default function DocsPage() {
                     }}
                 >
                     <button className="fab" title="Scroll to top" onClick={scrollToTop}>↑</button>
-                    <button className="fab" title="Toggle theme" onClick={toggleTheme}>
-                        {theme === 'dark' ? '☀️' : '🌙'}
-                    </button>
                 </div>
             </div>
         </div>
