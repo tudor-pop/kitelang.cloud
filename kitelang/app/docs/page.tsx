@@ -228,20 +228,22 @@ export default function DocsPage() {
                 />
 
                 {/* Right Sidebar - Table of Contents */}
-                <TableOfContents content={tocContent} show={showToc} />
-            </div>
+                {showToc && <TableOfContents content={tocContent} show={showToc} />}
 
-            {/* Floating Action Buttons */}
-            <div
-                className="fab-container"
-                style={{
-                    right: '90px'
-                }}
-            >
-                <button className="fab" title="Scroll to top" onClick={scrollToTop}>↑</button>
-                <button className="fab" title="Toggle theme" onClick={toggleTheme}>
-                    {theme === 'dark' ? '☀️' : '🌙'}
-                </button>
+                {/* Floating Action Buttons */}
+                <div
+                    className="fab-container"
+                    style={{
+                        position: 'fixed',
+                        right: showToc ? '330px' : '90px',
+                        bottom: '30px'
+                    }}
+                >
+                    <button className="fab" title="Scroll to top" onClick={scrollToTop}>↑</button>
+                    <button className="fab" title="Toggle theme" onClick={toggleTheme}>
+                        {theme === 'dark' ? '☀️' : '🌙'}
+                    </button>
+                </div>
             </div>
         </div>
     );

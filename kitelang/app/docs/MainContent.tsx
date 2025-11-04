@@ -27,9 +27,6 @@ export default function MainContent({
         <main
             className="main-content"
             ref={contentRef}
-            style={{
-                marginRight: showToc ? '280px' : '40px'
-            }}
         >
             {/* Home Page */}
             <div className={`page-section ${activePage === 'page-home' ? 'active' : ''}`}>
