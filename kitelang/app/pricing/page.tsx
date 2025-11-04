@@ -165,7 +165,7 @@ export default function PricingPage() {
                             <h4 className="footer-title">Community</h4>
                             <a href="https://github.com/tudor-pop/kitelang" target="_blank" rel="noopener noreferrer">GitHub</a>
                             <a href="#">Discord</a>
-                            <a href="#">Twitter</a>
+                            <a href="https://x.com/kite_lang">X</a>
                             <a href="#">Blog</a>
                         </div>
                         <div className="footer-column">
