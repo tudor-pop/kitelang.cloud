@@ -3,41 +3,27 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Footer from './components/Footer';
+import InteractiveCodeBlock from './components/InteractiveCodeBlock';
 
 const codeExamples = [
     {
         title: 'AWS VPC',
-        code: `package infrastructure
-
-import aws.*
+        code: `import aws.*
 
 resource vpc = VPC {
     name = "production-vpc"
     cidr = "10.0.0.0/16"
     region = "us-east-1"
-}
-
-resource server = EC2Instance {
-    name = "web-server"
-    type = "t3.medium"
-    vpc = vpc
-    tags = {
-        environment = "production"
-    }
 }`,
         steps: [
-            { line: 0, label: 'Package declaration' },
-            { line: 2, label: 'Import AWS modules' },
-            { line: 4, label: 'Define VPC resource' },
-            { line: 10, label: 'Create EC2 instance' }
+            { line: 0, label: 'Import AWS modules' },
+            { line: 2, label: 'Define VPC resource' }
         ]
     },
     {
         title: 'Multi-Cloud',
-        code: `package infrastructure
-
-import aws.*
-import kite.cloud.gcp.*
+        code: `import aws.*
+import gcp.*
 
 resource awsVpc = VPC {
     name = "aws-network"
@@ -49,17 +35,14 @@ resource gcpNetwork = Network {
     autoCreateSubnetworks = false
 }`,
         steps: [
-            { line: 0, label: 'Package declaration' },
-            { line: 2, label: 'Import multiple clouds' },
-            { line: 5, label: 'AWS VPC' },
-            { line: 10, label: 'GCP Network' }
+            { line: 0, label: 'Import multiple clouds' },
+            { line: 3, label: 'AWS VPC' },
+            { line: 8, label: 'GCP Network' }
         ]
     },
     {
         title: 'With Functions',
-        code: `package infrastructure
-
-import aws.*
+        code: `import aws.*
 
 fun createVpc(name: String, cidr: String) {
     return VPC {
@@ -71,20 +54,14 @@ fun createVpc(name: String, cidr: String) {
 
 resource vpc = createVpc("prod", "10.0.0.0/16")`,
         steps: [
-            { line: 0, label: 'Package declaration' },
-            { line: 4, label: 'Define reusable function' },
-            { line: 12, label: 'Use function to create VPC' }
+            { line: 2, label: 'Define reusable function' },
+            { line: 10, label: 'Use function to create VPC' }
         ]
     }
 ];
 
 export default function LandingPage() {
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
-    const [activeTab, setActiveTab] = useState(0);
-    const [displayedCode, setDisplayedCode] = useState('');
-    const [isTyping, setIsTyping] = useState(true);
-    const [currentStep, setCurrentStep] = useState(0);
-    const [, forceUpdate] = useState({});
 
     // Detect system theme on mount
     useEffect(() => {
@@ -114,129 +91,11 @@ export default function LandingPage() {
         return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
 
-    // Typing animation
-    useEffect(() => {
-        const code = codeExamples[activeTab].code;
-
-        // Skip typing animation temporarily for testing
-        setDisplayedCode(code);
-        setIsTyping(false);
-        setCurrentStep(0);
-
-        // // Uncomment for typing animation:
-        // setDisplayedCode('');
-        // setIsTyping(true);
-        // setCurrentStep(0);
-        // let index = 0;
-        // const typingInterval = setInterval(() => {
-        //     if (index < code.length) {
-        //         setDisplayedCode(code.substring(0, index + 1));
-        //         index++;
-        //     } else {
-        //         setIsTyping(false);
-        //         clearInterval(typingInterval);
-        //     }
-        // }, 20);
-        // return () => clearInterval(typingInterval);
-    }, [activeTab]);
-
-    // Step highlighting
-    useEffect(() => {
-        if (!isTyping) {
-            const steps = codeExamples[activeTab].steps;
-            let stepIndex = 0;
-
-            const stepInterval = setInterval(() => {
-                setCurrentStep(stepIndex % steps.length);
-                stepIndex++;
-            }, 2000);
-
-            return () => clearInterval(stepInterval);
-        }
-    }, [isTyping, activeTab]);
-
     const toggleTheme = () => {
         const newTheme = theme === 'dark' ? 'light' : 'dark';
         setTheme(newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-    };
-
-    const highlightSyntax = (code: string) => {
-        const lines = code.split('\n');
-        const activeStep = codeExamples[activeTab].steps[currentStep];
-
-        return lines.map((lineText, lineIndex) => {
-            const isHighlighted = !isTyping && activeStep.line === lineIndex;
-            const lineClass = isHighlighted ? 'code-line highlighted' : 'code-line';
-
-            if (!lineText.trim()) {
-                return (
-                    <div key={lineIndex} className={lineClass}>
-                        <span className="line-number">{lineIndex + 1}</span>
-                        <span>&nbsp;</span>
-                    </div>
-                );
-            }
-
-            // During typing, show plain text
-            if (isTyping) {
-                return (
-                    <div key={lineIndex} className={lineClass}>
-                        <span className="line-number">{lineIndex + 1}</span>
-                        <span>{lineText}</span>
-                    </div>
-                );
-            }
-
-            // After typing - parse into React elements
-            const tokens: React.ReactNode[] = [];
-            let pos = 0;
-            let key = 0;
-
-            // Define token patterns with priority (higher index = higher priority)
-            const tokenPatterns = [
-                { regex: /^\/\/.*$/, className: 'comment' },
-                { regex: /^"(?:[^"\\]|\\.)*"/, className: 'string' },
-                { regex: /^\b(package|import|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected)\b/, className: 'keyword' },
-                { regex: /^\b\d+\.?\d*\b/, className: 'number' },
-                { regex: /^[={}()[\]:,.]/, className: 'operator' },
-            ];
-
-            while (pos < lineText.length) {
-                let matched = false;
-
-                // Try to match each pattern at current position
-                for (const pattern of tokenPatterns) {
-                    const remaining = lineText.substring(pos);
-                    const match = remaining.match(pattern.regex);
-
-                    if (match) {
-                        tokens.push(
-                            <span key={key++} className={pattern.className}>
-                                {match[0]}
-                            </span>
-                        );
-                        pos += match[0].length;
-                        matched = true;
-                        break;
-                    }
-                }
-
-                // No pattern matched, add single character as plain text
-                if (!matched) {
-                    tokens.push(<span key={key++}>{lineText[pos]}</span>);
-                    pos++;
-                }
-            }
-
-            return (
-                <div key={lineIndex} className={lineClass}>
-                    <span className="line-number">{lineIndex + 1}</span>
-                    <span>{tokens}</span>
-                </div>
-            );
-        });
     };
 
     return (
@@ -274,34 +133,7 @@ export default function LandingPage() {
                         </div>
                     </div>
                     <div className="hero-code">
-                        <div className="code-window">
-                            <div className="code-header">
-                                <div className="code-tabs">
-                                    {codeExamples.map((example, index) => (
-                                        <button
-                                            key={index}
-                                            className={`code-tab ${activeTab === index ? 'active' : ''}`}
-                                            onClick={() => setActiveTab(index)}
-                                        >
-                                            {example.title}
-                                        </button>
-                                    ))}
-                                </div>
-                                <button className="copy-btn" onClick={() => navigator.clipboard.writeText(codeExamples[activeTab].code)}>
-                                    Copy
-                                </button>
-                            </div>
-                            <div className="code-content">
-                                {highlightSyntax(displayedCode)}
-                            </div>
-                            {!isTyping && (
-                                <div className="code-footer">
-                                    <div className="step-indicator">
-                                        <span className="step-label">{codeExamples[activeTab].steps[currentStep].label}</span>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                        <InteractiveCodeBlock examples={codeExamples} />
                     </div>
                 </section>
 
