@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Footer from '../components/Footer';
 
 export default function PricingPage() {
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -152,36 +153,7 @@ export default function PricingPage() {
                 </section>
 
                 {/* Footer */}
-                <footer className="footer">
-                    <div className="footer-content">
-                        <div className="footer-column">
-                            <h4 className="footer-title">Product</h4>
-                            <Link href="/docs">Documentation</Link>
-                            <Link href="/#features">Features</Link>
-                            <Link href="/pricing">Pricing</Link>
-                            <a href="/changelog">Changelog</a>
-                        </div>
-                        <div className="footer-column">
-                            <h4 className="footer-title">Community</h4>
-                            <a href="https://github.com/tudor-pop/kitelang" target="_blank" rel="noopener noreferrer">GitHub</a>
-                            <a href="#">Discord</a>
-                            <a href="https://x.com/kite_lang" target="_blank">X</a>
-                            <a href="#">Blog</a>
-                        </div>
-                        <div className="footer-column">
-                            <h4 className="footer-title">Company</h4>
-                            <a href="#">About</a>
-                            <a href="#">Contact</a>
-                            <a href="/LICENSE.html">License</a>
-                            <a href="#">Terms</a>
-                        </div>
-                        <div className="footer-column">
-                            <h4 className="footer-title">Kite</h4>
-                            <p className="footer-text">Modern Infrastructure as Code for the multi-cloud era.</p>
-                            <p className="footer-copyright">© 2025 EchoStream SRL</p>
-                        </div>
-                    </div>
-                </footer>
+                <Footer />
             </main>
 
             <style jsx global>{`
