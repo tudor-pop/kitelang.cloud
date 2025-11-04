@@ -25,7 +25,7 @@ export default function Footer() {
                         <h4>Community</h4>
                         <ul>
                             <li><a href="https://discord.gg/kite">Discord</a></li>
-                            <li><a href="https://x.com/kite_lang">X</a></li>
+                            <li><a href="https://x.com/kite_lang" target="_blank">X</a></li>
                             <li><a href="/blog">Blog</a></li>
                         </ul>
                     </div>
