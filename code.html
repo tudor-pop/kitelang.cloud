@@ -86,20 +86,20 @@
 
 <script>
     const snippets = {
-        resources: `import Bucket from "kite.cloud.storage.Bucket" // clean import statement
+        resources: `import Bucket from "kite.cloud.storage" // clean import statement
 
 @provisionOn([aws, gcp])
 resource Bucket photos {
     name = "my-photos"
 }
 
-// decorator and metadata are outside the resource block. Provisioning to some default provider
-@dependsOn(Bucket.photos)
+// decorators and metadata are outside the resource block
+@dependsOn(photos)
 resource Bucket videos {
     name = "my-videos"
 }
 
-for bucket in [Bucket.photos, Bucket.videos] {
+for bucket in [photos, videos] {
     println(bucket)
 }
 `,

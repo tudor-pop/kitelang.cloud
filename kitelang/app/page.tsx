@@ -7,22 +7,8 @@ import InteractiveCodeBlock from './components/InteractiveCodeBlock';
 
 const codeExamples = [
     {
-        title: 'AWS VPC',
-        code: `import aws.*
-
-resource vpc = VPC {
-    name = "production-vpc"
-    cidr = "10.0.0.0/16"
-    region = "us-east-1"
-}`,
-        steps: [
-            { line: 0, label: 'Import AWS modules' },
-            { line: 2, label: 'Define VPC resource' }
-        ]
-    },
-    {
         title: 'Multi-Cloud',
-        code: `import aws.*
+        code: `import * from aws
 import gcp.*
 
 resource awsVpc = VPC {
@@ -41,8 +27,22 @@ resource gcpNetwork = Network {
         ]
     },
     {
+        title: 'AWS VPC',
+        code: `import * from aws
+
+resource vpc = VPC {
+    name = "production-vpc"
+    cidr = "10.0.0.0/16"
+    region = "us-east-1"
+}`,
+        steps: [
+            { line: 0, label: 'Import AWS modules' },
+            { line: 2, label: 'Define VPC resource' }
+        ]
+    },
+    {
         title: 'With Functions',
-        code: `import aws.*
+        code: `import * from aws
 
 fun createVpc(name: String, cidr: String) {
     return VPC {

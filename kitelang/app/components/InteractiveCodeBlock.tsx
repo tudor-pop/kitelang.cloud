@@ -95,7 +95,7 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
             const tokenPatterns = [
                 { regex: /^\/\/.*$/, className: 'comment' },
                 { regex: /^"(?:[^"\\]|\\.)*"/, className: 'string' },
-                { regex: /^\b(package|import|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected)\b/, className: 'keyword' },
+                { regex: /^\b(package|import|from|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected)\b/, className: 'keyword' },
                 { regex: /^\b\d+\.?\d*\b/, className: 'number' },
                 { regex: /^[={}()[\]:,.]/, className: 'operator' },
             ];
