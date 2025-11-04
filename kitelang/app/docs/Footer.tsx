@@ -3,145 +3,101 @@
 import React from 'react';
 
 export default function Footer() {
-    const currentYear = new Date().getFullYear();
-
     return (
         <>
             <footer className="footer">
                 <div className="footer-content">
-                    <div className="footer-section">
-                        <h3>Kite</h3>
-                        <p>Modern Infrastructure as Code for multi-cloud deployments.</p>
+                    <div className="footer-column">
+                        <h4 className="footer-title">Product</h4>
+                        <a href="/docs">Documentation</a>
+                        <a href="/#features">Features</a>
+                        <a href="/pricing">Pricing</a>
+                        <a href="/changelog">Changelog</a>
                     </div>
-                    <div className="footer-section">
-                        <h4>Resources</h4>
-                        <ul>
-                            <li><a href="/docs">Documentation</a></li>
-                            <li><a href="https://github.com/kitelang/kite">GitHub</a></li>
-                            <li><a href="/examples">Examples</a></li>
-                        </ul>
+                    <div className="footer-column">
+                        <h4 className="footer-title">Community</h4>
+                        <a href="https://github.com/tudor-pop/kitelang" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a href="#">Discord</a>
+                        <a href="https://x.com/kite_lang" target="_blank" rel="noopener noreferrer">X</a>
+                        <a href="#">Blog</a>
                     </div>
-                    <div className="footer-section">
-                        <h4>Community</h4>
-                        <ul>
-                            <li><a href="https://discord.gg/kite">Discord</a></li>
-                            <li><a href="https://x.com/kite_lang" target="_blank">X</a></li>
-                            <li><a href="/blog">Blog</a></li>
-                        </ul>
+                    <div className="footer-column">
+                        <h4 className="footer-title">Company</h4>
+                        <a href="#">About</a>
+                        <a href="#">Contact</a>
+                        <a href="/LICENSE.html">License</a>
+                        <a href="#">Terms</a>
                     </div>
-                </div>
-                <div className="footer-bottom">
-                    <p>&copy; {currentYear} EchoStream SRL. Licensed under Fair Code.</p>
+                    <div className="footer-column">
+                        <h4 className="footer-title">Kite</h4>
+                        <p className="footer-text">Modern Infrastructure as Code for the multi-cloud era.</p>
+                        <p className="footer-copyright">© 2025 EchoStream SRL</p>
+                    </div>
                 </div>
             </footer>
 
             <style jsx>{`
                 .footer {
-                    background: #FFFFFF;
-                    border-radius: 16px;
-                    border: 2px solid var(--border-color);
-                    box-shadow: none;
-                    padding: 48px 48px 24px 48px;
-                    margin: 32px 32px 24px 32px;
-                    position: relative;
-                    transition: none;
-                    font-family: 'Roboto Mono', 'Consolas', monospace;
-                }
-
-                :global([data-theme="dark"]) .footer {
-                    background: #1A1A1A;
-                    border-color: #2A2A2A;
-                    box-shadow: none;
+                    background: var(--bg-secondary);
+                    border-top: 2px solid var(--border-color);
+                    padding: 60px 40px 40px;
+                    margin-top: 100px;
+                    border-radius: 0;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom: none;
                 }
 
                 .footer-content {
-                    max-width: 1200px;
-                    margin: 0 auto;
                     display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                    gap: 48px;
-                    margin-bottom: 40px;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 40px;
+                    max-width: 1400px;
+                    margin: 0 auto;
                 }
 
-                :global(.footer-section h3) {
+                .footer-column {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
+                }
+
+                .footer-title {
                     font-size: 14px;
-                    font-weight: 600;
-                    color: var(--text-primary);
-                    margin-bottom: 16px;
+                    font-weight: 900;
                     text-transform: uppercase;
-                    letter-spacing: 0.5px;
+                    letter-spacing: 1px;
+                    margin-bottom: 8px;
+                    color: var(--text-primary);
                 }
 
-                :global(.footer-section h4) {
+                .footer-column a {
                     font-size: 14px;
-                    font-weight: 600;
-                    color: var(--text-primary);
-                    margin-bottom: 16px;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                }
-
-                :global(.footer-section p) {
                     color: var(--text-secondary);
+                    text-decoration: none;
+                    transition: color 0.2s;
+                    border: none;
+                }
+
+                .footer-column a:hover {
+                    color: var(--primary-color);
+                }
+
+                .footer-text {
                     font-size: 14px;
                     line-height: 1.6;
-                }
-
-                :global(.footer-section ul) {
-                    list-style: none;
-                    padding: 0;
-                }
-
-                :global(.footer-section ul li) {
-                    margin-bottom: 8px;
-                }
-
-                :global(.footer-section a) {
                     color: var(--text-secondary);
-                    font-size: 14px;
-                    border: none;
                 }
 
-                :global(.footer-section a:hover) {
-                    color: var(--primary-color);
-                }
-
-                .footer-bottom {
-                    border-top: 1px solid var(--border-color);
-                    padding-top: 32px;
-                    margin-top: 40px;
-                    text-align: center;
+                .footer-copyright {
+                    font-size: 12px;
                     color: var(--text-muted);
-                    font-size: 13px;
+                    margin-top: 8px;
                 }
 
-                :global(.footer-bottom a) {
-                    color: var(--primary-color);
-                    border: none;
-                }
-
-                @media (max-width: 1400px) {
-                    .footer {
-                        margin: 32px 32px 24px 32px;
-                    }
-                }
-
-                @media (max-width: 1100px) {
-                    .footer {
-                        margin: 32px 16px 24px 16px;
-                    }
-                }
-
-                @media (max-width: 900px) {
-                    .footer {
-                        margin: 32px 16px 16px 16px;
-                        padding: 32px 24px;
-                        border-radius: 12px;
-                    }
-
+                @media (max-width: 768px) {
                     .footer-content {
-                        grid-template-columns: 1fr;
-                        gap: 24px;
+                        grid-template-columns: repeat(2, 1fr);
                     }
                 }
             `}</style>
