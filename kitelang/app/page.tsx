@@ -4,8 +4,87 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Footer from './components/Footer';
 
+const codeExamples = [
+    {
+        title: 'AWS VPC',
+        code: `package infrastructure
+
+import aws.*
+
+resource vpc = VPC {
+    name = "production-vpc"
+    cidr = "10.0.0.0/16"
+    region = "us-east-1"
+}
+
+resource server = EC2Instance {
+    name = "web-server"
+    type = "t3.medium"
+    vpc = vpc
+    tags = {
+        environment = "production"
+    }
+}`,
+        steps: [
+            { line: 0, label: 'Package declaration' },
+            { line: 2, label: 'Import AWS modules' },
+            { line: 4, label: 'Define VPC resource' },
+            { line: 10, label: 'Create EC2 instance' }
+        ]
+    },
+    {
+        title: 'Multi-Cloud',
+        code: `package infrastructure
+
+import aws.*
+import kite.cloud.gcp.*
+
+resource awsVpc = VPC {
+    name = "aws-network"
+    cidr = "10.0.0.0/16"
+}
+
+resource gcpNetwork = Network {
+    name = "gcp-network"
+    autoCreateSubnetworks = false
+}`,
+        steps: [
+            { line: 0, label: 'Package declaration' },
+            { line: 2, label: 'Import multiple clouds' },
+            { line: 5, label: 'AWS VPC' },
+            { line: 10, label: 'GCP Network' }
+        ]
+    },
+    {
+        title: 'With Functions',
+        code: `package infrastructure
+
+import aws.*
+
+fun createVpc(name: String, cidr: String) {
+    return VPC {
+        name = name
+        cidr = cidr
+        enableDnsHostnames = true
+    }
+}
+
+resource vpc = createVpc("prod", "10.0.0.0/16")`,
+        steps: [
+            { line: 0, label: 'Package declaration' },
+            { line: 4, label: 'Define reusable function' },
+            { line: 12, label: 'Use function to create VPC' }
+        ]
+    }
+];
+
 export default function LandingPage() {
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
+    const [activeTab, setActiveTab] = useState(0);
+    const [displayedCode, setDisplayedCode] = useState('');
+    const [isTyping, setIsTyping] = useState(true);
+    const [currentStep, setCurrentStep] = useState(0);
+    const [, forceUpdate] = useState({});
 
     // Detect system theme on mount
     useEffect(() => {
@@ -35,11 +114,129 @@ export default function LandingPage() {
         return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
 
+    // Typing animation
+    useEffect(() => {
+        const code = codeExamples[activeTab].code;
+
+        // Skip typing animation temporarily for testing
+        setDisplayedCode(code);
+        setIsTyping(false);
+        setCurrentStep(0);
+
+        // // Uncomment for typing animation:
+        // setDisplayedCode('');
+        // setIsTyping(true);
+        // setCurrentStep(0);
+        // let index = 0;
+        // const typingInterval = setInterval(() => {
+        //     if (index < code.length) {
+        //         setDisplayedCode(code.substring(0, index + 1));
+        //         index++;
+        //     } else {
+        //         setIsTyping(false);
+        //         clearInterval(typingInterval);
+        //     }
+        // }, 20);
+        // return () => clearInterval(typingInterval);
+    }, [activeTab]);
+
+    // Step highlighting
+    useEffect(() => {
+        if (!isTyping) {
+            const steps = codeExamples[activeTab].steps;
+            let stepIndex = 0;
+
+            const stepInterval = setInterval(() => {
+                setCurrentStep(stepIndex % steps.length);
+                stepIndex++;
+            }, 2000);
+
+            return () => clearInterval(stepInterval);
+        }
+    }, [isTyping, activeTab]);
+
     const toggleTheme = () => {
         const newTheme = theme === 'dark' ? 'light' : 'dark';
         setTheme(newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
+    };
+
+    const highlightSyntax = (code: string) => {
+        const lines = code.split('\n');
+        const activeStep = codeExamples[activeTab].steps[currentStep];
+
+        return lines.map((lineText, lineIndex) => {
+            const isHighlighted = !isTyping && activeStep.line === lineIndex;
+            const lineClass = isHighlighted ? 'code-line highlighted' : 'code-line';
+
+            if (!lineText.trim()) {
+                return (
+                    <div key={lineIndex} className={lineClass}>
+                        <span className="line-number">{lineIndex + 1}</span>
+                        <span>&nbsp;</span>
+                    </div>
+                );
+            }
+
+            // During typing, show plain text
+            if (isTyping) {
+                return (
+                    <div key={lineIndex} className={lineClass}>
+                        <span className="line-number">{lineIndex + 1}</span>
+                        <span>{lineText}</span>
+                    </div>
+                );
+            }
+
+            // After typing - parse into React elements
+            const tokens: React.ReactNode[] = [];
+            let pos = 0;
+            let key = 0;
+
+            // Define token patterns with priority (higher index = higher priority)
+            const tokenPatterns = [
+                { regex: /^\/\/.*$/, className: 'comment' },
+                { regex: /^"(?:[^"\\]|\\.)*"/, className: 'string' },
+                { regex: /^\b(package|import|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected)\b/, className: 'keyword' },
+                { regex: /^\b\d+\.?\d*\b/, className: 'number' },
+                { regex: /^[={}()[\]:,.]/, className: 'operator' },
+            ];
+
+            while (pos < lineText.length) {
+                let matched = false;
+
+                // Try to match each pattern at current position
+                for (const pattern of tokenPatterns) {
+                    const remaining = lineText.substring(pos);
+                    const match = remaining.match(pattern.regex);
+
+                    if (match) {
+                        tokens.push(
+                            <span key={key++} className={pattern.className}>
+                                {match[0]}
+                            </span>
+                        );
+                        pos += match[0].length;
+                        matched = true;
+                        break;
+                    }
+                }
+
+                // No pattern matched, add single character as plain text
+                if (!matched) {
+                    tokens.push(<span key={key++}>{lineText[pos]}</span>);
+                    pos++;
+                }
+            }
+
+            return (
+                <div key={lineIndex} className={lineClass}>
+                    <span className="line-number">{lineIndex + 1}</span>
+                    <span>{tokens}</span>
+                </div>
+            );
+        });
     };
 
     return (
@@ -79,31 +276,31 @@ export default function LandingPage() {
                     <div className="hero-code">
                         <div className="code-window">
                             <div className="code-header">
-                                <span className="code-title">main.kite</span>
-                                <button className="copy-btn">Copy</button>
+                                <div className="code-tabs">
+                                    {codeExamples.map((example, index) => (
+                                        <button
+                                            key={index}
+                                            className={`code-tab ${activeTab === index ? 'active' : ''}`}
+                                            onClick={() => setActiveTab(index)}
+                                        >
+                                            {example.title}
+                                        </button>
+                                    ))}
+                                </div>
+                                <button className="copy-btn" onClick={() => navigator.clipboard.writeText(codeExamples[activeTab].code)}>
+                                    Copy
+                                </button>
                             </div>
-                            <pre className="code-content">
-{`package infrastructure
-
-import kite.cloud.aws.*
-import kite.cloud.gcp.*
-
-resource vpc = VPC {
-    name = "production-vpc"
-    cidr = "10.0.0.0/16"
-    region = "us-east-1"
-}
-
-resource server = EC2Instance {
-    name = "web-server"
-    type = "t3.medium"
-    vpc = vpc
-    tags = {
-        environment = "production"
-        managed_by = "kite"
-    }
-}`}
-                            </pre>
+                            <div className="code-content">
+                                {highlightSyntax(displayedCode)}
+                            </div>
+                            {!isTyping && (
+                                <div className="code-footer">
+                                    <div className="step-indicator">
+                                        <span className="step-label">{codeExamples[activeTab].steps[currentStep].label}</span>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>
@@ -380,6 +577,34 @@ resource server = EC2Instance {
                     border-bottom: 2px solid var(--border-color);
                 }
 
+                .code-tabs {
+                    display: flex;
+                    gap: 8px;
+                }
+
+                .code-tab {
+                    padding: 6px 16px;
+                    background: transparent;
+                    border: 2px solid var(--border-color);
+                    border-radius: 4px;
+                    font-family: 'Roboto Mono', monospace;
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--text-secondary);
+                    cursor: pointer;
+                    transition: all 0.2s;
+                }
+
+                .code-tab:hover {
+                    background: var(--primary-light);
+                    color: var(--bg-primary);
+                }
+
+                .code-tab.active {
+                    background: var(--primary-color);
+                    color: var(--bg-primary);
+                }
+
                 .code-title {
                     font-family: 'Roboto Mono', monospace;
                     font-size: 14px;
@@ -396,6 +621,11 @@ resource server = EC2Instance {
                     font-size: 12px;
                     font-weight: 700;
                     cursor: pointer;
+                    transition: all 0.2s;
+                }
+
+                .copy-btn:hover {
+                    background: var(--primary-dark);
                 }
 
                 .code-content {
@@ -405,6 +635,72 @@ resource server = EC2Instance {
                     line-height: 1.8;
                     color: var(--text-primary);
                     overflow-x: auto;
+                    min-height: 400px;
+                }
+
+                .code-line {
+                    display: flex;
+                    gap: 16px;
+                    padding: 2px 0;
+                    transition: background 0.3s ease;
+                }
+
+                .code-line.highlighted {
+                    background: var(--primary-color);
+                    background: rgba(168, 85, 247, 0.15);
+                    border-left: 3px solid var(--primary-color);
+                    padding-left: 8px;
+                    margin-left: -11px;
+                }
+
+                .line-number {
+                    color: var(--text-muted);
+                    user-select: none;
+                    min-width: 30px;
+                    text-align: right;
+                    font-size: 12px;
+                }
+
+                .code-footer {
+                    padding: 12px 20px;
+                    background: var(--bg-secondary);
+                    border-top: 2px solid var(--border-color);
+                }
+
+                .step-indicator {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                .step-label {
+                    font-family: 'Roboto Mono', monospace;
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: var(--primary-color);
+                }
+
+                /* Syntax Highlighting */
+                .keyword {
+                    color: #A855F7;
+                    font-weight: 600;
+                }
+
+                .string {
+                    color: #10B981;
+                }
+
+                .number {
+                    color: #F59E0B;
+                }
+
+                .operator {
+                    color: var(--text-secondary);
+                }
+
+                .comment {
+                    color: var(--text-muted);
+                    font-style: italic;
                 }
 
                 /* Features Section */
