@@ -359,8 +359,6 @@ resource server = EC2Instance {
                 }
 
                 .secondary-button:hover {
-                    background: var(--text-primary);
-                    color: var(--bg-primary);
                     transform: translate(-4px, -4px);
                     box-shadow: 4px 4px 0 var(--border-color);
                 }
