@@ -565,59 +565,6 @@ resource server = EC2Instance {
                     box-shadow: 4px 4px 0 var(--border-color);
                 }
 
-                /* Footer */
-                .footer {
-                    background: var(--bg-secondary);
-                    border-top: 2px solid var(--border-color);
-                    padding: 60px 40px 40px;
-                }
-
-                .footer-content {
-                    display: grid;
-                    grid-template-columns: repeat(4, 1fr);
-                    gap: 40px;
-                    max-width: 1400px;
-                    margin: 0 auto;
-                }
-
-                .footer-column {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 12px;
-                }
-
-                .footer-title {
-                    font-size: 14px;
-                    font-weight: 900;
-                    text-transform: uppercase;
-                    letter-spacing: 1px;
-                    margin-bottom: 8px;
-                    color: var(--text-primary);
-                }
-
-                .footer-column a {
-                    font-size: 14px;
-                    color: var(--text-secondary);
-                    text-decoration: none;
-                    transition: color 0.2s;
-                }
-
-                .footer-column a:hover {
-                    color: var(--primary-color);
-                }
-
-                .footer-text {
-                    font-size: 14px;
-                    line-height: 1.6;
-                    color: var(--text-secondary);
-                }
-
-                .footer-copyright {
-                    font-size: 12px;
-                    color: var(--text-muted);
-                    margin-top: 8px;
-                }
-
                 /* Responsive */
                 @media (max-width: 1200px) {
                     .hero-section {
@@ -655,10 +602,6 @@ resource server = EC2Instance {
 
                     .features-grid {
                         grid-template-columns: 1fr;
-                    }
-
-                    .footer-content {
-                        grid-template-columns: repeat(2, 1fr);
                     }
                 }
             `}</style>
