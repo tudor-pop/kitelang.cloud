@@ -66,7 +66,7 @@ export default function LandingPage() {
                 {/* Hero Section */}
                 <section className="hero-section">
                     <div className="hero-content">
-                        <h1 className="hero-title">Infrastructure as Code.<br />Brutally Simple.</h1>
+                        <h1 className="hero-title">Infrastructure as Code.<br />Actually Simple.</h1>
                         <p className="hero-subtitle">
                             Define your cloud infrastructure with precision and clarity.
                             Deploy anywhere. Scale effortlessly. Built for the multi-cloud era.
@@ -328,7 +328,7 @@ resource server = EC2Instance {
                 .primary-button {
                     padding: 16px 32px;
                     background: var(--primary-color);
-                    color: var(--bg-primary);
+                    color: #FFFFFF;
                     border: 2px solid var(--border-color);
                     border-radius: 4px;
                     font-size: 16px;

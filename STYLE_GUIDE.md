@@ -16,6 +16,8 @@ The Kite documentation uses a **clean brutalist design system** featuring bold t
 - **Fully responsive**: Mobile-first with hamburger menu
 - **System-aware dark mode**: With manual override capability
 - **Material Design 3 purple**: #A855F7 as primary accent color
+- **Component modularity**: Reusable components across pages to maintain consistency
+- **DRY principle**: Don't Repeat Yourself - shared components for common UI elements
 
 ---
 
@@ -1107,7 +1109,325 @@ interface EditInfoProps {
 
 ---
 
-**Document Version**: 2.1 (Brutalist + Next.js Components)
+## Component Modularity and Reusability
+
+### Why Component Modularity Matters
+
+**Modularity is CRITICAL** for maintaining a consistent, scalable codebase. Instead of duplicating code across pages, we extract common UI elements into shared components. This approach provides:
+
+1. **Single Source of Truth**: Update once, apply everywhere
+2. **Consistency**: Same look and feel across all pages
+3. **Maintainability**: Easier to debug and update
+4. **DRY Principle**: Don't Repeat Yourself - reduces code duplication
+5. **Testability**: Isolated components are easier to test
+6. **Scalability**: Easy to add new pages without rebuilding common elements
+
+### Shared Components Directory
+
+**Location**: `/app/components/`
+
+All reusable components that appear on multiple pages should live here:
+
+```
+kitelang/app/components/
+├── Footer.tsx          # Shared footer across all pages
+├── TopBar.tsx          # (Future) Shared navigation bar
+└── Button.tsx          # (Future) Reusable button component
+```
+
+### Case Study: Footer Component
+
+#### Problem (Before)
+- Footer duplicated on homepage (`app/page.tsx`)
+- Footer duplicated on docs (`app/docs/Footer.tsx`)
+- Footer duplicated on pricing (`app/pricing/page.tsx`)
+- Any change required updating 3 separate files
+- Inconsistent styling and content across pages
+
+#### Solution (After)
+- Created `/app/components/Footer.tsx`
+- All pages import from shared component:
+  ```tsx
+  import Footer from '../components/Footer';
+  // or
+  import Footer from './components/Footer';
+  ```
+- Single file to update for all pages
+- Guaranteed consistency
+
+#### Benefits Achieved
+- **Lines of code saved**: ~120 lines × 2 = 240 lines eliminated
+- **Update time**: From 3 edits down to 1 edit
+- **Bug risk**: Reduced from 3× to 1×
+- **Consistency**: 100% guaranteed across all pages
+
+### Top Navigation Bar Pattern
+
+All pages (landing, docs, pricing) share the same top bar with:
+- Logo + version badge (links to homepage)
+- 5 navigation buttons: Documentation, Features, Pricing, GitHub, Theme Toggle
+- Active state highlighting for current page
+- Fixed positioning at top (70px height)
+- Dark mode support
+
+#### Implementation Guideline
+When adding a new page, reuse the same top bar structure:
+
+```tsx
+<nav className="top-bar">
+  <div className="logo">
+    <Link href="/" ...>
+      <span className="logo-text">Kite</span>
+      <span className="version-badge">v0.0.2</span>
+    </Link>
+  </div>
+  <div className="nav-buttons">
+    <Link href="/docs" className="nav-button {active}">Documentation</Link>
+    <Link href="/#features" className="nav-button">Features</Link>
+    <Link href="/pricing" className="nav-button">Pricing</Link>
+    <a href="https://github.com/...">GitHub</a>
+    <button onClick={toggleTheme}>...</button>
+  </div>
+</nav>
+```
+
+**Future Improvement**: Extract to `/app/components/TopBar.tsx`
+
+### Button Hover Effects Pattern
+
+All secondary buttons (transparent with border) follow the same hover behavior:
+
+```css
+.secondary-button {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.secondary-button:hover {
+  /* NO background color change */
+  /* NO text color change */
+  transform: translate(-4px, -4px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+```
+
+**Key Learning**: Don't change colors on hover for secondary buttons. Only transform and add shadow.
+
+### Color Consistency Across Pages
+
+#### CSS Variables (Shared)
+All pages must use the same CSS custom properties defined in the design system:
+
+```css
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --text-primary: #000000;
+  --primary-color: #A855F7;
+  --border-color: #000000;
+  /* ... */
+}
+
+[data-theme="dark"] {
+  --bg-primary: #000000;
+  --bg-secondary: #1A1A1A;
+  --text-primary: #FFFFFF;
+  --border-color: #FFFFFF;
+  /* ... */
+}
+```
+
+#### Same Primary Color Everywhere
+- **Homepage hero button**: `background: var(--primary-color)`
+- **Pricing "Popular" badge**: `background: var(--primary-color)`
+- **Docs active nav item**: `color: var(--primary-color)`
+- **Code syntax highlighting**: Uses derived colors from primary
+
+### Grid Layout Patterns
+
+Use consistent grid layouts across all pages for similar content:
+
+#### 4-Column Footer Grid
+```css
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+```
+
+#### 3-Column Feature/Pricing Grid
+```css
+.features-grid, .pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+@media (max-width: 1200px) {
+  grid-template-columns: 1fr;
+}
+```
+
+### Lessons Learned from Session
+
+#### 1. Flexbox vs Grid for Layout
+- **Use Flexbox** for simple directional layouts (top bar, button groups)
+- **Use Grid** for complex multi-column layouts (feature cards, pricing cards, footer)
+- **Don't overcomplicate**: Fixed-position sidebars don't need to be in grid
+
+#### 2. Positioning Strategy
+- **Fixed position** elements (top bar, sidebars, FAB) stay outside main layout flow
+- **Use margins** on main content to create space for fixed elements
+- **Don't use overlays** unless intentional (like modal dialogs)
+
+#### 3. When to Extract a Component
+Extract when:
+- ✅ Element appears on 2+ pages
+- ✅ Element is self-contained with clear purpose
+- ✅ Element has 30+ lines of code
+- ✅ Element might be reused in future
+
+Don't extract if:
+- ❌ Element is page-specific
+- ❌ Element is deeply coupled to page state
+- ❌ Element is < 10 lines of simple HTML
+
+#### 4. Theme Support in Components
+Every component must support dark mode:
+
+```tsx
+<style jsx>{`
+  .component {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  :global([data-theme="dark"]) .component {
+    /* Dark overrides if needed */
+  }
+`}</style>
+```
+
+#### 5. Component File Structure
+```tsx
+'use client';  // If uses hooks/interactivity
+
+import React from 'react';
+import Link from 'next/link';  // For internal links
+
+export default function ComponentName() {
+  return (
+    <>
+      <div className="component">
+        {/* JSX */}
+      </div>
+
+      <style jsx>{`
+        /* Scoped styles */
+      `}</style>
+    </>
+  );
+}
+```
+
+### Checklist: Adding a New Page
+
+When creating a new page, ensure:
+
+- [ ] Import and use shared `Footer` component
+- [ ] Use same top bar structure (or shared TopBar component)
+- [ ] Use CSS variables for all colors (`var(--primary-color)`)
+- [ ] Support dark mode with `[data-theme="dark"]` selectors
+- [ ] Match brutalist design (2px borders, no soft shadows)
+- [ ] Use grid for multi-column layouts (features, pricing)
+- [ ] Use same button hover effects (transform + box-shadow only)
+- [ ] Test responsive breakpoints (768px, 1200px)
+- [ ] Fixed top bar height: 70px
+- [ ] Main content: `margin-top: 70px`
+
+### Anti-Patterns to Avoid
+
+❌ **Don't copy-paste entire components**
+```tsx
+// BAD: Duplicating footer on every page
+<footer>...</footer>  // page.tsx
+<footer>...</footer>  // pricing/page.tsx
+<footer>...</footer>  // docs/page.tsx
+```
+
+✅ **Do import shared component**
+```tsx
+// GOOD: Single source of truth
+import Footer from '../components/Footer';
+<Footer />
+```
+
+❌ **Don't hardcode colors**
+```css
+background: #A855F7;  /* BAD */
+```
+
+✅ **Do use CSS variables**
+```css
+background: var(--primary-color);  /* GOOD */
+```
+
+❌ **Don't use different hover effects per page**
+```css
+/* BAD: Homepage button lifts, Pricing button doesn't */
+```
+
+✅ **Do use consistent hover effects**
+```css
+/* GOOD: All secondary buttons behave identically */
+.secondary-button:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+```
+
+### Component Naming Conventions
+
+- **PascalCase** for component files: `Footer.tsx`, `TopBar.tsx`
+- **kebab-case** for CSS classes: `.footer-content`, `.top-bar`
+- **camelCase** for CSS variables: `--primaryColor` ❌ NO, use `--primary-color` ✅
+- **Descriptive names**: `Button.tsx` ❌ too generic, `PrimaryButton.tsx` ✅ specific
+
+### Documentation for New Components
+
+When creating a shared component, document:
+
+1. **Purpose**: What does it do?
+2. **Props**: What parameters does it accept?
+3. **Usage**: How to import and use it?
+4. **Dependencies**: What other components/utils does it need?
+5. **Styling**: Does it support dark mode?
+
+Example:
+```tsx
+/**
+ * Footer Component
+ *
+ * Purpose: Shared footer with 4-column grid layout and company info
+ * Props: None (static content)
+ * Usage: import Footer from '@/components/Footer'; <Footer />
+ * Dependencies: None
+ * Styling: Supports dark mode via [data-theme="dark"]
+ */
+export default function Footer() { ... }
+```
+
+---
+
+**Document Version**: 2.2 (Brutalist + Component Modularity)
 **Last Updated**: January 2025
 **Based on**: Next.js 16 component architecture with styled-jsx
 **Primary Color**: Material Design 3 Purple (#A855F7)
