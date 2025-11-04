@@ -52,7 +52,7 @@ export default function LandingPage() {
                 <div className="nav-buttons">
                     <Link href="/docs" className="nav-button">Documentation</Link>
                     <a href="#features" className="nav-button">Features</a>
-                    <a href="#pricing" className="nav-button">Pricing</a>
+                    <Link href="/pricing" className="nav-button">Pricing</Link>
                     <a href="https://github.com/tudor-pop/kitelang" target="_blank" rel="noopener noreferrer" className="nav-button">GitHub</a>
                     <button onClick={toggleTheme} className="nav-button theme-toggle">
                         {theme === 'dark' ? '☀️' : '🌙'}
@@ -152,53 +152,6 @@ resource server = EC2Instance {
                             <p className="feature-description">
                                 Mixins, plugins, and custom providers. Adapt to your team's workflow.
                             </p>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Pricing Section */}
-                <section id="pricing" className="pricing-section">
-                    <h2 className="section-title">Simple Pricing</h2>
-                    <div className="pricing-grid">
-                        <div className="pricing-card">
-                            <h3 className="pricing-tier">Free</h3>
-                            <div className="pricing-price">$0<span className="pricing-period">/month</span></div>
-                            <p className="pricing-subtitle">For small teams</p>
-                            <ul className="pricing-features">
-                                <li>✓ Unlimited projects</li>
-                                <li>✓ Community support</li>
-                                <li>✓ Core features</li>
-                                <li>✓ &lt; 100 employees</li>
-                                <li>✓ &lt; $1M revenue</li>
-                            </ul>
-                            <button className="pricing-button secondary">Get Started</button>
-                        </div>
-                        <div className="pricing-card featured">
-                            <div className="featured-badge">Popular</div>
-                            <h3 className="pricing-tier">Pro</h3>
-                            <div className="pricing-price">$20<span className="pricing-period">/month</span></div>
-                            <p className="pricing-subtitle">For growing teams</p>
-                            <ul className="pricing-features">
-                                <li>✓ Everything in Free</li>
-                                <li>✓ Managed state backend</li>
-                                <li>✓ Email support</li>
-                                <li>✓ Advanced features</li>
-                                <li>✓ Priority updates</li>
-                            </ul>
-                            <button className="pricing-button primary">Start Trial</button>
-                        </div>
-                        <div className="pricing-card">
-                            <h3 className="pricing-tier">Enterprise</h3>
-                            <div className="pricing-price">Custom</div>
-                            <p className="pricing-subtitle">For large organizations</p>
-                            <ul className="pricing-features">
-                                <li>✓ Everything in Pro</li>
-                                <li>✓ SSO & SAML</li>
-                                <li>✓ 24/7 support</li>
-                                <li>✓ Training & onboarding</li>
-                                <li>✓ Custom SLA</li>
-                            </ul>
-                            <button className="pricing-button secondary">Contact Sales</button>
                         </div>
                     </div>
                 </section>
