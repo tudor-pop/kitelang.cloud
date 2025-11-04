@@ -13,12 +13,6 @@ export default function Sidebar({ isOpen, expandedMenus, onToggleMenu, onShowPag
     return (
         <>
             <aside className={`left-sidebar ${isOpen ? 'open' : ''}`}>
-                <div className="sidebar-header">
-                    <div className="sidebar-logo">
-                        <div className="logo-text">Kite</div>
-                        <span className="version-badge">v0.0.2</span>
-                    </div>
-                </div>
                 <ul className="sidebar-menu">
                     <li><a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-home'); }} id="nav-home">Home</a></li>
 
@@ -67,7 +61,7 @@ export default function Sidebar({ isOpen, expandedMenus, onToggleMenu, onShowPag
                     overflow-y: auto;
                     position: fixed;
                     left: 0;
-                    top: 0;
+                    top: 70px;
                     bottom: 0;
                     padding: 24px 0;
                     transition: none;

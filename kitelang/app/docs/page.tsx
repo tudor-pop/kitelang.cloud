@@ -191,6 +191,25 @@ export default function DocsPage() {
 
     return (
         <div className="body">
+            {/* Top Navigation Bar */}
+            <nav className="top-bar">
+                <div className="logo">
+                    <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <span className="logo-text">Kite</span>
+                        <span className="version-badge">v0.0.2</span>
+                    </a>
+                </div>
+                <div className="nav-buttons">
+                    <a href="/docs" className="nav-button active">Documentation</a>
+                    <a href="/#features" className="nav-button">Features</a>
+                    <a href="/pricing" className="nav-button">Pricing</a>
+                    <a href="https://github.com/tudor-pop/kitelang" target="_blank" rel="noopener noreferrer" className="nav-button">GitHub</a>
+                    <button onClick={toggleTheme} className="nav-button theme-toggle">
+                        {theme === 'dark' ? '☀️' : '🌙'}
+                    </button>
+                </div>
+            </nav>
+
             {/* Reading Progress Indicator */}
             <div className="reading-progress" style={{ width: `${readingProgress}%` }}></div>
 
