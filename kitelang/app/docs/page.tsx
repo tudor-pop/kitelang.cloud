@@ -235,7 +235,7 @@ export default function DocsPage() {
             <div
                 className="fab-container"
                 style={{
-                    right: showToc ? '40px' : '90px'
+                    right: '90px'
                 }}
             >
                 <button className="fab" title="Scroll to top" onClick={scrollToTop}>↑</button>

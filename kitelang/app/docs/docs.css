@@ -748,7 +748,7 @@
 .fab-container {
     position: fixed !important;
     bottom: 30px !important;
-    right: 330px;
+    right: 90px;
     display: flex !important;
     flex-direction: column !important;
     gap: 15px;
