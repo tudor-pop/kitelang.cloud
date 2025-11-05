@@ -267,10 +267,11 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
                     padding: 24px;
                     font-family: 'Roboto Mono', monospace;
                     font-size: 14px;
-                    line-height: 1.8;
+                    line-height: 1.5;
                     color: var(--text-primary);
                     overflow-x: auto;
-                    min-height: 400px;
+                    overflow-y: auto;
+                    height: 450px;
                     tab-size: 4;
                     -moz-tab-size: 4;
                     white-space: pre;
