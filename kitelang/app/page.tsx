@@ -8,22 +8,26 @@ import InteractiveCodeBlock from './components/InteractiveCodeBlock';
 const codeExamples = [
     {
         title: 'Multi-Cloud',
-        code: `import * from aws
-import gcp.*
+        code: `import Bucket from "kite.cloud.storage"
 
-resource awsVpc = VPC {
-    name = "aws-network"
-    cidr = "10.0.0.0/16"
+@provisionOn([aws, gcp])
+resource Bucket photos {
+    name = "my-photos"
 }
 
-resource gcpNetwork = Network {
-    name = "gcp-network"
-    autoCreateSubnetworks = false
+@dependsOn(photos)
+resource Bucket videos {
+    name = "my-videos"
+}
+
+for bucket in [photos, videos] {
+    println(bucket)
 }`,
         steps: [
-            { line: 0, label: 'Import multiple clouds' },
-            { line: 3, label: 'AWS VPC' },
-            { line: 8, label: 'GCP Network' }
+            { line: 0, label: 'Clean import statement' },
+            { line: 2, label: 'Provision on multiple clouds' },
+            { line: 7, label: 'Dependency management' },
+            { line: 12, label: 'Iterate over resources' }
         ]
     },
     {
@@ -322,10 +326,11 @@ export default function LandingPage() {
                     display: grid;
                     grid-template-columns: 1fr 1fr;
                     gap: 60px;
-                    padding: 100px 40px;
+                    padding: 0 40px;
                     max-width: 1400px;
                     margin: 0 auto;
                     align-items: center;
+                    min-height: calc(100vh - 70px);
                 }
 
                 .hero-content {

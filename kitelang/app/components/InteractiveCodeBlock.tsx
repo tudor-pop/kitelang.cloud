@@ -91,11 +91,15 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
             let pos = 0;
             let key = 0;
 
+            // Check if previous token was "resource" keyword to highlight type names
+            let previousWasResource = false;
+
             // Define token patterns with priority
             const tokenPatterns = [
                 { regex: /^\/\/.*$/, className: 'comment' },
                 { regex: /^"(?:[^"\\]|\\.)*"/, className: 'string' },
-                { regex: /^\b(package|import|from|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected)\b/, className: 'keyword' },
+                { regex: /^@\w+/, className: 'number' },  // Decorators like @provisionOn, @dependsOn
+                { regex: /^\b(package|import|from|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected|in|println)\b/, className: 'keyword' },
                 { regex: /^\b\d+\.?\d*\b/, className: 'number' },
                 { regex: /^[={}()[\]:,.]/, className: 'operator' },
             ];
@@ -103,12 +107,41 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
             while (pos < lineText.length) {
                 let matched = false;
 
+                // Skip whitespace but track if we just saw "resource"
+                if (lineText[pos] === ' ' || lineText[pos] === '\t') {
+                    tokens.push(<span key={key++}>{lineText[pos]}</span>);
+                    pos++;
+                    continue;
+                }
+
+                // Check if the next token should be highlighted as a type (after "resource")
+                if (previousWasResource) {
+                    const typeMatch = lineText.substring(pos).match(/^\b[A-Z]\w*/);
+                    if (typeMatch) {
+                        tokens.push(
+                            <span key={key++} className="type">
+                                {typeMatch[0]}
+                            </span>
+                        );
+                        pos += typeMatch[0].length;
+                        previousWasResource = false;
+                        continue;
+                    }
+                }
+
                 // Try to match each pattern at current position
                 for (const pattern of tokenPatterns) {
                     const remaining = lineText.substring(pos);
                     const match = remaining.match(pattern.regex);
 
                     if (match) {
+                        // Check if this is the "resource" keyword
+                        if (pattern.className === 'keyword' && match[0] === 'resource') {
+                            previousWasResource = true;
+                        } else {
+                            previousWasResource = false;
+                        }
+
                         tokens.push(
                             <span key={key++} className={pattern.className}>
                                 {match[0]}
@@ -124,6 +157,7 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
                 if (!matched) {
                     tokens.push(<span key={key++}>{lineText[pos]}</span>);
                     pos++;
+                    previousWasResource = false;
                 }
             }
 
@@ -210,7 +244,7 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
 
                 .code-tab.active {
                     background: var(--primary-color);
-                    color: var(--bg-primary);
+                    color: #FFFFFF;
                 }
 
                 .copy-btn {
@@ -237,6 +271,9 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
                     color: var(--text-primary);
                     overflow-x: auto;
                     min-height: 400px;
+                    tab-size: 4;
+                    -moz-tab-size: 4;
+                    white-space: pre;
                 }
 
                 .code-line {
@@ -286,12 +323,17 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
                     font-weight: 600;
                 }
 
+                :global(.type) {
+                    color: #3B82F6;
+                    font-weight: 600;
+                }
+
                 :global(.string) {
                     color: #10B981;
                 }
 
                 :global(.number) {
-                    color: #F59E0B;
+                    color: #D97706;
                 }
 
                 :global(.operator) {
