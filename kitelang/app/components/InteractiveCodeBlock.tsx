@@ -15,14 +15,16 @@ interface InteractiveCodeBlockProps {
 const defaultCodeExamples: CodeExample[] = [
     {
         title: 'Resources',
-        code: `import Bucket from "cloud.storage"
+        code: `import VPC from "cloud.network"
 
-resource Bucket bucket {
-    name = "prod-bucket"
+resource VPC vpc {
+    name = "production-vpc"
+    cidr = "10.0.0.0/16"
+    region = "us-east-1"
 }`,
         steps: [
-            { line: 0, label: 'Import Bucket resource' },
-            { line: 2, label: 'Create Bucket resource' }
+            { line: 0, label: 'Import VPC resource' },
+            { line: 2, label: 'Create VPC resource' }
         ]
     },
     {
