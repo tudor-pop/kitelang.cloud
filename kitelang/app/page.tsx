@@ -5,65 +5,6 @@ import Link from 'next/link';
 import Footer from './components/Footer';
 import InteractiveCodeBlock from './components/InteractiveCodeBlock';
 
-const codeExamples = [
-    {
-        title: 'Multi-Cloud',
-        code: `import Bucket from "kite.cloud.storage"
-
-@provisionOn([aws, gcp])
-resource Bucket photos {
-    name = "my-photos"
-}
-
-@dependsOn(photos)
-resource Bucket videos {
-    name = "my-videos"
-}
-
-for bucket in [photos, videos] {
-    println(bucket)
-}`,
-        steps: [
-            { line: 0, label: 'Clean import statement' },
-            { line: 2, label: 'Provision on multiple clouds' },
-            { line: 7, label: 'Dependency management' },
-            { line: 12, label: 'Iterate over resources' }
-        ]
-    },
-    {
-        title: 'AWS VPC',
-        code: `import * from aws
-
-resource vpc = VPC {
-    name = "production-vpc"
-    cidr = "10.0.0.0/16"
-    region = "us-east-1"
-}`,
-        steps: [
-            { line: 0, label: 'Import AWS modules' },
-            { line: 2, label: 'Define VPC resource' }
-        ]
-    },
-    {
-        title: 'With Functions',
-        code: `import * from aws
-
-fun createVpc(name: String, cidr: String) {
-    return VPC {
-        name = name
-        cidr = cidr
-        enableDnsHostnames = true
-    }
-}
-
-resource vpc = createVpc("prod", "10.0.0.0/16")`,
-        steps: [
-            { line: 2, label: 'Define reusable function' },
-            { line: 10, label: 'Use function to create VPC' }
-        ]
-    }
-];
-
 export default function LandingPage() {
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
@@ -137,7 +78,7 @@ export default function LandingPage() {
                         </div>
                     </div>
                     <div className="hero-code">
-                        <InteractiveCodeBlock examples={codeExamples} />
+                        <InteractiveCodeBlock />
                     </div>
                 </section>
 
@@ -528,7 +469,7 @@ export default function LandingPage() {
                 }
 
                 .number {
-                    color: #F59E0B;
+                    color: #06B6D4;
                 }
 
                 .operator {

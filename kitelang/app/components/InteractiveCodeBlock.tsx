@@ -9,10 +9,82 @@ interface CodeExample {
 }
 
 interface InteractiveCodeBlockProps {
-    examples: CodeExample[];
+    examples?: CodeExample[];
 }
 
-export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockProps) {
+const defaultCodeExamples: CodeExample[] = [
+    {
+        title: 'Resources',
+        code: `import Bucket from "cloud.storage"
+
+resource Bucket bucket {
+    name = "prod-bucket"
+}`,
+        steps: [
+            { line: 0, label: 'Import Bucket resource' },
+            { line: 2, label: 'Create Bucket resource' }
+        ]
+    },
+    {
+        title: 'Decorators',
+        code: `import Bucket from "cloud.storage"
+
+@count(2) // creates 2 buckets: prod-0 and prod-1
+resource Bucket bucket {
+    name = "prod-\${count}"
+}`,
+        steps: [
+            { line: 0, label: 'Import Bucket resource' },
+            { line: 2, label: 'Decorate resource with @count' },
+            { line: 3, label: 'Create Bucket resource' },
+            { line: 5, label: 'Use count index' }
+        ]
+    },
+    {
+        title: 'Multi-Cloud',
+        code: `import Bucket from "cloud.storage"
+
+@provisionOn([aws, gcp])
+resource Bucket photos {
+    name = "my-photos"
+}
+
+@dependsOn(photos)
+resource Bucket videos {
+    name = "my-videos"
+}
+
+for bucket in [photos, videos] {
+    println(bucket)
+}`,
+        steps: [
+            { line: 0, label: 'Clean import statement' },
+            { line: 2, label: 'Provision on multiple clouds' },
+            { line: 7, label: 'Dependency management' },
+            { line: 12, label: 'Iterate over resources' }
+        ]
+    },
+    {
+        title: 'With Functions',
+        code: `import * from aws
+
+fun createVpc(name: String, cidr: String) {
+    return VPC {
+        name = name
+        cidr = cidr
+        enableDnsHostnames = true
+    }
+}
+
+resource vpc = createVpc("prod", "10.0.0.0/16")`,
+        steps: [
+            { line: 2, label: 'Define reusable function' },
+            { line: 10, label: 'Use function to create VPC' }
+        ]
+    }
+];
+
+export default function InteractiveCodeBlock({ examples = defaultCodeExamples }: InteractiveCodeBlockProps) {
     const [activeTab, setActiveTab] = useState(0);
     const [displayedCode, setDisplayedCode] = useState('');
     const [isTyping, setIsTyping] = useState(true);
@@ -97,10 +169,8 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
             // Define token patterns with priority
             const tokenPatterns = [
                 { regex: /^\/\/.*$/, className: 'comment' },
-                { regex: /^"(?:[^"\\]|\\.)*"/, className: 'string' },
-                { regex: /^@\w+/, className: 'number' },  // Decorators like @provisionOn, @dependsOn
                 { regex: /^\b(package|import|from|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected|in|println)\b/, className: 'keyword' },
-                { regex: /^\b\d+\.?\d*\b/, className: 'number' },
+                { regex: /^\d+\.?\d*/, className: 'number' },  // Removed word boundary requirement
                 { regex: /^[={}()[\]:,.]/, className: 'operator' },
             ];
 
@@ -111,6 +181,81 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
                 if (lineText[pos] === ' ' || lineText[pos] === '\t') {
                     tokens.push(<span key={key++}>{lineText[pos]}</span>);
                     pos++;
+                    continue;
+                }
+
+                // Handle decorators like @count(2)
+                if (lineText[pos] === '@') {
+                    const decoratorMatch = lineText.substring(pos).match(/^@\w+/);
+                    if (decoratorMatch) {
+                        tokens.push(<span key={key++} className="decorator">{decoratorMatch[0]}</span>);
+                        pos += decoratorMatch[0].length;
+                        matched = true;
+                        continue;
+                    }
+                }
+
+                // Handle strings with interpolation
+                if (lineText[pos] === '"') {
+                    tokens.push(<span key={key++} className="string">"</span>);
+                    pos++;
+
+                    let stringContent = '';
+                    while (pos < lineText.length && lineText[pos] !== '"') {
+                        if (lineText[pos] === '\\' && pos + 1 < lineText.length) {
+                            // Handle escape sequences
+                            stringContent += lineText[pos] + lineText[pos + 1];
+                            pos += 2;
+                        } else if (lineText[pos] === '$' && pos + 1 < lineText.length && lineText[pos + 1] === '{') {
+                            // Flush any accumulated string content
+                            if (stringContent) {
+                                tokens.push(<span key={key++} className="string">{stringContent}</span>);
+                                stringContent = '';
+                            }
+
+                            // Add interpolation start ${
+                            tokens.push(<span key={key++} className="interpolation">${'{'}</span>);
+                            pos += 2;
+
+                            // Find matching closing brace
+                            let interpolationContent = '';
+                            let braceCount = 1;
+                            while (pos < lineText.length && braceCount > 0) {
+                                if (lineText[pos] === '{') braceCount++;
+                                else if (lineText[pos] === '}') braceCount--;
+
+                                if (braceCount > 0) {
+                                    interpolationContent += lineText[pos];
+                                }
+                                pos++;
+                            }
+
+                            // Add interpolation content (variable name) - white color
+                            if (interpolationContent) {
+                                tokens.push(<span key={key++}>{interpolationContent}</span>);
+                            }
+
+                            // Add closing brace
+                            tokens.push(<span key={key++} className="interpolation">{'}'}</span>);
+                        } else {
+                            stringContent += lineText[pos];
+                            pos++;
+                        }
+                    }
+
+                    // Flush remaining string content
+                    if (stringContent) {
+                        tokens.push(<span key={key++} className="string">{stringContent}</span>);
+                    }
+
+                    // Add closing quote
+                    if (pos < lineText.length && lineText[pos] === '"') {
+                        tokens.push(<span key={key++} className="string">"</span>);
+                        pos++;
+                    }
+
+                    matched = true;
+                    previousWasResource = false;
                     continue;
                 }
 
@@ -185,9 +330,6 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
                             </button>
                         ))}
                     </div>
-                    <button className="copy-btn" onClick={() => navigator.clipboard.writeText(examples[activeTab].code)}>
-                        Copy
-                    </button>
                 </div>
                 <div className="code-content">
                     {highlightSyntax(displayedCode)}
@@ -333,8 +475,16 @@ export default function InteractiveCodeBlock({ examples }: InteractiveCodeBlockP
                     color: #10B981;
                 }
 
-                :global(.number) {
+                :global(.interpolation) {
                     color: #D97706;
+                }
+
+                :global(.decorator) {
+                    color: #D97706;
+                }
+
+                :global(.number) {
+                    color: #06B6D4;
                 }
 
                 :global(.operator) {
