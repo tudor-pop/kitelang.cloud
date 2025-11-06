@@ -36,16 +36,17 @@ resource VPC vpc {
     name = "production-vpc"
     cidr = "10.0.0.0/16"
 }
-@count(3) // creates 3 subnets: subnet-0 (10.0.0.0/24), subnet-1(10.1.0.0/24), subnet-2(10.2.0.0/24)
+// creates 3 subnets: subnet-0 (10.0.0.0/24), subnet-1(10.1.0.0/24), subnet-2(10.2.0.0/24)
+// Implicit naming (Kite auto-generates: subnet-0, subnet-1, subnet-2). Explicit naming is also possible.
+@count(3) 
 resource Subnet subnet {
     vpc_id      = vpc.id
     cidr_block  = "10.\${count}.0.0/24" 
 }
-`,
+println(subnet) // prints subnet-0, subnet-1, subnet-2
+    `,
         steps: [
-            {line: 0, label: 'Import Bucket resource'},
-            {line: 2, label: 'Decorate resource with @count'},
-            {line: 3, label: 'Create Bucket resource'},
+            {line: 7, label: 'Decorate resource with @count'},
             {line: 4, label: 'Use count index'}
         ]
     },
