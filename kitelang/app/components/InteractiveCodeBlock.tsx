@@ -37,7 +37,7 @@ resource Bucket bucket {
             { line: 0, label: 'Import Bucket resource' },
             { line: 2, label: 'Decorate resource with @count' },
             { line: 3, label: 'Create Bucket resource' },
-            { line: 5, label: 'Use count index' }
+            { line: 4, label: 'Use count index' }
         ]
     },
     {
