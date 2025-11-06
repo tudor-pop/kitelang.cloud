@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 
 interface CodeExample {
     title: string;
@@ -23,23 +23,30 @@ resource VPC vpc {
     region = "us-east-1"
 }`,
         steps: [
-            { line: 0, label: 'Import VPC resource' },
-            { line: 2, label: 'Create VPC resource' }
+            {line: 0, label: 'Import VPC resource'},
+            {line: 2, label: 'Create VPC resource'}
         ]
     },
     {
         title: 'Decorators',
-        code: `import Bucket from "cloud.storage"
+        code: `import VPC from "cloud.network"
+import Subnet from "cloud.network"
 
-@count(2) // creates 2 buckets: prod-0 and prod-1
-resource Bucket bucket {
-    name = "prod-\${count}"
-}`,
+resource VPC vpc {
+    name = "production-vpc"
+    cidr = "10.0.0.0/16"
+}
+@count(3) // creates 3 subnets: subnet-0 (10.0.0.0/24), subnet-1(10.1.0.0/24), subnet-2(10.2.0.0/24)
+resource Subnet subnet {
+    vpc_id      = vpc.id
+    cidr_block  = "10.\${count}.0.0/24" 
+}
+`,
         steps: [
-            { line: 0, label: 'Import Bucket resource' },
-            { line: 2, label: 'Decorate resource with @count' },
-            { line: 3, label: 'Create Bucket resource' },
-            { line: 4, label: 'Use count index' }
+            {line: 0, label: 'Import Bucket resource'},
+            {line: 2, label: 'Decorate resource with @count'},
+            {line: 3, label: 'Create Bucket resource'},
+            {line: 4, label: 'Use count index'}
         ]
     },
     {
@@ -60,10 +67,10 @@ for bucket in [photos, videos] {
     println(bucket)
 }`,
         steps: [
-            { line: 0, label: 'Clean import statement' },
-            { line: 2, label: 'Provision on multiple clouds' },
-            { line: 7, label: 'Dependency management' },
-            { line: 12, label: 'Iterate over resources' }
+            {line: 0, label: 'Clean import statement'},
+            {line: 2, label: 'Provision on multiple clouds'},
+            {line: 7, label: 'Dependency management'},
+            {line: 12, label: 'Iterate over resources'}
         ]
     },
     {
@@ -80,13 +87,13 @@ fun createVpc(name: String, cidr: String) {
 
 resource vpc = createVpc("prod", "10.0.0.0/16")`,
         steps: [
-            { line: 2, label: 'Define reusable function' },
-            { line: 10, label: 'Use function to create VPC' }
+            {line: 2, label: 'Define reusable function'},
+            {line: 10, label: 'Use function to create VPC'}
         ]
     }
 ];
 
-export default function InteractiveCodeBlock({ examples = defaultCodeExamples }: InteractiveCodeBlockProps) {
+export default function InteractiveCodeBlock({examples = defaultCodeExamples}: InteractiveCodeBlockProps) {
     const [activeTab, setActiveTab] = useState(0);
     const [displayedCode, setDisplayedCode] = useState('');
     const [isTyping, setIsTyping] = useState(true);
@@ -170,10 +177,13 @@ export default function InteractiveCodeBlock({ examples = defaultCodeExamples }:
 
             // Define token patterns with priority
             const tokenPatterns = [
-                { regex: /^\/\/.*$/, className: 'comment' },
-                { regex: /^\b(package|import|from|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected|in|println)\b/, className: 'keyword' },
-                { regex: /^\d+\.?\d*/, className: 'number' },  // Removed word boundary requirement
-                { regex: /^[={}()[\]:,.]/, className: 'operator' },
+                {regex: /^\/\/.*$/, className: 'comment'},
+                {
+                    regex: /^\b(package|import|from|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected|in|println)\b/,
+                    className: 'keyword'
+                },
+                {regex: /^\d+\.?\d*/, className: 'number'},  // Removed word boundary requirement
+                {regex: /^[={}()[\]:,.]/, className: 'operator'},
             ];
 
             while (pos < lineText.length) {
