@@ -362,21 +362,72 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                             previousWasResource = false;
                         }
 
-                        tokens.push(
-                            <span key={key++} className={pattern.className}>
-                                {match[0]}
-                            </span>
-                        );
+                        // Add tooltip for "in" keyword
+                        if (pattern.className === 'keyword' && match[0] === 'in') {
+                            const tooltipText = "We fixed the infamous 'keys need to be known at plan time'";
+                            tokens.push(
+                                <span
+                                    key={key++}
+                                    className="keyword has-tooltip"
+                                    data-tooltip={tooltipText}
+                                >
+                                    {match[0]}
+                                </span>
+                            );
+                        } else {
+                            tokens.push(
+                                <span key={key++} className={pattern.className}>
+                                    {match[0]}
+                                </span>
+                            );
+                        }
                         pos += match[0].length;
                         matched = true;
                         break;
                     }
                 }
 
-                // No pattern matched, add single character as plain text
+                // No pattern matched - check for identifiers with tooltips
                 if (!matched) {
-                    tokens.push(<span key={key++}>{lineText[pos]}</span>);
-                    pos++;
+                    // Check if this is an identifier (starts with letter or underscore)
+                    if (/[a-zA-Z_]/.test(lineText[pos])) {
+                        let identifier = '';
+                        const startPos = pos;
+                        while (pos < lineText.length && /[a-zA-Z0-9_]/.test(lineText[pos])) {
+                            identifier += lineText[pos];
+                            pos++;
+                        }
+
+                        // Add tooltip for "index" identifier
+                        if (identifier === 'index') {
+                            const tooltipText = "index will be: 0, 1, 2, ..., n";
+                            tokens.push(
+                                <span
+                                    key={key++}
+                                    className="identifier has-tooltip"
+                                    data-tooltip={tooltipText}
+                                >
+                                    {identifier}
+                                </span>
+                            );
+                        } else if (identifier === 'availabilityZone') {
+                            const tooltipText = "availabilityZone is a local variable containing actual values";
+                            tokens.push(
+                                <span
+                                    key={key++}
+                                    className="identifier has-tooltip"
+                                    data-tooltip={tooltipText}
+                                >
+                                    {identifier}
+                                </span>
+                            );
+                        } else {
+                            tokens.push(<span key={key++}>{identifier}</span>);
+                        }
+                    } else {
+                        tokens.push(<span key={key++}>{lineText[pos]}</span>);
+                        pos++;
+                    }
                     previousWasResource = false;
                 }
             }
@@ -542,6 +593,41 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                     font-weight: 600;
                 }
 
+                :global(.keyword.has-tooltip) {
+                    cursor: help;
+                    text-decoration: underline dotted;
+                    text-decoration-color: #A855F7;
+                    text-underline-offset: 2px;
+                    position: relative;
+                }
+
+                :global(.keyword.has-tooltip::before) {
+                    content: attr(data-tooltip);
+                    position: fixed;
+                    bottom: auto;
+                    left: var(--tooltip-x);
+                    top: var(--tooltip-y);
+                    transform: translate(-50%, -100%);
+                    background: var(--text-primary);
+                    color: var(--bg-primary);
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    white-space: pre-line;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.2s;
+                    z-index: 1000;
+                    max-width: 300px;
+                    line-height: 1.4;
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 400;
+                }
+
+                :global(.keyword.has-tooltip:hover::before) {
+                    opacity: 1;
+                }
+
                 :global(.type) {
                     color: #3B82F6;
                     font-weight: 600;
@@ -605,6 +691,41 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                 :global(.comment) {
                     color: var(--text-muted);
                     font-style: italic;
+                }
+
+                :global(.identifier.has-tooltip) {
+                    cursor: help;
+                    text-decoration: underline dotted;
+                    text-decoration-color: var(--text-primary);
+                    text-underline-offset: 2px;
+                    position: relative;
+                }
+
+                :global(.identifier.has-tooltip::before) {
+                    content: attr(data-tooltip);
+                    position: fixed;
+                    bottom: auto;
+                    left: var(--tooltip-x);
+                    top: var(--tooltip-y);
+                    transform: translate(-50%, -100%);
+                    background: var(--text-primary);
+                    color: var(--bg-primary);
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    white-space: pre-line;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.2s;
+                    z-index: 1000;
+                    max-width: 300px;
+                    line-height: 1.4;
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 400;
+                }
+
+                :global(.identifier.has-tooltip:hover::before) {
+                    opacity: 1;
                 }
             `}</style>
         </>
