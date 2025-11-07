@@ -106,6 +106,31 @@ for index, bucket in [photos, videos] {
             {line: 7, label: 'Dependency management'},
             {line: 12, label: 'Iterate over resources'}
         ]
+    },
+    {
+        title: 'Mixins',
+        code: `import Bucket from "cloud.storage"
+
+resource Bucket photos {
+  name = "my-photos"
+}
+// resource property applied to just one resource
+mixin gcp on photos { uniform_bucket_level_access = true }
+mixin aws on photos { account_id = "00000" }
+
+// type property applied to all instances
+mixin gcp on Bucket { uniform_bucket_level_access = true }
+mixin aws on Bucket { account_id = "00000" }
+
+// properties on all buckets
+mixin Bucket { tags = { env: 'prod' } }
+`,
+        steps: [
+            {line: 0, label: 'Clean import statement'},
+            {line: 2, label: 'Provision on multiple clouds'},
+            {line: 7, label: 'Dependency management'},
+            {line: 12, label: 'Iterate over resources'}
+        ]
     }
 ];
 
@@ -195,7 +220,7 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
             const tokenPatterns = [
                 {regex: /^\/\/.*$/, className: 'comment'},
                 {
-                    regex: /^\b(package|import|from|resource|component|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected|in|input|output|println)\b/,
+                    regex: /^\b(package|import|from|resource|component|mixin|on|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected|in|input|output|println)\b/,
                     className: 'keyword'
                 },
                 {regex: /^\b(string|int|float|double|boolean|byte|short|long|char)\b/, className: 'type'},  // Built-in types
