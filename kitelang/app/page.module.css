@@ -165,6 +165,60 @@
     color: var(--text-secondary);
 }
 
+/* Comparison CTA Section */
+.comparisonCta {
+    padding: 60px 40px;
+    background: var(--bg-primary);
+}
+
+.comparisonContent {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 48px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.comparisonTitle {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.comparisonText {
+    font-size: 18px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.comparisonButton {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--primary-color);
+    color: #FFFFFF;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 900;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+}
+
+.comparisonButton:hover {
+    background: var(--primary-dark);
+}
+
+.comparisonButton:focus-visible {
+    outline: 3px solid var(--primary-dark);
+    outline-offset: 2px;
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
     .heroSection {
@@ -184,5 +238,25 @@
 
     .featuresGrid {
         grid-template-columns: 1fr;
+    }
+
+    .comparisonCta {
+        padding: 40px 20px;
+    }
+
+    .comparisonContent {
+        padding: 32px 24px;
+    }
+
+    .comparisonTitle {
+        font-size: 28px;
+    }
+
+    .comparisonText {
+        font-size: 16px;
+    }
+
+    .comparisonButton {
+        width: 100%;
     }
 }

@@ -108,6 +108,19 @@ export default function LandingPage() {
                     </div>
                 </section>
 
+                {/* Comparison CTA Section */}
+                <section className={styles.comparisonCta}>
+                    <div className={styles.comparisonContent}>
+                        <h2 className={styles.comparisonTitle}>How does Kite compare?</h2>
+                        <p className={styles.comparisonText}>
+                            See how Kite stacks up against Terraform, Pulumi, and Bicep across 20+ features.
+                        </p>
+                        <Link href="/comparison" className={styles.comparisonButton}>
+                            View Comparison
+                        </Link>
+                    </div>
+                </section>
+
                 {/* Waitlist Section */}
                 <Waitlist />
 
