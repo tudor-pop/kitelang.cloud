@@ -10,7 +10,7 @@ This is the official website for **Kite** - a modern Infrastructure as Code (IaC
 - **Next.js 16.0.1** - React framework with Turbopack for fast development
 - **TypeScript 5.9.3** - Type-safe component development
 - **React 19.2.0** - Modern React with functional components and hooks
-- **Styled JSX** - Component-scoped CSS-in-JS styling
+- **CSS Modules** - Component-scoped CSS with `.module.css` files
 - **Node.js 24 LTS** - Latest LTS version with @types/node 24.10.0
 - **Tailwind CSS 4.1.17** - Utility-first CSS framework (minimal usage)
 - **ESLint 9.39.1** - Code linting with Next.js configuration
@@ -18,7 +18,8 @@ This is the official website for **Kite** - a modern Infrastructure as Code (IaC
 **Key Characteristics:**
 - Next.js app directory structure with React Server Components
 - Type-safe development with TypeScript
-- Styled-jsx for scoped CSS (embedded in components)
+- CSS Modules for component-scoped styles with automatic class name hashing
+- Global styles in `app/globals.css` for theme variables and shared utilities
 - System-aware dark mode with localStorage persistence
 - Brutalist design philosophy throughout
 
