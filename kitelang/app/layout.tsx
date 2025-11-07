@@ -29,7 +29,14 @@ const robotoMono = Roboto_Mono({
   display: 'swap',
 });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kitelang.cloud'),
   title: {
     default: "Kite - Infrastructure as Code. Actually Simple.",
     template: "%s | Kite"
@@ -44,7 +51,6 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://kitelang.cloud'),
   alternates: {
     canonical: '/',
   },

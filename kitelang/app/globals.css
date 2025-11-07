@@ -72,6 +72,27 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Main Content Wrapper */
+.main-content-wrapper {
+    margin-top: 70px;
+}
+
+@media (max-width: 768px) {
+    .main-content-wrapper {
+        margin-top: 60px;
+    }
+
+    /* Ensure minimum touch target size for mobile */
+    button,
+    a,
+    input[type="button"],
+    input[type="submit"],
+    [role="button"] {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
 /* Skip to Content Link - Accessibility */
 .skip-to-content {
     position: absolute;

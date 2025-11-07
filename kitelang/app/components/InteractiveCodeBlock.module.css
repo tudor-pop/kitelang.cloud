@@ -260,3 +260,81 @@
 :global(.identifier.has-tooltip:hover::before) {
     opacity: 1;
 }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .codeWindow {
+        border-radius: 4px;
+    }
+
+    .codeHeader {
+        padding: 10px 16px;
+    }
+
+    .codeTabs {
+        gap: 6px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .codeTab {
+        padding: 8px 14px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .codeContent {
+        padding: 16px;
+        font-size: 12px;
+        line-height: 1.6;
+        height: 350px;
+    }
+
+    .lineNumber {
+        min-width: 24px;
+        font-size: 11px;
+    }
+
+    .codeFooter {
+        padding: 10px 16px;
+    }
+
+    .stepLabel {
+        font-size: 11px;
+    }
+
+    /* Disable tooltips on mobile */
+    :global(.has-tooltip::before) {
+        display: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .codeHeader {
+        padding: 8px 12px;
+    }
+
+    .codeTabs {
+        gap: 4px;
+    }
+
+    .codeTab {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+
+    .codeContent {
+        padding: 12px;
+        font-size: 11px;
+        height: 300px;
+    }
+
+    .lineNumber {
+        min-width: 20px;
+        font-size: 10px;
+    }
+
+    .stepLabel {
+        font-size: 10px;
+    }
+}
