@@ -4,29 +4,50 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the official website for **Kite** - a modern Infrastructure as Code (IaC) language designed for multi-cloud deployments. The site is a static HTML website combining marketing content, documentation, and pricing information.
+This is the official website for **Kite** - a modern Infrastructure as Code (IaC) language designed for multi-cloud deployments. The site combines marketing content, documentation, and pricing information.
 
-**Key Characteristic:** Zero-dependency, self-contained architecture. Each HTML file is production-ready with embedded CSS and JavaScript. No build process, no frameworks, no package managers.
+**Technology Stack:**
+- **Next.js 16.0.1** - React framework with Turbopack for fast development
+- **TypeScript** - Type-safe component development
+- **React 19** - Modern React with functional components and hooks
+- **Styled JSX** - Component-scoped CSS-in-JS styling
+
+**Key Characteristics:**
+- Next.js app directory structure with React Server Components
+- Type-safe development with TypeScript
+- Styled-jsx for scoped CSS (embedded in components)
+- System-aware dark mode with localStorage persistence
+- Brutalist design philosophy throughout
 
 ## Architecture
 
-### Self-Contained Static Files
+### Next.js App Structure
 
-- **No build process** - Files can be edited and deployed directly
-- **No external dependencies** - No package.json, npm, or node_modules
-- **No frameworks** - Pure vanilla HTML/CSS/JavaScript
-- **Inline everything** - CSS in `<style>` tags, JavaScript in `<script>` tags
-- Each page is completely standalone and can function independently
+```
+app/
+├── page.tsx                          # Landing page (/)
+├── components/
+│   ├── Footer.tsx                    # Shared footer component
+│   └── InteractiveCodeBlock.tsx      # Code demo with tabs and syntax highlighting
+├── layout.tsx                        # Root layout wrapper
+└── globals.css                       # Global styles
+```
 
 ### File Structure
 
 ```
-index.html          # Interactive landing page with code demo
-docs.html           # Documentation portal (multi-page SPA)
-pricing.html        # Three-tier pricing page
-LICENSE.html        # Terms and conditions
-STYLE_GUIDE.md      # Complete design system documentation
+app/page.tsx                    # Interactive landing page with code demo
+app/components/InteractiveCodeBlock.tsx  # Tabbed code block with Kite syntax highlighting
+app/components/Footer.tsx       # Footer component
+docs.html                       # Documentation portal (multi-page SPA, static HTML)
+pricing.html                    # Three-tier pricing page (static HTML)
+LICENSE.html                    # Terms and conditions (static HTML)
+public/LICENSE.html             # Public license file
+STYLE_GUIDE.md                  # Complete design system documentation
+CLAUDE.md                       # This file - developer guidance
 ```
+
+**Note:** The main landing page uses Next.js/React, while docs, pricing, and license pages remain static HTML files for simplicity.
 
 ### docs.html SPA Pattern
 
@@ -117,23 +138,29 @@ Content is organized into "islands" - distinct bordered sections:
 
 ## Development Workflow
 
-### Testing Changes
+### Running the Development Server
 
-**Local Development:**
+**Next.js Development:**
 ```bash
-# Option 1: Open directly in browser (file:// protocol)
-open index.html  # macOS
-xdg-open index.html  # Linux
-start index.html  # Windows
+npm run dev
+# Then visit http://localhost:3000
+```
 
-# Option 2: Simple HTTP server (if needed for CORS)
-python3 -m http.server 8000
-# Then visit http://localhost:8000
+The Next.js dev server uses Turbopack for fast hot module replacement. Changes to React components will reflect immediately.
+
+**Static HTML Pages:**
+For docs.html, pricing.html, and LICENSE.html, you can open them directly:
+```bash
+open docs.html  # macOS
+xdg-open docs.html  # Linux
+start docs.html  # Windows
 ```
 
 **Browser Compatibility:**
-- Requires CSS Grid, Flexbox, CSS Custom Properties
-- Requires IntersectionObserver API (for TOC highlighting)
+- Next.js supports modern browsers with ES6+ features
+- React 19 requires recent browser versions
+- Static HTML pages require CSS Grid, Flexbox, CSS Custom Properties
+- IntersectionObserver API (for TOC highlighting in docs.html)
 - Test in Chrome, Firefox, Safari, Edge
 
 ### Git Workflow
@@ -149,7 +176,70 @@ Remote repository: https://github.com/tudor-pop/kitelang.cloud.git
 
 ## Common Modifications
 
-### Adding Syntax-Highlighted Code Block
+### Interactive Code Block Component (app/components/InteractiveCodeBlock.tsx)
+
+The landing page features a custom syntax-highlighted code block with:
+
+**Features:**
+- **Tabbed interface** - Multiple code examples (Resources, Decorators, Components, etc.)
+- **Kite language syntax highlighting** - Custom tokenizer with support for:
+  - Keywords (purple): `package`, `import`, `resource`, `component`, `mixin`, `on`, `fun`, `val`, `input`, `output`, etc.
+  - Built-in types (blue): `string`, `int`, `float`, `double`, `boolean`, etc.
+  - Decorators (orange): `@count`, `@region`, etc.
+  - String interpolation (green strings, orange `${}` delimiters): `"production-${count}"`
+  - Numbers (cyan): `3`, `10`, etc.
+  - Comments (gray): Both `//` and `#` syntax
+  - Functions and identifiers with hover tooltips
+- **Horizontal text wrapping** - Code wraps naturally without horizontal scrolling
+- **Copy to clipboard** - Copy button for each code example
+- **Theme-aware** - Automatically adapts to light/dark theme
+
+**Implementation Details:**
+- Custom tokenization logic in `tokenizeLine()` function
+- Handles string interpolation with both `${variable}` and `$variable` syntax
+- Uses `data-tooltip` attribute with CSS `::before` pseudo-elements for tooltips
+- Code examples stored in `defaultCodeExamples` array within component
+
+### Decorative Cloud Background (app/page.tsx)
+
+The landing page features subtle animated clouds using CSS pseudo-elements:
+
+**Cloud Structure:**
+- 3 clouds with varied sizes (large, small, medium)
+- Created using CSS pseudo-elements (`::before` and `::after`)
+- Main body: elongated oval with `border-radius: 100px`
+- `::before`: smaller circular bump on left
+- `::after`: larger circular bump on right
+
+**Styling:**
+```tsx
+.cloud {
+    position: absolute;
+    border-radius: 100px;
+    opacity: 0.15;
+}
+
+.cloud-1 {
+    width: 280px;
+    height: 80px;
+    background: var(--text-primary);  // Black in light mode, white in dark mode
+    animation: float 35s infinite ease-in-out;
+}
+```
+
+**Animations:**
+- Floating animation moves clouds naturally across screen
+- Different speeds (25s-40s) and delays for variety
+- Movement includes translateY() and translateX() transformations
+- Positioned at 15%, 50%, and 80% vertical positions for good distribution
+
+**Key Principles:**
+- Use `var(--text-primary)` for theme-aware gray clouds
+- Keep opacity at ~0.15 for subtle background effect
+- Z-index: 0 (behind all content)
+- `pointer-events: none` to avoid interfering with interactions
+
+### Adding Syntax-Highlighted Code Block (Static HTML Pages)
 
 ```html
 <div class="code-block-wrapper">
