@@ -20,11 +20,20 @@ const defaultCodeExamples: CodeExample[] = [
 resource VPC vpc {
     name = "production-vpc"
     cidr = "10.0.0.0/16"
-    region = "us-east-1"
-}`,
+}
+
+for index, availabilityZone in vpc.availabilityZones {
+    resource Subnet subnets {
+      vpcId = vpc.id
+      cidr  = "10.\${index}.0.0/24"
+      az    = availabilityZone
+    }
+}
+`,
         steps: [
             {line: 0, label: 'Import VPC resource'},
-            {line: 2, label: 'Create VPC resource'}
+            {line: 2, label: 'Create VPC resource'},
+            {line: 7, label: 'Iterates over runtime values'}
         ]
     },
     {
