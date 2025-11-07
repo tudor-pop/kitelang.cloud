@@ -74,9 +74,20 @@
     box-shadow: 2px 2px 0 var(--border-color);
 }
 
+.navButton:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
 .navButton.active {
     background: var(--primary-color);
     color: var(--bg-primary);
+}
+
+.logoLink:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 4px;
+    border-radius: 4px;
 }
 
 .themeToggle {

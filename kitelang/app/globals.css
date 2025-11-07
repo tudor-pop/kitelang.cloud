@@ -55,11 +55,45 @@
     box-sizing: border-box;
 }
 
+/* Global Focus Styles - Accessibility */
+*:focus {
+    outline: none;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
 body {
     font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Skip to Content Link - Accessibility */
+.skip-to-content {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    padding: 16px 32px;
+    background: var(--primary-color);
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 16px;
+    text-decoration: none;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+    top: 10px;
+    outline: 3px solid var(--primary-dark);
+    outline-offset: 2px;
 }
 
 /* Cloud Animations */

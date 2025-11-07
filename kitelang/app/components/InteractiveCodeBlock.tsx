@@ -140,30 +140,35 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
     const [isTyping, setIsTyping] = useState(true);
     const [currentStep, setCurrentStep] = useState(0);
 
-    // Typing animation
+    // Keyboard navigation handler for tabs
+    const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
+        let newIndex = index;
+
+        if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            newIndex = index === 0 ? examples.length - 1 : index - 1;
+        } else if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            newIndex = index === examples.length - 1 ? 0 : index + 1;
+        } else if (event.key === 'Home') {
+            event.preventDefault();
+            newIndex = 0;
+        } else if (event.key === 'End') {
+            event.preventDefault();
+            newIndex = examples.length - 1;
+        } else {
+            return; // Don't change tab for other keys
+        }
+
+        setActiveTab(newIndex);
+    };
+
+    // Typing animation (disabled - instant display)
     useEffect(() => {
         const code = examples[activeTab].code;
-
-        // Skip typing animation temporarily for testing
         setDisplayedCode(code);
         setIsTyping(false);
         setCurrentStep(0);
-
-        // // Uncomment for typing animation:
-        // setDisplayedCode('');
-        // setIsTyping(true);
-        // setCurrentStep(0);
-        // let index = 0;
-        // const typingInterval = setInterval(() => {
-        //     if (index < code.length) {
-        //         setDisplayedCode(code.substring(0, index + 1));
-        //         index++;
-        //     } else {
-        //         setIsTyping(false);
-        //         clearInterval(typingInterval);
-        //     }
-        // }, 20);
-        // return () => clearInterval(typingInterval);
     }, [activeTab, examples]);
 
     // Step highlighting
@@ -456,19 +461,31 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
     return (
         <div className={styles.codeWindow}>
             <div className={styles.codeHeader}>
-                <div className={styles.codeTabs}>
+                <div className={styles.codeTabs} role="tablist" aria-label="Code examples">
                     {examples.map((example, index) => (
                         <button
                             key={index}
+                            role="tab"
+                            id={`tab-${index}`}
+                            aria-selected={activeTab === index}
+                            aria-controls={`tabpanel-${index}`}
+                            tabIndex={activeTab === index ? 0 : -1}
                             className={`${styles.codeTab} ${activeTab === index ? styles.active : ''}`}
                             onClick={() => setActiveTab(index)}
+                            onKeyDown={(e) => handleKeyDown(e, index)}
                         >
                             {example.title}
                         </button>
                     ))}
                 </div>
             </div>
-            <div className={styles.codeContent}>
+            <div
+                className={styles.codeContent}
+                role="tabpanel"
+                id={`tabpanel-${activeTab}`}
+                aria-labelledby={`tab-${activeTab}`}
+                tabIndex={0}
+            >
                 {highlightSyntax(displayedCode)}
             </div>
             {!isTyping && examples[activeTab]?.steps?.[currentStep] && (

@@ -81,6 +81,11 @@
     box-shadow: 4px 4px 0 var(--border-color);
 }
 
+.primaryButton:focus-visible {
+    outline: 3px solid var(--primary-dark);
+    outline-offset: 2px;
+}
+
 .secondaryButton {
     padding: 16px 32px;
     background: transparent;
@@ -98,6 +103,11 @@
 .secondaryButton:hover {
     transform: translate(-4px, -4px);
     box-shadow: 4px 4px 0 var(--border-color);
+}
+
+.secondaryButton:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 /* Features Section */

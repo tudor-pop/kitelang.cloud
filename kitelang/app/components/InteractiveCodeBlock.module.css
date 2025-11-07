@@ -38,6 +38,11 @@
     color: var(--bg-primary);
 }
 
+.codeTab:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
 .codeTab.active {
     background: var(--primary-color);
     color: #FFFFFF;

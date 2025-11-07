@@ -52,8 +52,11 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
     return (
         <>
+            <a href="#main-content" className="skip-to-content">
+                Skip to main content
+            </a>
             <TopBar theme={theme} toggleTheme={toggleTheme} activePage={getActivePage()} />
-            <div style={{ marginTop: '70px' }}>
+            <div id="main-content" style={{ marginTop: '70px' }}>
                 {children}
             </div>
         </>
