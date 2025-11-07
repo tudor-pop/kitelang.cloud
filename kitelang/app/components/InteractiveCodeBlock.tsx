@@ -128,7 +128,7 @@ mixin Bucket { tags = { env: 'prod' } }
         steps: [
             {line: 6, label: 'Set properties on a resource'},
             {line: 10, label: 'Set provider properties on all resources of a type'},
-            {line: 14, label: 'Set properties on all resources of a type'},
+            {line: 14, label: 'Set general properties on all resources of a type'},
         ]
     }
 ];
