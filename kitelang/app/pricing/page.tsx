@@ -57,20 +57,54 @@ const pricingTiers = [
 
 const faqs = [
     {
+        id: 'project-definition',
         question: 'What counts as a project?',
         answer: 'A project is a distinct infrastructure configuration managed by Kite. You can have unlimited projects on all plans.'
     },
     {
+        id: 'plan-changes',
         question: 'Can I upgrade or downgrade anytime?',
         answer: "Yes! You can change your plan at any time. Changes take effect immediately, and we'll prorate your billing accordingly."
     },
     {
+        id: 'managed-state',
         question: 'What is managed state backend?',
         answer: 'We host and manage your infrastructure state in a secure, highly available database with automatic backups and versioning.'
     },
     {
+        id: 'discounts',
         question: 'Do you offer academic or non-profit discounts?',
         answer: 'Yes! Contact us for special pricing for educational institutions, open-source projects, and non-profit organizations.'
+    },
+    {
+        id: 'free-commercial',
+        question: 'Can I use the Free plan for commercial projects?',
+        answer: 'Yes! The Free plan can be used for commercial projects as long as your company has fewer than 100 employees and less than $1M in annual revenue.'
+    },
+    {
+        id: 'free-trial',
+        question: 'Do you offer a free trial?',
+        answer: 'All users start with the Free plan, which includes core features and unlimited projects. You can upgrade to Pro or Enterprise anytime without needing a separate trial.'
+    },
+    {
+        id: 'payment-methods',
+        question: 'What payment methods do you accept?',
+        answer: 'We accept all major credit and debit cards. Annual billing is available with a discount - contact us for details on annual pricing.'
+    },
+    {
+        id: 'data-residency',
+        question: 'Where is my infrastructure state stored?',
+        answer: 'For managed state backend, data is stored in secure, highly available regions. Enterprise customers can discuss specific data residency requirements with our team.'
+    },
+    {
+        id: 'pricing-model',
+        question: 'Is pricing per user or per organization?',
+        answer: 'Pricing is per organization, not per user. Your entire team can use Kite under a single plan with no per-seat charges.'
+    },
+    {
+        id: 'cancellation',
+        question: 'What is your cancellation policy?',
+        answer: 'You can cancel your subscription at any time. Your plan remains active until the end of your billing period, and no refunds are provided for partial months.'
     }
 ];
 
@@ -89,8 +123,8 @@ export default function PricingPage() {
                     </p>
 
                     <div className="pricing-grid">
-                        {pricingTiers.map((tier, index) => (
-                            <PricingCard key={index} {...tier} />
+                        {pricingTiers.map((tier) => (
+                            <PricingCard key={tier.tier} {...tier} />
                         ))}
                     </div>
 
@@ -98,8 +132,8 @@ export default function PricingPage() {
                     <div className="faq-section">
                         <h2 className="faq-title">Frequently Asked Questions</h2>
                         <div className="faq-grid">
-                            {faqs.map((faq, index) => (
-                                <FAQItem key={index} question={faq.question} answer={faq.answer} />
+                            {faqs.map((faq) => (
+                                <FAQItem key={faq.id} question={faq.question} answer={faq.answer} />
                             ))}
                         </div>
                     </div>
@@ -211,6 +245,7 @@ export default function PricingPage() {
                     display: grid;
                     grid-template-columns: repeat(2, 1fr);
                     gap: 32px;
+                    align-items: start;
                 }
 
                 /* Footer */
