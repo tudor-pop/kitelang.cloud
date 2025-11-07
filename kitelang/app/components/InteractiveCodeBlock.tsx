@@ -34,8 +34,8 @@ for availabilityZone in vpc.availabilityZones {
         steps: [
             {line: 0, label: 'Import VPC resource'},
             {line: 2, label: 'Create VPC resource'},
-            {line: 7, label: 'Iterates over runtime values'},
-            {line: 10, label: 'Use availabilityZone local variable'}
+            {line: 8, label: 'Iterates over runtime values'},
+            {line: 11, label: 'Use availabilityZone local variable'}
         ]
     },
     {
@@ -168,7 +168,7 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
 
     // Step highlighting
     useEffect(() => {
-        if (!isTyping) {
+        if (!isTyping && examples[activeTab]?.steps?.length > 0) {
             const steps = examples[activeTab].steps;
             let stepIndex = 0;
 
@@ -183,10 +183,10 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
 
     const highlightSyntax = (code: string) => {
         const lines = code.split('\n');
-        const activeStep = examples[activeTab].steps[currentStep];
+        const activeStep = examples[activeTab]?.steps?.[currentStep];
 
         return lines.map((lineText, lineIndex) => {
-            const isHighlighted = !isTyping && activeStep.line === lineIndex;
+            const isHighlighted = !isTyping && activeStep && activeStep.line === lineIndex;
             const lineClass = isHighlighted ? `${styles.codeLine} ${styles.highlighted}` : styles.codeLine;
 
             if (!lineText.trim()) {
@@ -471,7 +471,7 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
             <div className={styles.codeContent}>
                 {highlightSyntax(displayedCode)}
             </div>
-            {!isTyping && (
+            {!isTyping && examples[activeTab]?.steps?.[currentStep] && (
                 <div className={styles.codeFooter}>
                     <div className={styles.stepIndicator}>
                         <span className={styles.stepLabel}>{examples[activeTab].steps[currentStep].label}</span>
