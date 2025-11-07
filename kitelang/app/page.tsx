@@ -45,6 +45,22 @@ export default function LandingPage() {
 
     return (
         <div className="landing-page">
+            {/* Decorative Clouds Background */}
+            <div className="clouds-container">
+                <svg className="cloud cloud-1" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M170,25c0-11-9-20-20-20c-3,0-6,1-9,2C137,3,132,0,126,0c-11,0-20,9-20,20c0,1,0,2,0,3c-8,2-14,9-14,17c0,10,8,18,18,18h60c11,0,20-9,20-20C190,31,181,26,170,25z"/>
+                </svg>
+                <svg className="cloud cloud-2" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M170,25c0-11-9-20-20-20c-3,0-6,1-9,2C137,3,132,0,126,0c-11,0-20,9-20,20c0,1,0,2,0,3c-8,2-14,9-14,17c0,10,8,18,18,18h60c11,0,20-9,20-20C190,31,181,26,170,25z"/>
+                </svg>
+                <svg className="cloud cloud-3" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M170,25c0-11-9-20-20-20c-3,0-6,1-9,2C137,3,132,0,126,0c-11,0-20,9-20,20c0,1,0,2,0,3c-8,2-14,9-14,17c0,10,8,18,18,18h60c11,0,20-9,20-20C190,31,181,26,170,25z"/>
+                </svg>
+                <svg className="cloud cloud-4" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M170,25c0-11-9-20-20-20c-3,0-6,1-9,2C137,3,132,0,126,0c-11,0-20,9-20,20c0,1,0,2,0,3c-8,2-14,9-14,17c0,10,8,18,18,18h60c11,0,20-9,20-20C190,31,181,26,170,25z"/>
+                </svg>
+            </div>
+
             {/* Top Navigation Bar */}
             <nav className="top-bar">
                 <div className="logo">
@@ -178,6 +194,68 @@ export default function LandingPage() {
                     display: flex;
                     flex-direction: column;
                     min-height: 100vh;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .clouds-container {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 0;
+                    opacity: 0.15;
+                }
+
+                .cloud {
+                    position: absolute;
+                    fill: var(--text-primary);
+                    opacity: 0.3;
+                }
+
+                .cloud-1 {
+                    width: 150px;
+                    top: 10%;
+                    left: 10%;
+                    animation: float 30s infinite ease-in-out;
+                }
+
+                .cloud-2 {
+                    width: 120px;
+                    top: 25%;
+                    right: 15%;
+                    animation: float 35s infinite ease-in-out 5s;
+                }
+
+                .cloud-3 {
+                    width: 180px;
+                    bottom: 30%;
+                    left: 5%;
+                    animation: float 40s infinite ease-in-out 10s;
+                }
+
+                .cloud-4 {
+                    width: 140px;
+                    bottom: 15%;
+                    right: 10%;
+                    animation: float 32s infinite ease-in-out 15s;
+                }
+
+                @keyframes float {
+                    0%, 100% {
+                        transform: translateY(0) translateX(0);
+                    }
+                    25% {
+                        transform: translateY(-20px) translateX(10px);
+                    }
+                    50% {
+                        transform: translateY(0) translateX(20px);
+                    }
+                    75% {
+                        transform: translateY(20px) translateX(10px);
+                    }
                 }
 
                 /* Top Bar */
@@ -185,6 +263,7 @@ export default function LandingPage() {
                     position: fixed;
                     top: 0;
                     left: 0;
+                    z-index: 100;
                     right: 0;
                     height: 70px;
                     background: var(--bg-primary);
@@ -260,6 +339,8 @@ export default function LandingPage() {
                     margin-top: 70px;
                     overflow-y: auto;
                     flex: 1;
+                    position: relative;
+                    z-index: 1;
                 }
 
                 /* Hero Section */
