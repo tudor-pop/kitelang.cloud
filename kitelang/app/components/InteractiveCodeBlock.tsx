@@ -39,12 +39,38 @@ resource VPC vpc {
 
 @count(3)
 resource Subnet subnet {
-    vpc_id      = vpc.id
-    cidr_block  = "10.\${count}.0.0/24"
+    vpcId  = vpc.id
+    cidr   = "10.\${count}.0.0/24"
 }`,
         steps: [
             {line: 8, label: 'Decorate resource with @count'},
             {line: 11, label: 'Use count in string interpolation'}
+        ]
+    },
+    {
+        title: 'Components',
+        code: `import Bucket from "cloud.storage"
+
+component Prometheus {
+    @allow(['client1', 'client2'])
+    input string name = 'client1'
+
+    resource Bucket logs { ... }
+    resource Bucket metrics { ... }
+
+    output string arn = logs.arn
+}
+
+// create both buckets by using a component
+component Prometheus prod {
+    name = "client2"
+}`,
+        steps: [
+            {line: 2, label: 'Define reusable component'},
+            {line: 3, label: '@allow only specific strings'},
+            {line: 4, label: 'Input declaration'},
+            {line: 9, label: 'Output declaration'},
+            {line: 13, label: 'Initialize component with input'},
         ]
     },
     {
@@ -69,24 +95,6 @@ for bucket in [photos, videos] {
             {line: 2, label: 'Provision on multiple clouds'},
             {line: 7, label: 'Dependency management'},
             {line: 12, label: 'Iterate over resources'}
-        ]
-    },
-    {
-        title: 'With Functions',
-        code: `import * from aws
-
-fun createVpc(name: String, cidr: String) {
-    return VPC {
-        name = name
-        cidr = cidr
-        enableDnsHostnames = true
-    }
-}
-
-resource vpc = createVpc("prod", "10.0.0.0/16")`,
-        steps: [
-            {line: 2, label: 'Define reusable function'},
-            {line: 10, label: 'Use function to create VPC'}
         ]
     }
 ];
@@ -177,9 +185,10 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
             const tokenPatterns = [
                 {regex: /^\/\/.*$/, className: 'comment'},
                 {
-                    regex: /^\b(package|import|from|resource|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected|in|println)\b/,
+                    regex: /^\b(package|import|from|resource|component|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected|in|input|output|println)\b/,
                     className: 'keyword'
                 },
+                {regex: /^\b(string|int|float|double|boolean|byte|short|long|char)\b/, className: 'type'},  // Built-in types
                 {regex: /^\d+\.?\d*/, className: 'number'},  // Removed word boundary requirement
                 {regex: /^[={}()[\]:,.]/, className: 'operator'},
             ];
@@ -222,48 +231,78 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                     }
                 }
 
-                // Handle strings with interpolation
-                if (lineText[pos] === '"') {
-                    tokens.push(<span key={key++} className="string">"</span>);
+                // Handle strings with interpolation (both single and double quotes)
+                if (lineText[pos] === '"' || lineText[pos] === "'") {
+                    const quote = lineText[pos];
+                    tokens.push(<span key={key++} className="string">{quote}</span>);
                     pos++;
 
                     let stringContent = '';
-                    while (pos < lineText.length && lineText[pos] !== '"') {
+                    while (pos < lineText.length && lineText[pos] !== quote) {
                         if (lineText[pos] === '\\' && pos + 1 < lineText.length) {
                             // Handle escape sequences
                             stringContent += lineText[pos] + lineText[pos + 1];
                             pos += 2;
-                        } else if (lineText[pos] === '$' && pos + 1 < lineText.length && lineText[pos + 1] === '{') {
-                            // Flush any accumulated string content
-                            if (stringContent) {
-                                tokens.push(<span key={key++} className="string">{stringContent}</span>);
-                                stringContent = '';
-                            }
-
-                            // Add interpolation start ${
-                            tokens.push(<span key={key++} className="interpolation">${'{'}</span>);
-                            pos += 2;
-
-                            // Find matching closing brace
-                            let interpolationContent = '';
-                            let braceCount = 1;
-                            while (pos < lineText.length && braceCount > 0) {
-                                if (lineText[pos] === '{') braceCount++;
-                                else if (lineText[pos] === '}') braceCount--;
-
-                                if (braceCount > 0) {
-                                    interpolationContent += lineText[pos];
+                        } else if (lineText[pos] === '$') {
+                            // Check for ${...} or $variable interpolation
+                            if (pos + 1 < lineText.length && lineText[pos + 1] === '{') {
+                                // Flush any accumulated string content
+                                if (stringContent) {
+                                    tokens.push(<span key={key++} className="string">{stringContent}</span>);
+                                    stringContent = '';
                                 }
+
+                                // Add interpolation start ${
+                                tokens.push(<span key={key++} className="interpolation">${'{'}</span>);
+                                pos += 2;
+
+                                // Find matching closing brace
+                                let interpolationContent = '';
+                                let braceCount = 1;
+                                while (pos < lineText.length && braceCount > 0) {
+                                    if (lineText[pos] === '{') braceCount++;
+                                    else if (lineText[pos] === '}') braceCount--;
+
+                                    if (braceCount > 0) {
+                                        interpolationContent += lineText[pos];
+                                    }
+                                    pos++;
+                                }
+
+                                // Add interpolation content (variable name) - white color
+                                if (interpolationContent) {
+                                    tokens.push(<span key={key++}>{interpolationContent}</span>);
+                                }
+
+                                // Add closing brace
+                                tokens.push(<span key={key++} className="interpolation">{'}'}</span>);
+                            } else if (pos + 1 < lineText.length && /[a-zA-Z_]/.test(lineText[pos + 1])) {
+                                // Handle $variable (without braces)
+                                // Flush any accumulated string content
+                                if (stringContent) {
+                                    tokens.push(<span key={key++} className="string">{stringContent}</span>);
+                                    stringContent = '';
+                                }
+
+                                // Add $ as interpolation
+                                tokens.push(<span key={key++} className="interpolation">$</span>);
+                                pos++;
+
+                                // Extract variable name
+                                let variableName = '';
+                                while (pos < lineText.length && /[a-zA-Z0-9_]/.test(lineText[pos])) {
+                                    variableName += lineText[pos];
+                                    pos++;
+                                }
+
+                                // Add variable name
+                                if (variableName) {
+                                    tokens.push(<span key={key++}>{variableName}</span>);
+                                }
+                            } else {
+                                stringContent += lineText[pos];
                                 pos++;
                             }
-
-                            // Add interpolation content (variable name) - white color
-                            if (interpolationContent) {
-                                tokens.push(<span key={key++}>{interpolationContent}</span>);
-                            }
-
-                            // Add closing brace
-                            tokens.push(<span key={key++} className="interpolation">{'}'}</span>);
                         } else {
                             stringContent += lineText[pos];
                             pos++;
@@ -276,8 +315,8 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                     }
 
                     // Add closing quote
-                    if (pos < lineText.length && lineText[pos] === '"') {
-                        tokens.push(<span key={key++} className="string">"</span>);
+                    if (pos < lineText.length && lineText[pos] === quote) {
+                        tokens.push(<span key={key++} className="string">{quote}</span>);
                         pos++;
                     }
 
