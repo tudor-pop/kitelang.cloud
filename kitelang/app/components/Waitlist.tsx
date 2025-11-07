@@ -1,34 +1,44 @@
 'use client';
 
 import React, { useState } from 'react';
+import Toast from './Toast';
 import styles from './Waitlist.module.css';
+
+interface ToastState {
+    show: boolean;
+    message: string;
+    type: 'success' | 'error';
+}
 
 export default function Waitlist() {
     const [email, setEmail] = useState('');
-    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-    const [errorMessage, setErrorMessage] = useState('');
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+    const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
 
     const validateEmail = (email: string): boolean => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
 
+    const showToast = (message: string, type: 'success' | 'error') => {
+        setToast({ show: true, message, type });
+    };
+
+    const hideToast = () => {
+        setToast({ ...toast, show: false });
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Reset error state
-        setErrorMessage('');
-
         // Validate email
         if (!email) {
-            setStatus('error');
-            setErrorMessage('Please enter your email address');
+            showToast('Please enter your email address', 'error');
             return;
         }
 
         if (!validateEmail(email)) {
-            setStatus('error');
-            setErrorMessage('Please enter a valid email address');
+            showToast('Please enter a valid email address', 'error');
             return;
         }
 
@@ -47,9 +57,13 @@ export default function Waitlist() {
 
             setStatus('success');
             setEmail(''); // Clear the input
+            showToast('Thanks for joining! Check your email for confirmation.', 'success');
+
+            // Reset status after a delay
+            setTimeout(() => setStatus('idle'), 3000);
         } catch (error) {
-            setStatus('error');
-            setErrorMessage('Something went wrong. Please try again.');
+            setStatus('idle');
+            showToast('Something went wrong. Please try again.', 'error');
         }
     };
 
@@ -74,8 +88,6 @@ export default function Waitlist() {
                             placeholder="Enter your email"
                             className={styles.emailInput}
                             disabled={status === 'loading' || status === 'success'}
-                            aria-invalid={status === 'error'}
-                            aria-describedby={status === 'error' ? 'error-message' : undefined}
                         />
                         <button
                             type="submit"
@@ -85,24 +97,20 @@ export default function Waitlist() {
                             {status === 'loading' ? 'Joining...' : status === 'success' ? 'Joined!' : 'Join Waitlist'}
                         </button>
                     </div>
-
-                    {status === 'error' && errorMessage && (
-                        <p id="error-message" className={styles.errorMessage} role="alert">
-                            {errorMessage}
-                        </p>
-                    )}
-
-                    {status === 'success' && (
-                        <p className={styles.successMessage} role="alert">
-                            Thanks for joining! Check your email for confirmation.
-                        </p>
-                    )}
                 </form>
 
                 <p className={styles.privacyNote}>
                     We respect your privacy. Unsubscribe at any time.
                 </p>
             </div>
+
+            {toast.show && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={hideToast}
+                />
+            )}
         </section>
     );
 }

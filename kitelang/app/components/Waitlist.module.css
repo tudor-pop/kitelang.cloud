@@ -99,8 +99,7 @@
 }
 
 .submitButton:hover:not(:disabled) {
-    transform: translate(-4px, -4px);
-    box-shadow: 4px 4px 0 #000000;
+    background: #1A1A1A;
 }
 
 .submitButton:focus-visible {
