@@ -1,6 +1,7 @@
 'use client';
 
 import React, {useEffect, useState} from 'react';
+import styles from './InteractiveCodeBlock.module.css';
 
 interface CodeExample {
     title: string;
@@ -186,12 +187,12 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
 
         return lines.map((lineText, lineIndex) => {
             const isHighlighted = !isTyping && activeStep.line === lineIndex;
-            const lineClass = isHighlighted ? 'code-line highlighted' : 'code-line';
+            const lineClass = isHighlighted ? `${styles.codeLine} ${styles.highlighted}` : styles.codeLine;
 
             if (!lineText.trim()) {
                 return (
                     <div key={lineIndex} className={lineClass}>
-                        <span className="line-number">{lineIndex + 1}</span>
+                        <span className={styles.lineNumber}>{lineIndex + 1}</span>
                         <span>&nbsp;</span>
                     </div>
                 );
@@ -201,7 +202,7 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
             if (isTyping) {
                 return (
                     <div key={lineIndex} className={lineClass}>
-                        <span className="line-number">{lineIndex + 1}</span>
+                        <span className={styles.lineNumber}>{lineIndex + 1}</span>
                         <span>{lineText}</span>
                     </div>
                 );
@@ -445,7 +446,7 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
 
             return (
                 <div key={lineIndex} className={lineClass}>
-                    <span className="line-number">{lineIndex + 1}</span>
+                    <span className={styles.lineNumber}>{lineIndex + 1}</span>
                     <span>{tokens}</span>
                 </div>
             );
@@ -453,292 +454,30 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
     };
 
     return (
-        <>
-            <div className="code-window">
-                <div className="code-header">
-                    <div className="code-tabs">
-                        {examples.map((example, index) => (
-                            <button
-                                key={index}
-                                className={`code-tab ${activeTab === index ? 'active' : ''}`}
-                                onClick={() => setActiveTab(index)}
-                            >
-                                {example.title}
-                            </button>
-                        ))}
-                    </div>
+        <div className={styles.codeWindow}>
+            <div className={styles.codeHeader}>
+                <div className={styles.codeTabs}>
+                    {examples.map((example, index) => (
+                        <button
+                            key={index}
+                            className={`${styles.codeTab} ${activeTab === index ? styles.active : ''}`}
+                            onClick={() => setActiveTab(index)}
+                        >
+                            {example.title}
+                        </button>
+                    ))}
                 </div>
-                <div className="code-content">
-                    {highlightSyntax(displayedCode)}
-                </div>
-                {!isTyping && (
-                    <div className="code-footer">
-                        <div className="step-indicator">
-                            <span className="step-label">{examples[activeTab].steps[currentStep].label}</span>
-                        </div>
-                    </div>
-                )}
             </div>
-
-            <style jsx>{`
-                /* Code Window */
-                .code-window {
-                    background: var(--code-bg);
-                    border: 2px solid var(--border-color);
-                    border-radius: 8px;
-                    overflow: hidden;
-                }
-
-                .code-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: 12px 20px;
-                    background: var(--bg-secondary);
-                    border-bottom: 2px solid var(--border-color);
-                }
-
-                .code-tabs {
-                    display: flex;
-                    gap: 8px;
-                }
-
-                .code-tab {
-                    padding: 6px 16px;
-                    background: transparent;
-                    border: 2px solid var(--border-color);
-                    border-radius: 4px;
-                    font-family: 'Roboto Mono', monospace;
-                    font-size: 12px;
-                    font-weight: 600;
-                    color: var(--text-secondary);
-                    cursor: pointer;
-                    transition: all 0.2s;
-                }
-
-                .code-tab:hover {
-                    background: var(--primary-light);
-                    color: var(--bg-primary);
-                }
-
-                .code-tab.active {
-                    background: var(--primary-color);
-                    color: #FFFFFF;
-                }
-
-                .copy-btn {
-                    padding: 6px 12px;
-                    background: var(--primary-color);
-                    color: var(--bg-primary);
-                    border: none;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    font-weight: 700;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                }
-
-                .copy-btn:hover {
-                    background: var(--primary-dark);
-                }
-
-                .code-content {
-                    padding: 24px;
-                    font-family: 'Roboto Mono', monospace;
-                    font-size: 14px;
-                    line-height: 1.5;
-                    color: var(--text-primary);
-                    overflow-x: hidden;
-                    overflow-y: auto;
-                    height: 450px;
-                    tab-size: 4;
-                    -moz-tab-size: 4;
-                    white-space: pre-wrap;
-                    word-wrap: break-word;
-                }
-
-                .code-line {
-                    display: flex;
-                    gap: 16px;
-                    padding: 2px 0;
-                    transition: background 0.3s ease;
-                }
-
-                .code-line.highlighted {
-                    background: rgba(168, 85, 247, 0.15);
-                    border-left: 3px solid var(--primary-color);
-                    padding-left: 8px;
-                    margin-left: -11px;
-                }
-
-                .line-number {
-                    color: var(--text-muted);
-                    user-select: none;
-                    min-width: 30px;
-                    text-align: right;
-                    font-size: 12px;
-                }
-
-                .code-footer {
-                    padding: 12px 20px;
-                    background: var(--bg-secondary);
-                    border-top: 2px solid var(--border-color);
-                }
-
-                .step-indicator {
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                }
-
-                .step-label {
-                    font-family: 'Roboto Mono', monospace;
-                    font-size: 12px;
-                    font-weight: 600;
-                    color: var(--primary-color);
-                }
-
-                /* Syntax Highlighting */
-                :global(.keyword) {
-                    color: #A855F7;
-                    font-weight: 600;
-                }
-
-                :global(.keyword.has-tooltip) {
-                    cursor: help;
-                    text-decoration: underline dotted;
-                    text-decoration-color: #A855F7;
-                    text-underline-offset: 2px;
-                    position: relative;
-                }
-
-                :global(.keyword.has-tooltip::before) {
-                    content: attr(data-tooltip);
-                    position: fixed;
-                    bottom: auto;
-                    left: var(--tooltip-x);
-                    top: var(--tooltip-y);
-                    transform: translate(-50%, -100%);
-                    background: var(--text-primary);
-                    color: var(--bg-primary);
-                    padding: 8px 12px;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    white-space: pre-line;
-                    opacity: 0;
-                    pointer-events: none;
-                    transition: opacity 0.2s;
-                    z-index: 1000;
-                    max-width: 300px;
-                    line-height: 1.4;
-                    font-family: 'Roboto', sans-serif;
-                    font-weight: 400;
-                }
-
-                :global(.keyword.has-tooltip:hover::before) {
-                    opacity: 1;
-                }
-
-                :global(.type) {
-                    color: #3B82F6;
-                    font-weight: 600;
-                }
-
-                :global(.string) {
-                    color: #10B981;
-                }
-
-                :global(.interpolation) {
-                    color: #D97706;
-                }
-
-                :global(.decorator) {
-                    color: #D97706;
-                }
-
-                :global(.decorator.has-tooltip) {
-                    cursor: help;
-                    text-decoration: underline dotted;
-                    text-decoration-color: #D97706;
-                    text-underline-offset: 2px;
-                    position: relative;
-                }
-
-                :global(.decorator.has-tooltip::before) {
-                    content: attr(data-tooltip);
-                    position: fixed;
-                    bottom: auto;
-                    left: var(--tooltip-x);
-                    top: var(--tooltip-y);
-                    transform: translate(-50%, -100%);
-                    background: var(--text-primary);
-                    color: var(--bg-primary);
-                    padding: 8px 12px;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    white-space: pre-line;
-                    opacity: 0;
-                    pointer-events: none;
-                    transition: opacity 0.2s;
-                    z-index: 1000;
-                    max-width: 300px;
-                    line-height: 1.4;
-                    font-family: 'Roboto', sans-serif;
-                    font-weight: 400;
-                }
-
-                :global(.decorator.has-tooltip:hover::before) {
-                    opacity: 1;
-                }
-
-                :global(.number) {
-                    color: #06B6D4;
-                }
-
-                :global(.operator) {
-                    color: var(--text-secondary);
-                }
-
-                :global(.comment) {
-                    color: var(--text-muted);
-                    font-style: italic;
-                }
-
-                :global(.identifier.has-tooltip) {
-                    cursor: help;
-                    text-decoration: underline dotted;
-                    text-decoration-color: var(--text-primary);
-                    text-underline-offset: 2px;
-                    position: relative;
-                }
-
-                :global(.identifier.has-tooltip::before) {
-                    content: attr(data-tooltip);
-                    position: fixed;
-                    bottom: auto;
-                    left: var(--tooltip-x);
-                    top: var(--tooltip-y);
-                    transform: translate(-50%, -100%);
-                    background: var(--text-primary);
-                    color: var(--bg-primary);
-                    padding: 8px 12px;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    white-space: pre-line;
-                    opacity: 0;
-                    pointer-events: none;
-                    transition: opacity 0.2s;
-                    z-index: 1000;
-                    max-width: 300px;
-                    line-height: 1.4;
-                    font-family: 'Roboto', sans-serif;
-                    font-weight: 400;
-                }
-
-                :global(.identifier.has-tooltip:hover::before) {
-                    opacity: 1;
-                }
-            `}</style>
-        </>
+            <div className={styles.codeContent}>
+                {highlightSyntax(displayedCode)}
+            </div>
+            {!isTyping && (
+                <div className={styles.codeFooter}>
+                    <div className={styles.stepIndicator}>
+                        <span className={styles.stepLabel}>{examples[activeTab].steps[currentStep].label}</span>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 }
