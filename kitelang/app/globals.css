@@ -101,6 +101,9 @@ body {
     position: absolute;
     border-radius: 100px;
     opacity: 0.15;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .cloud::before,

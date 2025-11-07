@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, memo} from 'react';
 import styles from './InteractiveCodeBlock.module.css';
 
 interface CodeExample {
@@ -134,7 +134,7 @@ mixin Bucket { tags = { env: 'prod' } }
     }
 ];
 
-export default function InteractiveCodeBlock({examples = defaultCodeExamples}: InteractiveCodeBlockProps) {
+function InteractiveCodeBlock({examples = defaultCodeExamples}: InteractiveCodeBlockProps) {
     const [activeTab, setActiveTab] = useState(0);
     const [displayedCode, setDisplayedCode] = useState('');
     const [isTyping, setIsTyping] = useState(true);
@@ -498,3 +498,5 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
         </div>
     );
 }
+
+export default memo(InteractiveCodeBlock);

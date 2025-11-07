@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Link from 'next/link';
-import Footer from './components/Footer';
 import InteractiveCodeBlock from './components/InteractiveCodeBlock';
-import Waitlist from './components/Waitlist';
 import styles from './page.module.css';
+
+// Lazy load components below the fold for better initial load performance
+const Waitlist = lazy(() => import('./components/Waitlist'));
+const Footer = lazy(() => import('./components/Footer'));
 
 export default function LandingPage() {
     const [cloudPositions, setCloudPositions] = useState<Array<{ top: number; left?: number; right?: number }>>([]);
@@ -122,10 +124,14 @@ export default function LandingPage() {
                 </section>
 
                 {/* Waitlist Section */}
-                <Waitlist />
+                <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+                    <Waitlist />
+                </Suspense>
 
                 {/* Footer */}
-                <Footer />
+                <Suspense fallback={<div style={{ minHeight: '200px' }} />}>
+                    <Footer />
+                </Suspense>
             </main>
 
         </div>
