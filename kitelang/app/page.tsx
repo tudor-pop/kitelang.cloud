@@ -47,55 +47,9 @@ export default function LandingPage() {
         <div className="landing-page">
             {/* Decorative Clouds Background */}
             <div className="clouds-container">
-                {/* Cloud 1 - Simple 3 bumps */}
-                <svg className="cloud cloud-1" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 30,60 Q 30,30 50,30 Q 60,15 85,15 Q 110,15 120,30 Q 140,30 140,50 Q 140,70 120,70 L 50,70 Q 30,70 30,60 Z"/>
-                </svg>
-
-                {/* Cloud 2 - 4 bumps elongated */}
-                <svg className="cloud cloud-2" viewBox="0 0 220 75" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 25,55 Q 25,35 45,35 Q 52,20 75,20 Q 90,20 95,25 Q 105,15 125,15 Q 145,15 150,25 Q 160,25 170,35 Q 180,35 180,55 Q 180,65 170,65 L 45,65 Q 25,65 25,55 Z"/>
-                </svg>
-
-                {/* Cloud 3 - 5 bumps large */}
-                <svg className="cloud cloud-3" viewBox="0 0 240 85" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 30,65 Q 30,45 50,45 Q 57,28 80,28 Q 95,28 100,35 Q 110,22 135,22 Q 160,22 165,35 Q 175,30 190,30 Q 205,30 210,40 Q 220,40 220,60 Q 220,75 205,75 L 50,75 Q 30,75 30,65 Z"/>
-                </svg>
-
-                {/* Cloud 4 - Small 3 bumps */}
-                <svg className="cloud cloud-4" viewBox="0 0 160 65" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 25,50 Q 25,30 42,30 Q 50,18 70,18 Q 90,18 98,30 Q 115,30 115,45 Q 115,58 100,58 L 42,58 Q 25,58 25,50 Z"/>
-                </svg>
-
-                {/* Cloud 5 - Flat bottom 4 bumps */}
-                <svg className="cloud cloud-5" viewBox="0 0 190 70" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 25,60 L 25,50 Q 25,35 42,35 Q 48,22 68,22 Q 82,22 88,30 Q 98,20 118,20 Q 138,20 145,32 Q 160,32 160,50 L 160,60 Z"/>
-                </svg>
-
-                {/* Cloud 6 - Compact 4 bumps */}
-                <svg className="cloud cloud-6" viewBox="0 0 180 75" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 28,58 Q 28,38 48,38 Q 55,25 75,25 Q 90,25 95,32 Q 105,22 125,22 Q 145,22 150,35 Q 165,35 165,55 Q 165,68 150,68 L 48,68 Q 28,68 28,58 Z"/>
-                </svg>
-
-                {/* Cloud 7 - Wide 5 bumps */}
-                <svg className="cloud cloud-7" viewBox="0 0 250 80" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 30,62 Q 30,45 48,45 Q 54,30 72,30 Q 85,30 90,37 Q 100,25 120,25 Q 140,25 145,35 Q 155,28 172,28 Q 190,28 195,38 Q 208,38 208,55 Q 208,70 195,70 L 48,70 Q 30,70 30,62 Z"/>
-                </svg>
-
-                {/* Cloud 8 - Tiny 3 bumps */}
-                <svg className="cloud cloud-8" viewBox="0 0 140 60" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 22,48 Q 22,32 38,32 Q 45,20 62,20 Q 79,20 86,32 Q 102,32 102,46 Q 102,54 90,54 L 38,54 Q 22,54 22,48 Z"/>
-                </svg>
-
-                {/* Cloud 9 - Medium 4 bumps */}
-                <svg className="cloud cloud-9" viewBox="0 0 200 75" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 28,60 Q 28,40 46,40 Q 52,26 72,26 Q 88,26 93,34 Q 103,22 123,22 Q 143,22 150,35 Q 165,35 165,55 Q 165,68 152,68 L 46,68 Q 28,68 28,60 Z"/>
-                </svg>
-
-                {/* Cloud 10 - Rounded 3 bumps */}
-                <svg className="cloud cloud-10" viewBox="0 0 170 70" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 26,55 Q 26,38 44,38 Q 52,23 74,23 Q 96,23 104,38 Q 122,38 122,52 Q 122,64 108,64 L 44,64 Q 26,64 26,55 Z"/>
-                </svg>
+                <div className="cloud cloud-1"></div>
+                <div className="cloud cloud-2"></div>
+                <div className="cloud cloud-3"></div>
             </div>
 
             {/* Top Navigation Bar */}
@@ -248,87 +202,245 @@ export default function LandingPage() {
 
                 .cloud {
                     position: absolute;
+                    border-radius: 100px;
                     opacity: 0.15;
                 }
 
+                .cloud::before,
+                .cloud::after {
+                    content: '';
+                    position: absolute;
+                    border-radius: 50%;
+                }
+
                 .cloud-1 {
-                    width: 180px;
-                    top: 8%;
-                    left: 5%;
+                    width: 200px;
+                    height: 60px;
+                    background: var(--text-primary);
+                    top: 15%;
+                    left: 10%;
                     animation: float 35s infinite ease-in-out;
-                    fill: #60A5FA;
+                }
+                .cloud-1::before {
+                    width: 80px;
+                    height: 80px;
+                    background: var(--text-primary);
+                    top: -40px;
+                    left: 30px;
+                }
+                .cloud-1::after {
+                    width: 110px;
+                    height: 100px;
+                    background: var(--text-primary);
+                    top: -50px;
+                    right: 30px;
                 }
 
                 .cloud-2 {
-                    width: 110px;
-                    top: 15%;
-                    left: 25%;
-                    animation: float 28s infinite ease-in-out 3s;
-                    fill: #C084FC;
+                    width: 180px;
+                    height: 55px;
+                    background: var(--text-primary);
+                    top: 50%;
+                    right: 15%;
+                    animation: float 40s infinite ease-in-out 5s;
+                }
+                .cloud-2::before {
+                    width: 70px;
+                    height: 70px;
+                    background: var(--text-primary);
+                    top: -35px;
+                    left: 28px;
+                }
+                .cloud-2::after {
+                    width: 100px;
+                    height: 90px;
+                    background: var(--text-primary);
+                    top: -45px;
+                    right: 28px;
                 }
 
                 .cloud-3 {
-                    width: 180px;
-                    top: 20%;
-                    right: 10%;
-                    animation: float 42s infinite ease-in-out 7s;
-                    fill: #34D399;
+                    width: 220px;
+                    height: 65px;
+                    background: var(--text-primary);
+                    top: 80%;
+                    left: 20%;
+                    animation: float 38s infinite ease-in-out 10s;
+                }
+                .cloud-3::before {
+                    width: 85px;
+                    height: 85px;
+                    background: var(--text-primary);
+                    top: -45px;
+                    left: 35px;
+                }
+                .cloud-3::after {
+                    width: 120px;
+                    height: 105px;
+                    background: var(--text-primary);
+                    top: -55px;
+                    right: 35px;
                 }
 
                 .cloud-4 {
-                    width: 150px;
+                    width: 180px;
+                    height: 55px;
+                    background: var(--text-primary);
                     top: 35%;
                     right: 25%;
                     animation: float 32s infinite ease-in-out 12s;
-                    fill: #818CF8;
+                }
+                .cloud-4::before {
+                    width: 70px;
+                    height: 70px;
+                    background: var(--text-primary);
+                    top: -35px;
+                    left: 28px;
+                }
+                .cloud-4::after {
+                    width: 100px;
+                    height: 90px;
+                    background: var(--text-primary);
+                    top: -45px;
+                    right: 28px;
                 }
 
                 .cloud-5 {
-                    width: 90px;
+                    width: 140px;
+                    height: 48px;
+                    background: var(--text-primary);
                     top: 45%;
                     left: 15%;
                     animation: float 25s infinite ease-in-out 5s;
-                    fill: #F472B6;
+                }
+                .cloud-5::before {
+                    width: 55px;
+                    height: 55px;
+                    background: var(--text-primary);
+                    top: -28px;
+                    left: 22px;
+                }
+                .cloud-5::after {
+                    width: 80px;
+                    height: 75px;
+                    background: var(--text-primary);
+                    top: -38px;
+                    right: 22px;
                 }
 
                 .cloud-6 {
-                    width: 180px;
+                    width: 210px;
+                    height: 62px;
+                    background: var(--text-primary);
                     top: 55%;
                     right: 8%;
                     animation: float 38s infinite ease-in-out 18s;
-                    fill: #22D3EE;
+                }
+                .cloud-6::before {
+                    width: 82px;
+                    height: 82px;
+                    background: var(--text-primary);
+                    top: -42px;
+                    left: 32px;
+                }
+                .cloud-6::after {
+                    width: 115px;
+                    height: 102px;
+                    background: var(--text-primary);
+                    top: -52px;
+                    right: 32px;
                 }
 
                 .cloud-7 {
-                    width: 140px;
+                    width: 170px;
+                    height: 52px;
+                    background: var(--text-primary);
                     top: 65%;
                     left: 30%;
                     animation: float 30s infinite ease-in-out 10s;
-                    fill: #A78BFA;
+                }
+                .cloud-7::before {
+                    width: 68px;
+                    height: 68px;
+                    background: var(--text-primary);
+                    top: -34px;
+                    left: 26px;
+                }
+                .cloud-7::after {
+                    width: 95px;
+                    height: 88px;
+                    background: var(--text-primary);
+                    top: -44px;
+                    right: 26px;
                 }
 
                 .cloud-8 {
-                    width: 80px;
+                    width: 130px;
+                    height: 45px;
+                    background: var(--text-primary);
                     top: 75%;
                     right: 35%;
                     animation: float 22s infinite ease-in-out 14s;
-                    fill: #2DD4BF;
+                }
+                .cloud-8::before {
+                    width: 52px;
+                    height: 52px;
+                    background: var(--text-primary);
+                    top: -26px;
+                    left: 20px;
+                }
+                .cloud-8::after {
+                    width: 75px;
+                    height: 70px;
+                    background: var(--text-primary);
+                    top: -35px;
+                    right: 20px;
                 }
 
                 .cloud-9 {
-                    width: 160px;
+                    width: 195px;
+                    height: 58px;
+                    background: var(--text-primary);
                     top: 82%;
                     left: 8%;
                     animation: float 36s infinite ease-in-out 8s;
-                    fill: #6366F1;
+                }
+                .cloud-9::before {
+                    width: 78px;
+                    height: 78px;
+                    background: var(--text-primary);
+                    top: -39px;
+                    left: 30px;
+                }
+                .cloud-9::after {
+                    width: 108px;
+                    height: 95px;
+                    background: var(--text-primary);
+                    top: -48px;
+                    right: 30px;
                 }
 
                 .cloud-10 {
-                    width: 130px;
+                    width: 160px;
+                    height: 50px;
+                    background: var(--text-primary);
                     top: 90%;
                     right: 15%;
                     animation: float 29s infinite ease-in-out 16s;
-                    fill: #8B5CF6;
+                }
+                .cloud-10::before {
+                    width: 65px;
+                    height: 65px;
+                    background: var(--text-primary);
+                    top: -32px;
+                    left: 24px;
+                }
+                .cloud-10::after {
+                    width: 90px;
+                    height: 85px;
+                    background: var(--text-primary);
+                    top: -42px;
+                    right: 24px;
                 }
 
                 @keyframes float {
