@@ -22,10 +22,10 @@ resource VPC vpc {
     cidr = "10.0.0.0/16"
 }
 
-for index, availabilityZone in vpc.availabilityZones {
+// We fixed the infamous 'keys need to be known at plan time'
+for availabilityZone in vpc.availabilityZones {
     resource Subnet subnets {
       vpcId = vpc.id
-      cidr  = "10.\${index}.0.0/24"
       az    = availabilityZone
     }
 }
@@ -33,7 +33,8 @@ for index, availabilityZone in vpc.availabilityZones {
         steps: [
             {line: 0, label: 'Import VPC resource'},
             {line: 2, label: 'Create VPC resource'},
-            {line: 7, label: 'Iterates over runtime values'}
+            {line: 7, label: 'Iterates over runtime values'},
+            {line: 10, label: 'Use availabilityZone local variable'}
         ]
     },
     {
@@ -61,8 +62,8 @@ resource Subnet subnet {
         code: `import Bucket from "cloud.storage"
 
 component Prometheus {
-    @allow(['client1', 'client2'])
-    input string name = 'client1'
+    @allow(['prod', 'dev'])
+    input string name = 'prod'
 
     resource Bucket logs { ... }
     resource Bucket metrics { ... }
@@ -71,13 +72,13 @@ component Prometheus {
 }
 
 // create both buckets by using a component
-component Prometheus prod {
-    name = "client2"
+component Prometheus dev {
+    name = "dev"
 }`,
         steps: [
             {line: 2, label: 'Define reusable component'},
             {line: 3, label: '@allow only specific strings'},
-            {line: 4, label: 'Input declaration'},
+            {line: 4, label: 'Input declaration with default value \'prod\''},
             {line: 9, label: 'Output declaration'},
             {line: 13, label: 'Initialize component with input'},
         ]
@@ -96,8 +97,8 @@ resource Bucket videos {
     name = "my-videos"
 }
 
-for bucket in [photos, videos] {
-    println(bucket)
+for index, bucket in [photos, videos] {
+    println(index, bucket)
 }`,
         steps: [
             {line: 0, label: 'Clean import statement'},
@@ -362,8 +363,8 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                             previousWasResource = false;
                         }
 
-                        // Add tooltip for "in" keyword
-                        if (pattern.className === 'keyword' && match[0] === 'in') {
+                        // Add tooltip for "in" keyword (only in Resources tab)
+                        if (pattern.className === 'keyword' && match[0] === 'in' && examples[activeTab].title === 'Resources') {
                             const tooltipText = "We fixed the infamous 'keys need to be known at plan time'";
                             tokens.push(
                                 <span
@@ -411,7 +412,7 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                                 </span>
                             );
                         } else if (identifier === 'availabilityZone') {
-                            const tooltipText = "availabilityZone is a local variable containing actual values";
+                            const tooltipText = "availabilityZone is a local variable containing actual values: \n• us-east-1a\n• us-east-1b\n• us-east-1c";
                             tokens.push(
                                 <span
                                     key={key++}
