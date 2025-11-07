@@ -15,9 +15,73 @@ export default function Waitlist() {
     const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
     const [toast, setToast] = useState<ToastState>({ show: false, message: '', type: 'success' });
 
-    const validateEmail = (email: string): boolean => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+    // Common disposable email domains to block
+    const disposableDomains = [
+        'tempmail.com', 'throwaway.email', '10minutemail.com', 'guerrillamail.com',
+        'mailinator.com', 'maildrop.cc', 'trashmail.com', 'fakeinbox.com'
+    ];
+
+    // Common domain typos to suggest corrections
+    const domainCorrections: Record<string, string> = {
+        'gmail.con': 'gmail.com',
+        'gmial.com': 'gmail.com',
+        'gmai.com': 'gmail.com',
+        'yahooo.com': 'yahoo.com',
+        'yaho.com': 'yahoo.com',
+        'hotmial.com': 'hotmail.com',
+        'hotmai.com': 'hotmail.com',
+        'outlok.com': 'outlook.com',
+        'outloo.com': 'outlook.com'
+    };
+
+    const validateEmail = (email: string): { valid: boolean; error?: string; suggestion?: string } => {
+        // Trim whitespace
+        email = email.trim().toLowerCase();
+
+        // Check if empty
+        if (!email) {
+            return { valid: false, error: 'Please enter your email address' };
+        }
+
+        // More robust email regex (RFC 5322 simplified)
+        const emailRegex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+
+        if (!emailRegex.test(email)) {
+            return { valid: false, error: 'Please enter a valid email address' };
+        }
+
+        // Extract domain
+        const domain = email.split('@')[1];
+
+        // Check for disposable email
+        if (disposableDomains.includes(domain)) {
+            return { valid: false, error: 'Temporary email addresses are not allowed' };
+        }
+
+        // Check for common typos and suggest corrections
+        if (domainCorrections[domain]) {
+            return {
+                valid: false,
+                error: `Did you mean ${email.replace(domain, domainCorrections[domain])}?`,
+                suggestion: email.replace(domain, domainCorrections[domain])
+            };
+        }
+
+        // Check for suspicious patterns
+        if (email.split('@')[0].length < 2) {
+            return { valid: false, error: 'Email address seems too short' };
+        }
+
+        if (domain.split('.').length < 2) {
+            return { valid: false, error: 'Please enter a complete domain (e.g., example.com)' };
+        }
+
+        // Check for consecutive dots
+        if (email.includes('..')) {
+            return { valid: false, error: 'Email address cannot contain consecutive dots' };
+        }
+
+        return { valid: true };
     };
 
     const showToast = (message: string, type: 'success' | 'error') => {
@@ -32,13 +96,34 @@ export default function Waitlist() {
         e.preventDefault();
 
         // Validate email
-        if (!email) {
-            showToast('Please enter your email address', 'error');
+        const validation = validateEmail(email);
+
+        if (!validation.valid) {
+            showToast(validation.error || 'Invalid email address', 'error');
+
+            // If there's a suggestion, automatically correct it
+            if (validation.suggestion) {
+                setTimeout(() => {
+                    setEmail(validation.suggestion!);
+                }, 2000);
+            }
             return;
         }
 
-        if (!validateEmail(email)) {
-            showToast('Please enter a valid email address', 'error');
+        // Check for recent submission (rate limiting)
+        const lastSubmission = localStorage.getItem('waitlist_last_submission');
+        if (lastSubmission) {
+            const timeSince = Date.now() - parseInt(lastSubmission);
+            if (timeSince < 60000) { // 1 minute cooldown
+                showToast('Please wait a moment before submitting again', 'error');
+                return;
+            }
+        }
+
+        // Check if email already submitted
+        const submittedEmails = JSON.parse(localStorage.getItem('waitlist_emails') || '[]');
+        if (submittedEmails.includes(email.toLowerCase())) {
+            showToast('This email is already on the waitlist!', 'error');
             return;
         }
 
@@ -54,6 +139,11 @@ export default function Waitlist() {
 
             // For now, just log to console and show success
             console.log('Waitlist signup:', email);
+
+            // Store submission
+            submittedEmails.push(email.toLowerCase());
+            localStorage.setItem('waitlist_emails', JSON.stringify(submittedEmails));
+            localStorage.setItem('waitlist_last_submission', Date.now().toString());
 
             setStatus('success');
             setEmail(''); // Clear the input
