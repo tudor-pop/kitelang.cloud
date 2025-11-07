@@ -143,10 +143,12 @@
     z-index: 999;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .mobileMenuOverlayOpen {
     opacity: 1;
+    pointer-events: auto;
 }
 
 /* Mobile Menu Drawer */
@@ -267,12 +269,6 @@
     /* Show hamburger on mobile */
     .hamburger {
         display: flex;
-    }
-
-    /* Show mobile menu elements */
-    .mobileMenuOverlay,
-    .mobileMenu {
-        display: block;
     }
 }
 

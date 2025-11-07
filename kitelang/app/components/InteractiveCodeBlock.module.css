@@ -76,11 +76,31 @@
     color: var(--text-primary);
     overflow-x: hidden;
     overflow-y: auto;
-    height: 450px;
+    max-height: 450px;
+    min-height: 450px;
     tab-size: 4;
     -moz-tab-size: 4;
     white-space: pre-wrap;
     word-wrap: break-word;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+}
+
+.codeContent::-webkit-scrollbar {
+    width: 8px;
+}
+
+.codeContent::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.codeContent::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.codeContent::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
 }
 
 .codeLine {
@@ -314,9 +334,12 @@
         padding: 12px;
         font-size: 12px;
         line-height: 1.6;
-        height: 350px;
+        max-height: 350px;
+        min-height: 350px;
         width: 100%;
         box-sizing: border-box;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .lineNumber {
@@ -361,7 +384,10 @@
     .codeContent {
         padding: 10px;
         font-size: 11px;
-        height: 300px;
+        max-height: 300px;
+        min-height: 300px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .lineNumber {
