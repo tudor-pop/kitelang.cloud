@@ -71,7 +71,7 @@ component Prometheus {
     output string arn = logs.arn
 }
 
-// create both buckets by using a component
+// create both buckets by initializing a component
 component Prometheus dev {
     name = "dev"
 }`,
@@ -363,25 +363,11 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                             previousWasResource = false;
                         }
 
-                        // Add tooltip for "in" keyword (only in Resources tab)
-                        if (pattern.className === 'keyword' && match[0] === 'in' && examples[activeTab].title === 'Resources') {
-                            const tooltipText = "We fixed the infamous 'keys need to be known at plan time'";
-                            tokens.push(
-                                <span
-                                    key={key++}
-                                    className="keyword has-tooltip"
-                                    data-tooltip={tooltipText}
-                                >
-                                    {match[0]}
-                                </span>
-                            );
-                        } else {
-                            tokens.push(
-                                <span key={key++} className={pattern.className}>
-                                    {match[0]}
-                                </span>
-                            );
-                        }
+                        tokens.push(
+                            <span key={key++} className={pattern.className}>
+                                {match[0]}
+                            </span>
+                        );
                         pos += match[0].length;
                         matched = true;
                         break;
