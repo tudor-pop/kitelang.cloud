@@ -4,6 +4,9 @@
     border: 2px solid var(--border-color);
     border-radius: 8px;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .codeHeader {
@@ -18,6 +21,7 @@
 .codeTabs {
     display: flex;
     gap: 8px;
+    flex-wrap: nowrap;
 }
 
 .codeTab {
@@ -265,29 +269,54 @@
 @media (max-width: 768px) {
     .codeWindow {
         border-radius: 4px;
+        max-width: 100%;
+        width: 100%;
     }
 
     .codeHeader {
-        padding: 10px 16px;
+        padding: 10px 12px;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-x: hidden;
     }
 
     .codeTabs {
-        gap: 6px;
+        gap: 4px;
         overflow-x: auto;
+        overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
+        flex: 1;
+        min-width: 0;
+        scrollbar-width: thin;
+    }
+
+    .codeTabs::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .codeTabs::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .codeTabs::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 2px;
     }
 
     .codeTab {
-        padding: 8px 14px;
-        font-size: 11px;
+        padding: 8px 10px;
+        font-size: 10px;
         white-space: nowrap;
+        flex-shrink: 0;
     }
 
     .codeContent {
-        padding: 16px;
+        padding: 12px;
         font-size: 12px;
         line-height: 1.6;
         height: 350px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .lineNumber {
@@ -296,7 +325,9 @@
     }
 
     .codeFooter {
-        padding: 10px 16px;
+        padding: 10px 12px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .stepLabel {
@@ -310,21 +341,25 @@
 }
 
 @media (max-width: 480px) {
+    .codeWindow {
+        max-width: 100%;
+    }
+
     .codeHeader {
-        padding: 8px 12px;
+        padding: 8px 10px;
     }
 
     .codeTabs {
-        gap: 4px;
+        gap: 3px;
     }
 
     .codeTab {
-        padding: 6px 10px;
-        font-size: 10px;
+        padding: 6px 8px;
+        font-size: 9px;
     }
 
     .codeContent {
-        padding: 12px;
+        padding: 10px;
         font-size: 11px;
         height: 300px;
     }
@@ -332,6 +367,10 @@
     .lineNumber {
         min-width: 20px;
         font-size: 10px;
+    }
+
+    .codeFooter {
+        padding: 8px 10px;
     }
 
     .stepLabel {
