@@ -47,17 +47,54 @@ export default function LandingPage() {
         <div className="landing-page">
             {/* Decorative Clouds Background */}
             <div className="clouds-container">
-                <svg className="cloud cloud-1" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M170,25c0-11-9-20-20-20c-3,0-6,1-9,2C137,3,132,0,126,0c-11,0-20,9-20,20c0,1,0,2,0,3c-8,2-14,9-14,17c0,10,8,18,18,18h60c11,0,20-9,20-20C190,31,181,26,170,25z"/>
+                {/* Cloud 1 - Simple 3 bumps */}
+                <svg className="cloud cloud-1" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 30,60 Q 30,30 50,30 Q 60,15 85,15 Q 110,15 120,30 Q 140,30 140,50 Q 140,70 120,70 L 50,70 Q 30,70 30,60 Z"/>
                 </svg>
-                <svg className="cloud cloud-2" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M170,25c0-11-9-20-20-20c-3,0-6,1-9,2C137,3,132,0,126,0c-11,0-20,9-20,20c0,1,0,2,0,3c-8,2-14,9-14,17c0,10,8,18,18,18h60c11,0,20-9,20-20C190,31,181,26,170,25z"/>
+
+                {/* Cloud 2 - 4 bumps elongated */}
+                <svg className="cloud cloud-2" viewBox="0 0 220 75" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 25,55 Q 25,35 45,35 Q 52,20 75,20 Q 90,20 95,25 Q 105,15 125,15 Q 145,15 150,25 Q 160,25 170,35 Q 180,35 180,55 Q 180,65 170,65 L 45,65 Q 25,65 25,55 Z"/>
                 </svg>
-                <svg className="cloud cloud-3" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M170,25c0-11-9-20-20-20c-3,0-6,1-9,2C137,3,132,0,126,0c-11,0-20,9-20,20c0,1,0,2,0,3c-8,2-14,9-14,17c0,10,8,18,18,18h60c11,0,20-9,20-20C190,31,181,26,170,25z"/>
+
+                {/* Cloud 3 - 5 bumps large */}
+                <svg className="cloud cloud-3" viewBox="0 0 240 85" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 30,65 Q 30,45 50,45 Q 57,28 80,28 Q 95,28 100,35 Q 110,22 135,22 Q 160,22 165,35 Q 175,30 190,30 Q 205,30 210,40 Q 220,40 220,60 Q 220,75 205,75 L 50,75 Q 30,75 30,65 Z"/>
                 </svg>
-                <svg className="cloud cloud-4" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M170,25c0-11-9-20-20-20c-3,0-6,1-9,2C137,3,132,0,126,0c-11,0-20,9-20,20c0,1,0,2,0,3c-8,2-14,9-14,17c0,10,8,18,18,18h60c11,0,20-9,20-20C190,31,181,26,170,25z"/>
+
+                {/* Cloud 4 - Small 3 bumps */}
+                <svg className="cloud cloud-4" viewBox="0 0 160 65" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 25,50 Q 25,30 42,30 Q 50,18 70,18 Q 90,18 98,30 Q 115,30 115,45 Q 115,58 100,58 L 42,58 Q 25,58 25,50 Z"/>
+                </svg>
+
+                {/* Cloud 5 - Flat bottom 4 bumps */}
+                <svg className="cloud cloud-5" viewBox="0 0 190 70" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 25,60 L 25,50 Q 25,35 42,35 Q 48,22 68,22 Q 82,22 88,30 Q 98,20 118,20 Q 138,20 145,32 Q 160,32 160,50 L 160,60 Z"/>
+                </svg>
+
+                {/* Cloud 6 - Compact 4 bumps */}
+                <svg className="cloud cloud-6" viewBox="0 0 180 75" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 28,58 Q 28,38 48,38 Q 55,25 75,25 Q 90,25 95,32 Q 105,22 125,22 Q 145,22 150,35 Q 165,35 165,55 Q 165,68 150,68 L 48,68 Q 28,68 28,58 Z"/>
+                </svg>
+
+                {/* Cloud 7 - Wide 5 bumps */}
+                <svg className="cloud cloud-7" viewBox="0 0 250 80" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 30,62 Q 30,45 48,45 Q 54,30 72,30 Q 85,30 90,37 Q 100,25 120,25 Q 140,25 145,35 Q 155,28 172,28 Q 190,28 195,38 Q 208,38 208,55 Q 208,70 195,70 L 48,70 Q 30,70 30,62 Z"/>
+                </svg>
+
+                {/* Cloud 8 - Tiny 3 bumps */}
+                <svg className="cloud cloud-8" viewBox="0 0 140 60" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 22,48 Q 22,32 38,32 Q 45,20 62,20 Q 79,20 86,32 Q 102,32 102,46 Q 102,54 90,54 L 38,54 Q 22,54 22,48 Z"/>
+                </svg>
+
+                {/* Cloud 9 - Medium 4 bumps */}
+                <svg className="cloud cloud-9" viewBox="0 0 200 75" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 28,60 Q 28,40 46,40 Q 52,26 72,26 Q 88,26 93,34 Q 103,22 123,22 Q 143,22 150,35 Q 165,35 165,55 Q 165,68 152,68 L 46,68 Q 28,68 28,60 Z"/>
+                </svg>
+
+                {/* Cloud 10 - Rounded 3 bumps */}
+                <svg className="cloud cloud-10" viewBox="0 0 170 70" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 26,55 Q 26,38 44,38 Q 52,23 74,23 Q 96,23 104,38 Q 122,38 122,52 Q 122,64 108,64 L 44,64 Q 26,64 26,55 Z"/>
                 </svg>
             </div>
 
@@ -206,41 +243,92 @@ export default function LandingPage() {
                     height: 100%;
                     pointer-events: none;
                     z-index: 0;
-                    opacity: 0.15;
+                    opacity: 1;
                 }
 
                 .cloud {
                     position: absolute;
-                    fill: var(--text-primary);
-                    opacity: 0.3;
+                    opacity: 0.15;
                 }
 
                 .cloud-1 {
-                    width: 150px;
-                    top: 10%;
-                    left: 10%;
-                    animation: float 30s infinite ease-in-out;
+                    width: 180px;
+                    top: 8%;
+                    left: 5%;
+                    animation: float 35s infinite ease-in-out;
+                    fill: #60A5FA;
                 }
 
                 .cloud-2 {
-                    width: 120px;
-                    top: 25%;
-                    right: 15%;
-                    animation: float 35s infinite ease-in-out 5s;
+                    width: 110px;
+                    top: 15%;
+                    left: 25%;
+                    animation: float 28s infinite ease-in-out 3s;
+                    fill: #C084FC;
                 }
 
                 .cloud-3 {
                     width: 180px;
-                    bottom: 30%;
-                    left: 5%;
-                    animation: float 40s infinite ease-in-out 10s;
+                    top: 20%;
+                    right: 10%;
+                    animation: float 42s infinite ease-in-out 7s;
+                    fill: #34D399;
                 }
 
                 .cloud-4 {
+                    width: 150px;
+                    top: 35%;
+                    right: 25%;
+                    animation: float 32s infinite ease-in-out 12s;
+                    fill: #818CF8;
+                }
+
+                .cloud-5 {
+                    width: 90px;
+                    top: 45%;
+                    left: 15%;
+                    animation: float 25s infinite ease-in-out 5s;
+                    fill: #F472B6;
+                }
+
+                .cloud-6 {
+                    width: 180px;
+                    top: 55%;
+                    right: 8%;
+                    animation: float 38s infinite ease-in-out 18s;
+                    fill: #22D3EE;
+                }
+
+                .cloud-7 {
                     width: 140px;
-                    bottom: 15%;
-                    right: 10%;
-                    animation: float 32s infinite ease-in-out 15s;
+                    top: 65%;
+                    left: 30%;
+                    animation: float 30s infinite ease-in-out 10s;
+                    fill: #A78BFA;
+                }
+
+                .cloud-8 {
+                    width: 80px;
+                    top: 75%;
+                    right: 35%;
+                    animation: float 22s infinite ease-in-out 14s;
+                    fill: #2DD4BF;
+                }
+
+                .cloud-9 {
+                    width: 160px;
+                    top: 82%;
+                    left: 8%;
+                    animation: float 36s infinite ease-in-out 8s;
+                    fill: #6366F1;
+                }
+
+                .cloud-10 {
+                    width: 130px;
+                    top: 90%;
+                    right: 15%;
+                    animation: float 29s infinite ease-in-out 16s;
+                    fill: #8B5CF6;
                 }
 
                 @keyframes float {
