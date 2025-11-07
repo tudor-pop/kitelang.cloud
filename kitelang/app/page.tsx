@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Footer from './components/Footer';
 import InteractiveCodeBlock from './components/InteractiveCodeBlock';
+import Waitlist from './components/Waitlist';
 import styles from './page.module.css';
 
 export default function LandingPage() {
@@ -106,6 +107,9 @@ export default function LandingPage() {
                         </div>
                     </div>
                 </section>
+
+                {/* Waitlist Section */}
+                <Waitlist />
 
                 {/* Footer */}
                 <Footer />

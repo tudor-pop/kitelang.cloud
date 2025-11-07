@@ -1,0 +1,167 @@
+.waitlistSection {
+    padding: 100px 40px;
+    background: var(--primary-color);
+    border-top: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
+    position: relative;
+}
+
+.waitlistContent {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.waitlistTitle {
+    font-size: 48px;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+}
+
+.waitlistSubtitle {
+    font-size: 20px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+}
+
+.waitlistForm {
+    margin-bottom: 16px;
+}
+
+.formGroup {
+    display: flex;
+    gap: 12px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.visuallyHidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.emailInput {
+    flex: 1;
+    padding: 18px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    background: #FFFFFF;
+    color: #000000;
+    transition: all 0.2s;
+}
+
+.emailInput::placeholder {
+    color: #808080;
+    font-weight: 500;
+}
+
+.emailInput:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.emailInput:disabled {
+    background: #F5F5F5;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.emailInput[aria-invalid="true"] {
+    border-color: #EF4444;
+}
+
+.submitButton {
+    padding: 18px 40px;
+    background: #000000;
+    color: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.submitButton:hover:not(:disabled) {
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0 #000000;
+}
+
+.submitButton:focus-visible {
+    outline: 3px solid #000000;
+    outline-offset: 2px;
+}
+
+.submitButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.errorMessage {
+    color: #FFFFFF;
+    background: rgba(239, 68, 68, 0.9);
+    padding: 12px 20px;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.successMessage {
+    color: #FFFFFF;
+    background: rgba(16, 185, 129, 0.9);
+    padding: 12px 20px;
+    border: 2px solid #000000;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.privacyNote {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .waitlistSection {
+        padding: 60px 20px;
+    }
+
+    .waitlistTitle {
+        font-size: 32px;
+    }
+
+    .waitlistSubtitle {
+        font-size: 16px;
+    }
+
+    .formGroup {
+        flex-direction: column;
+    }
+
+    .submitButton {
+        width: 100%;
+    }
+}
