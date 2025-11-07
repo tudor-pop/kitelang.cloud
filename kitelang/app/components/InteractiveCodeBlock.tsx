@@ -126,10 +126,9 @@ mixin aws on Bucket { account_id = "00000" }
 mixin Bucket { tags = { env: 'prod' } }
 `,
         steps: [
-            {line: 0, label: 'Clean import statement'},
-            {line: 2, label: 'Provision on multiple clouds'},
-            {line: 7, label: 'Dependency management'},
-            {line: 12, label: 'Iterate over resources'}
+            {line: 6, label: 'Set properties on a resource'},
+            {line: 10, label: 'Set provider properties on all resources of a type'},
+            {line: 14, label: 'Set properties on all resources of a type'},
         ]
     }
 ];
