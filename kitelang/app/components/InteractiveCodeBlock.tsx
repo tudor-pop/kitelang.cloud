@@ -130,6 +130,26 @@ mixin Bucket { tags = { env: 'prod' } }
             {line: 10, label: 'Set provider properties on all resources of a type'},
             {line: 14, label: 'Set general properties on all resources of a type'},
         ]
+    },
+    {
+        title: 'Renaming',
+        code: `import Bucket from "cloud.storage"
+
+resource Bucket logs { ... }
+
+// later we rename resource 'logs' to 'kite' during a refactor
+resource Bucket kite { ... }
+
+// console output
+# Bucket.logs will be renamed to Bucket.kite
+resource Bucket logs -> kite { ... }
+Plan: 0 to add, 0 to change, 0 to destroy, 1 to rename.
+`,
+        steps: [
+            {line: 6, label: 'Set properties on a resource'},
+            {line: 10, label: 'Set provider properties on all resources of a type'},
+            {line: 14, label: 'Set general properties on all resources of a type'},
+        ]
     }
 ];
 
@@ -217,7 +237,7 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
 
             // Define token patterns with priority
             const tokenPatterns = [
-                {regex: /^\/\/.*$/, className: 'comment'},
+                {regex: /^(\/\/|#).*$/, className: 'comment'},  // Support both // and # comments
                 {
                     regex: /^\b(package|import|from|resource|component|mixin|on|fun|return|val|var|if|else|for|while|when|class|interface|object|companion|data|sealed|abstract|open|override|private|public|internal|protected|in|input|output|println)\b/,
                     className: 'keyword'
