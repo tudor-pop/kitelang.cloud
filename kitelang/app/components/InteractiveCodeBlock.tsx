@@ -48,8 +48,8 @@ resource VPC vpc {
 
 @count(3)
 resource Subnet subnet {
-    vpcId  = vpc.id
-    cidr   = "10.\${count}.0.0/24"
+    vpcId = vpc.id
+    cidr  = "10.\${count}.0.0/24"
 }`,
         steps: [
             {line: 8, label: 'Decorate resource with @count'},
