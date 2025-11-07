@@ -1,0 +1,86 @@
+.pricingPage {
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.mainContent {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.pricingSection {
+    padding: 100px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.pageTitle {
+    font-size: 56px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+}
+
+.pageSubtitle {
+    font-size: 20px;
+    line-height: 1.6;
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 80px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pricingGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto 100px;
+}
+
+.faqSection {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.faqTitle {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 48px;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.faqGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    align-items: start;
+}
+
+@media (max-width: 1200px) {
+    .pricingGrid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
+
+    .faqGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .pageTitle {
+        font-size: 36px;
+    }
+
+    .pricingSection {
+        padding: 60px 20px;
+    }
+}

@@ -1,0 +1,17 @@
+.editInfo {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: none;
+}
+
+.editInfo::before {
+    content: '📅';
+    font-size: 14px;
+}
