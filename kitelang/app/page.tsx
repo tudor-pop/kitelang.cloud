@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Footer from './components/Footer';
 import InteractiveCodeBlock from './components/InteractiveCodeBlock';
+import styles from './page.module.css';
 
 export default function LandingPage() {
     const [cloudPositions, setCloudPositions] = useState<Array<{ top: number; left?: number; right?: number }>>([]);
@@ -21,9 +22,9 @@ export default function LandingPage() {
     }, []);
 
     return (
-        <div className="landing-page">
+        <div className={styles.landingPage}>
             {/* Decorative Clouds Background */}
-            <div className="clouds-container">
+            <div className={styles.cloudsContainer}>
                 {cloudPositions.map((pos, index) => (
                     <div
                         key={index}
@@ -38,68 +39,68 @@ export default function LandingPage() {
             </div>
 
             {/* Main Content Area */}
-            <main className="main-content">
+            <main className={styles.mainContent}>
                 {/* Hero Section */}
-                <section className="hero-section">
-                    <div className="hero-content">
-                        <h1 className="hero-title">Infrastructure as Code.<br />Actually Simple.</h1>
-                        <p className="hero-subtitle">
+                <section className={styles.heroSection}>
+                    <div className={styles.heroContent}>
+                        <h1 className={styles.heroTitle}>Infrastructure as Code.<br />Actually Simple.</h1>
+                        <p className={styles.heroSubtitle}>
                             Define your cloud infrastructure with precision and clarity.
                             Deploy anywhere. Scale effortlessly. Built for the multi-cloud era.
                         </p>
-                        <div className="hero-buttons">
-                            <Link href="/docs" className="primary-button">Get Started</Link>
-                            <a href="#demo" className="secondary-button">See Demo</a>
+                        <div className={styles.heroButtons}>
+                            <Link href="/docs" className={styles.primaryButton}>Get Started</Link>
+                            <a href="#demo" className={styles.secondaryButton}>See Demo</a>
                         </div>
                     </div>
-                    <div className="hero-code">
+                    <div className={styles.heroCode}>
                         <InteractiveCodeBlock />
                     </div>
                 </section>
 
                 {/* Features Section */}
-                <section id="features" className="features-section">
-                    <h2 className="section-title">Why Kite?</h2>
-                    <div className="features-grid">
-                        <div className="feature-card">
-                            <div className="feature-icon">🚀</div>
-                            <h3 className="feature-title">Multi-Cloud Native</h3>
-                            <p className="feature-description">
+                <section id="features" className={styles.featuresSection}>
+                    <h2 className={styles.sectionTitle}>Why Kite?</h2>
+                    <div className={styles.featuresGrid}>
+                        <div className={styles.featureCard}>
+                            <div className={styles.featureIcon}>🚀</div>
+                            <h3 className={styles.featureTitle}>Multi-Cloud Native</h3>
+                            <p className={styles.featureDescription}>
                                 One language for AWS, GCP, Azure, and more. True portability without the pain.
                             </p>
                         </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">🔒</div>
-                            <h3 className="feature-title">Type Safe</h3>
-                            <p className="feature-description">
+                        <div className={styles.featureCard}>
+                            <div className={styles.featureIcon}>🔒</div>
+                            <h3 className={styles.featureTitle}>Type Safe</h3>
+                            <p className={styles.featureDescription}>
                                 Catch configuration errors before deployment. Strong typing meets infrastructure.
                             </p>
                         </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">⚡</div>
-                            <h3 className="feature-title">Blazing Fast</h3>
-                            <p className="feature-description">
+                        <div className={styles.featureCard}>
+                            <div className={styles.featureIcon}>⚡</div>
+                            <h3 className={styles.featureTitle}>Blazing Fast</h3>
+                            <p className={styles.featureDescription}>
                                 Optimized compilation and execution. Deploy in seconds, not minutes.
                             </p>
                         </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">🎯</div>
-                            <h3 className="feature-title">Developer First</h3>
-                            <p className="feature-description">
+                        <div className={styles.featureCard}>
+                            <div className={styles.featureIcon}>🎯</div>
+                            <h3 className={styles.featureTitle}>Developer First</h3>
+                            <p className={styles.featureDescription}>
                                 Clean syntax inspired by modern languages. Familiar patterns, powerful features.
                             </p>
                         </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">🔄</div>
-                            <h3 className="feature-title">State Management</h3>
-                            <p className="feature-description">
+                        <div className={styles.featureCard}>
+                            <div className={styles.featureIcon}>🔄</div>
+                            <h3 className={styles.featureTitle}>State Management</h3>
+                            <p className={styles.featureDescription}>
                                 Database-backed state. Automatic versioning. Team collaboration built-in.
                             </p>
                         </div>
-                        <div className="feature-card">
-                            <div className="feature-icon">🛠️</div>
-                            <h3 className="feature-title">Extensible</h3>
-                            <p className="feature-description">
+                        <div className={styles.featureCard}>
+                            <div className={styles.featureIcon}>🛠️</div>
+                            <h3 className={styles.featureTitle}>Extensible</h3>
+                            <p className={styles.featureDescription}>
                                 Mixins, plugins, and custom providers. Adapt to your team's workflow.
                             </p>
                         </div>
@@ -147,25 +148,6 @@ export default function LandingPage() {
                     background: var(--bg-primary);
                     color: var(--text-primary);
                     transition: background-color 0.3s ease, color 0.3s ease;
-                }
-
-                .landing-page {
-                    display: flex;
-                    flex-direction: column;
-                    min-height: 100vh;
-                    position: relative;
-                    overflow: hidden;
-                }
-
-                .clouds-container {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    pointer-events: none;
-                    z-index: 0;
-                    opacity: 1;
                 }
 
                 .cloud {
@@ -406,90 +388,6 @@ export default function LandingPage() {
                     }
                 }
 
-                /* Main Content */
-                .main-content {
-                    overflow-y: auto;
-                    flex: 1;
-                    position: relative;
-                    z-index: 1;
-                }
-
-                /* Hero Section */
-                .hero-section {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    gap: 60px;
-                    padding: 0 40px;
-                    max-width: 1400px;
-                    margin: 0 auto;
-                    align-items: center;
-                    min-height: calc(100vh - 70px);
-                }
-
-                .hero-content {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 24px;
-                }
-
-                .hero-title {
-                    font-size: 56px;
-                    font-weight: 900;
-                    line-height: 1.2;
-                    color: var(--text-primary);
-                    letter-spacing: -1px;
-                }
-
-                .hero-subtitle {
-                    font-size: 20px;
-                    line-height: 1.7;
-                    color: var(--text-secondary);
-                }
-
-                .hero-buttons {
-                    display: flex;
-                    gap: 16px;
-                    margin-top: 16px;
-                }
-
-                .primary-button {
-                    padding: 16px 32px;
-                    background: var(--primary-color);
-                    color: #FFFFFF;
-                    border: 2px solid var(--border-color);
-                    border-radius: 4px;
-                    font-size: 16px;
-                    font-weight: 900;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    text-decoration: none;
-                    display: inline-block;
-                }
-
-                .primary-button:hover {
-                    transform: translate(-4px, -4px);
-                    box-shadow: 4px 4px 0 var(--border-color);
-                }
-
-                .secondary-button {
-                    padding: 16px 32px;
-                    background: transparent;
-                    color: var(--text-primary);
-                    border: 2px solid var(--border-color);
-                    border-radius: 4px;
-                    font-size: 16px;
-                    font-weight: 900;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    text-decoration: none;
-                    display: inline-block;
-                }
-
-                .secondary-button:hover {
-                    transform: translate(-4px, -4px);
-                    box-shadow: 4px 4px 0 var(--border-color);
-                }
-
                 /* Code Window */
                 .code-window {
                     background: var(--code-bg);
@@ -633,61 +531,6 @@ export default function LandingPage() {
                     font-style: italic;
                 }
 
-                /* Features Section */
-                .features-section {
-                    padding: 100px 40px;
-                    background: var(--bg-secondary);
-                    border-top: 2px solid var(--border-color);
-                    border-bottom: 2px solid var(--border-color);
-                }
-
-                .section-title {
-                    font-size: 48px;
-                    font-weight: 900;
-                    text-align: center;
-                    margin-bottom: 60px;
-                    color: var(--text-primary);
-                }
-
-                .features-grid {
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
-                    gap: 32px;
-                    max-width: 1400px;
-                    margin: 0 auto;
-                }
-
-                .feature-card {
-                    background: var(--bg-primary);
-                    border: 2px solid var(--border-color);
-                    border-radius: 16px;
-                    padding: 32px;
-                    transition: all 0.2s;
-                }
-
-                .feature-card:hover {
-                    transform: translate(-6px, -6px);
-                    box-shadow: 6px 6px 0 var(--shadow);
-                }
-
-                .feature-icon {
-                    font-size: 40px;
-                    margin-bottom: 16px;
-                }
-
-                .feature-title {
-                    font-size: 22px;
-                    font-weight: 700;
-                    margin-bottom: 12px;
-                    color: var(--text-primary);
-                }
-
-                .feature-description {
-                    font-size: 16px;
-                    line-height: 1.6;
-                    color: var(--text-secondary);
-                }
-
                 /* Pricing Section */
                 .pricing-section {
                     padding: 100px 40px;
@@ -789,33 +632,6 @@ export default function LandingPage() {
                 .pricing-button:hover {
                     transform: translate(-4px, -4px);
                     box-shadow: 4px 4px 0 var(--border-color);
-                }
-
-                /* Responsive */
-                @media (max-width: 1200px) {
-                    .hero-section {
-                        grid-template-columns: 1fr;
-                        gap: 40px;
-                    }
-
-                    .features-grid {
-                        grid-template-columns: repeat(2, 1fr);
-                    }
-
-                    .pricing-grid {
-                        grid-template-columns: 1fr;
-                        max-width: 500px;
-                    }
-                }
-
-                @media (max-width: 768px) {
-                    .hero-title {
-                        font-size: 36px;
-                    }
-
-                    .features-grid {
-                        grid-template-columns: 1fr;
-                    }
                 }
             `}</style>
         </div>
