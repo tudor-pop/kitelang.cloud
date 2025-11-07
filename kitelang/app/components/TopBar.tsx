@@ -7,7 +7,7 @@ import styles from './TopBar.module.css';
 interface TopBarProps {
     theme: string;
     toggleTheme: () => void;
-    activePage?: 'home' | 'docs' | 'pricing';
+    activePage?: 'home' | 'docs' | 'pricing' | 'comparison';
 }
 
 export default function TopBar({ theme, toggleTheme, activePage = 'home' }: TopBarProps) {
@@ -28,6 +28,13 @@ export default function TopBar({ theme, toggleTheme, activePage = 'home' }: TopB
                     Documentation
                 </Link>
                 <Link href="/#features" className={styles.navButton}>Features</Link>
+                <Link
+                    href="/comparison"
+                    className={`${styles.navButton} ${activePage === 'comparison' ? styles.active : ''}`}
+                    aria-current={activePage === 'comparison' ? 'page' : undefined}
+                >
+                    Compare
+                </Link>
                 <Link
                     href="/pricing"
                     className={`${styles.navButton} ${activePage === 'pricing' ? styles.active : ''}`}

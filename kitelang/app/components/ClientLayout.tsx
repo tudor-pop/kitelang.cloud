@@ -44,9 +44,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     };
 
     // Determine active page based on pathname
-    const getActivePage = (): 'home' | 'docs' | 'pricing' => {
+    const getActivePage = (): 'home' | 'docs' | 'pricing' | 'comparison' => {
         if (pathname === '/docs') return 'docs';
         if (pathname === '/pricing') return 'pricing';
+        if (pathname === '/comparison') return 'comparison';
         return 'home';
     };
 
