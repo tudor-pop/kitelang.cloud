@@ -2,6 +2,77 @@
 
 import React from 'react';
 import Footer from '../components/Footer';
+import PricingCard from './components/PricingCard';
+import FAQItem from './components/FAQItem';
+
+const pricingTiers = [
+    {
+        tier: 'Free',
+        price: '$0',
+        period: '/month',
+        subtitle: 'For small teams',
+        features: [
+            'Unlimited projects',
+            'Community support',
+            'Core features',
+            '< 100 employees',
+            '< $1M revenue'
+        ],
+        buttonText: 'Get Started',
+        buttonType: 'secondary' as const,
+        featured: false
+    },
+    {
+        tier: 'Pro',
+        price: '$20',
+        period: '/month',
+        subtitle: 'For growing teams',
+        features: [
+            'Everything in Free',
+            'Managed state backend',
+            'Email support',
+            '100-500 employees',
+            '$10M revenue'
+        ],
+        buttonText: 'Start Trial',
+        buttonType: 'primary' as const,
+        featured: true
+    },
+    {
+        tier: 'Enterprise',
+        price: 'Custom',
+        subtitle: 'For large organizations',
+        features: [
+            'Everything in Pro',
+            '24/7 priority support',
+            'Feature request',
+            'Training & onboarding',
+            'Custom SLA'
+        ],
+        buttonText: 'Contact Sales',
+        buttonType: 'secondary' as const,
+        featured: false
+    }
+];
+
+const faqs = [
+    {
+        question: 'What counts as a project?',
+        answer: 'A project is a distinct infrastructure configuration managed by Kite. You can have unlimited projects on all plans.'
+    },
+    {
+        question: 'Can I upgrade or downgrade anytime?',
+        answer: "Yes! You can change your plan at any time. Changes take effect immediately, and we'll prorate your billing accordingly."
+    },
+    {
+        question: 'What is managed state backend?',
+        answer: 'We host and manage your infrastructure state in a secure, highly available database with automatic backups and versioning.'
+    },
+    {
+        question: 'Do you offer academic or non-profit discounts?',
+        answer: 'Yes! Contact us for special pricing for educational institutions, open-source projects, and non-profit organizations.'
+    }
+];
 
 export default function PricingPage() {
 
@@ -18,80 +89,18 @@ export default function PricingPage() {
                     </p>
 
                     <div className="pricing-grid">
-                        <div className="pricing-card">
-                            <h3 className="pricing-tier">Free</h3>
-                            <div className="pricing-price">$0<span className="pricing-period">/month</span></div>
-                            <p className="pricing-subtitle">For small teams</p>
-                            <ul className="pricing-features">
-                                <li>✓ Unlimited projects</li>
-                                <li>✓ Community support</li>
-                                <li>✓ Core features</li>
-                                <li>✓ &lt; 100 employees</li>
-                                <li>✓ &lt; $1M revenue</li>
-                            </ul>
-                            <button className="pricing-button secondary">Get Started</button>
-                        </div>
-                        <div className="pricing-card featured">
-                            <div className="featured-badge">Popular</div>
-                            <h3 className="pricing-tier">Pro</h3>
-                            <div className="pricing-price">$20<span className="pricing-period">/month</span></div>
-                            <p className="pricing-subtitle">For growing teams</p>
-                            <ul className="pricing-features">
-                                <li>✓ Everything in Free</li>
-                                <li>✓ Managed state backend</li>
-                                <li>✓ Email support</li>
-                                <li>✓ 100-500 employees</li>
-                                <li>✓ $10M revenue</li>
-                            </ul>
-                            <button className="pricing-button primary">Start Trial</button>
-                        </div>
-                        <div className="pricing-card">
-                            <h3 className="pricing-tier">Enterprise</h3>
-                            <div className="pricing-price">Custom</div>
-                            <p className="pricing-subtitle">For large organizations</p>
-                            <ul className="pricing-features">
-                                <li>✓ Everything in Pro</li>
-                                <li>✓ 24/7 priority support</li>
-                                <li>✓ Feature request</li>
-                                <li>✓ Training & onboarding</li>
-                                <li>✓ Custom SLA</li>
-                            </ul>
-                            <button className="pricing-button secondary">Contact Sales</button>
-                        </div>
+                        {pricingTiers.map((tier, index) => (
+                            <PricingCard key={index} {...tier} />
+                        ))}
                     </div>
 
                     {/* FAQ Section */}
                     <div className="faq-section">
                         <h2 className="faq-title">Frequently Asked Questions</h2>
                         <div className="faq-grid">
-                            <div className="faq-item">
-                                <h3 className="faq-question">What counts as a project?</h3>
-                                <p className="faq-answer">
-                                    A project is a distinct infrastructure configuration managed by Kite.
-                                    You can have unlimited projects on all plans.
-                                </p>
-                            </div>
-                            <div className="faq-item">
-                                <h3 className="faq-question">Can I upgrade or downgrade anytime?</h3>
-                                <p className="faq-answer">
-                                    Yes! You can change your plan at any time. Changes take effect immediately,
-                                    and we'll prorate your billing accordingly.
-                                </p>
-                            </div>
-                            <div className="faq-item">
-                                <h3 className="faq-question">What is managed state backend?</h3>
-                                <p className="faq-answer">
-                                    We host and manage your infrastructure state in a secure, highly available
-                                    database with automatic backups and versioning.
-                                </p>
-                            </div>
-                            <div className="faq-item">
-                                <h3 className="faq-question">Do you offer academic or non-profit discounts?</h3>
-                                <p className="faq-answer">
-                                    Yes! Contact us for special pricing for educational institutions,
-                                    open-source projects, and non-profit organizations.
-                                </p>
-                            </div>
+                            {faqs.map((faq, index) => (
+                                <FAQItem key={index} question={faq.question} answer={faq.answer} />
+                            ))}
                         </div>
                     </div>
                 </section>
@@ -184,101 +193,6 @@ export default function PricingPage() {
                     margin: 0 auto 100px;
                 }
 
-                .pricing-card {
-                    background: var(--bg-primary);
-                    border: 2px solid var(--border-color);
-                    border-radius: 16px;
-                    padding: 40px 32px;
-                    position: relative;
-                    transition: all 0.2s;
-                }
-
-                .pricing-card:hover {
-                    transform: translate(-6px, -6px);
-                    box-shadow: 6px 6px 0 var(--shadow);
-                }
-
-                .pricing-card.featured {
-                    border-color: var(--primary-color);
-                    border-width: 3px;
-                }
-
-                .featured-badge {
-                    position: absolute;
-                    top: -12px;
-                    right: 20px;
-                    background: var(--primary-color);
-                    color: var(--bg-primary);
-                    padding: 6px 16px;
-                    border-radius: 4px;
-                    font-size: 12px;
-                    font-weight: 900;
-                    letter-spacing: 1px;
-                }
-
-                .pricing-tier {
-                    font-size: 24px;
-                    font-weight: 900;
-                    margin-bottom: 16px;
-                    color: var(--text-primary);
-                }
-
-                .pricing-price {
-                    font-size: 48px;
-                    font-weight: 900;
-                    margin-bottom: 8px;
-                    color: var(--text-primary);
-                }
-
-                .pricing-period {
-                    font-size: 18px;
-                    font-weight: 500;
-                    color: var(--text-muted);
-                }
-
-                .pricing-subtitle {
-                    font-size: 14px;
-                    color: var(--text-muted);
-                    margin-bottom: 24px;
-                }
-
-                .pricing-features {
-                    list-style: none;
-                    margin-bottom: 32px;
-                }
-
-                .pricing-features li {
-                    padding: 10px 0;
-                    font-size: 15px;
-                    color: var(--text-secondary);
-                }
-
-                .pricing-button {
-                    width: 100%;
-                    padding: 14px;
-                    border: 2px solid var(--border-color);
-                    border-radius: 4px;
-                    font-size: 16px;
-                    font-weight: 900;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                }
-
-                .pricing-button.primary {
-                    background: var(--primary-color);
-                    color: var(--bg-primary);
-                }
-
-                .pricing-button.secondary {
-                    background: transparent;
-                    color: var(--text-primary);
-                }
-
-                .pricing-button:hover {
-                    transform: translate(-4px, -4px);
-                    box-shadow: 4px 4px 0 var(--border-color);
-                }
-
                 /* FAQ Section */
                 .faq-section {
                     max-width: 1200px;
@@ -297,26 +211,6 @@ export default function PricingPage() {
                     display: grid;
                     grid-template-columns: repeat(2, 1fr);
                     gap: 32px;
-                }
-
-                .faq-item {
-                    background: var(--bg-secondary);
-                    border: 2px solid var(--border-color);
-                    border-radius: 12px;
-                    padding: 32px;
-                }
-
-                .faq-question {
-                    font-size: 18px;
-                    font-weight: 700;
-                    margin-bottom: 12px;
-                    color: var(--text-primary);
-                }
-
-                .faq-answer {
-                    font-size: 15px;
-                    line-height: 1.7;
-                    color: var(--text-secondary);
                 }
 
                 /* Footer */
