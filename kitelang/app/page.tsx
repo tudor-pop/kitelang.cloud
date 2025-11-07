@@ -214,72 +214,72 @@ export default function LandingPage() {
                 }
 
                 .cloud-1 {
-                    width: 280px;
-                    height: 80px;
+                    width: 180px;
+                    height: 50px;
                     background: var(--text-primary);
                     top: 15%;
                     left: 10%;
                     animation: float 35s infinite ease-in-out;
                 }
                 .cloud-1::before {
-                    width: 110px;
-                    height: 110px;
+                    width: 70px;
+                    height: 70px;
                     background: var(--text-primary);
-                    top: -55px;
-                    left: 40px;
+                    top: -35px;
+                    left: 25px;
                 }
                 .cloud-1::after {
-                    width: 150px;
-                    height: 135px;
+                    width: 95px;
+                    height: 85px;
                     background: var(--text-primary);
-                    top: -68px;
-                    right: 45px;
+                    top: -43px;
+                    right: 28px;
                 }
 
                 .cloud-2 {
-                    width: 130px;
-                    height: 42px;
+                    width: 100px;
+                    height: 32px;
                     background: var(--text-primary);
                     top: 50%;
                     right: 15%;
                     animation: float 40s infinite ease-in-out 5s;
                 }
                 .cloud-2::before {
-                    width: 52px;
+                    width: 40px;
+                    height: 40px;
+                    background: var(--text-primary);
+                    top: -20px;
+                    left: 15px;
+                }
+                .cloud-2::after {
+                    width: 55px;
                     height: 52px;
                     background: var(--text-primary);
                     top: -26px;
-                    left: 20px;
-                }
-                .cloud-2::after {
-                    width: 72px;
-                    height: 68px;
-                    background: var(--text-primary);
-                    top: -34px;
-                    right: 20px;
+                    right: 15px;
                 }
 
                 .cloud-3 {
-                    width: 195px;
-                    height: 58px;
+                    width: 145px;
+                    height: 44px;
                     background: var(--text-primary);
                     top: 80%;
                     left: 20%;
                     animation: float 38s infinite ease-in-out 10s;
                 }
                 .cloud-3::before {
-                    width: 75px;
-                    height: 75px;
+                    width: 56px;
+                    height: 56px;
                     background: var(--text-primary);
-                    top: -38px;
-                    left: 30px;
+                    top: -28px;
+                    left: 22px;
                 }
                 .cloud-3::after {
-                    width: 105px;
-                    height: 95px;
+                    width: 78px;
+                    height: 72px;
                     background: var(--text-primary);
-                    top: -48px;
-                    right: 30px;
+                    top: -36px;
+                    right: 22px;
                 }
 
                 .cloud-4 {
