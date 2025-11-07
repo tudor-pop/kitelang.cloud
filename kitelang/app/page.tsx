@@ -1,19 +1,40 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Footer from './components/Footer';
 import InteractiveCodeBlock from './components/InteractiveCodeBlock';
 
 export default function LandingPage() {
+    const [cloudPositions, setCloudPositions] = useState<Array<{ top: number; left?: number; right?: number }>>([]);
+
+    useEffect(() => {
+        // Generate random positions for clouds on mount
+        const positions = Array.from({ length: 5 }, () => ({
+            top: Math.random() * 80 + 10, // 10% to 90%
+            ...(Math.random() > 0.5
+                ? { left: Math.random() * 70 + 5 } // 5% to 75%
+                : { right: Math.random() * 70 + 5 }
+            )
+        }));
+        setCloudPositions(positions);
+    }, []);
 
     return (
         <div className="landing-page">
             {/* Decorative Clouds Background */}
             <div className="clouds-container">
-                <div className="cloud cloud-1"></div>
-                <div className="cloud cloud-2"></div>
-                <div className="cloud cloud-3"></div>
+                {cloudPositions.map((pos, index) => (
+                    <div
+                        key={index}
+                        className={`cloud cloud-${index + 1}`}
+                        style={{
+                            top: `${pos.top}%`,
+                            left: pos.left !== undefined ? `${pos.left}%` : undefined,
+                            right: pos.right !== undefined ? `${pos.right}%` : undefined
+                        }}
+                    ></div>
+                ))}
             </div>
 
             {/* Main Content Area */}
@@ -164,8 +185,6 @@ export default function LandingPage() {
                     width: 180px;
                     height: 50px;
                     background: var(--text-primary);
-                    top: 15%;
-                    left: 10%;
                     animation: float 35s infinite ease-in-out;
                 }
                 .cloud-1::before {
@@ -187,8 +206,6 @@ export default function LandingPage() {
                     width: 100px;
                     height: 32px;
                     background: var(--text-primary);
-                    top: 50%;
-                    right: 15%;
                     animation: float 40s infinite ease-in-out 5s;
                 }
                 .cloud-2::before {
@@ -210,8 +227,6 @@ export default function LandingPage() {
                     width: 145px;
                     height: 44px;
                     background: var(--text-primary);
-                    top: 80%;
-                    left: 20%;
                     animation: float 38s infinite ease-in-out 10s;
                 }
                 .cloud-3::before {
@@ -233,8 +248,6 @@ export default function LandingPage() {
                     width: 180px;
                     height: 55px;
                     background: var(--text-primary);
-                    top: 35%;
-                    right: 25%;
                     animation: float 32s infinite ease-in-out 12s;
                 }
                 .cloud-4::before {
@@ -256,8 +269,6 @@ export default function LandingPage() {
                     width: 140px;
                     height: 48px;
                     background: var(--text-primary);
-                    top: 45%;
-                    left: 15%;
                     animation: float 25s infinite ease-in-out 5s;
                 }
                 .cloud-5::before {
@@ -279,8 +290,6 @@ export default function LandingPage() {
                     width: 210px;
                     height: 62px;
                     background: var(--text-primary);
-                    top: 55%;
-                    right: 8%;
                     animation: float 38s infinite ease-in-out 18s;
                 }
                 .cloud-6::before {
@@ -302,8 +311,6 @@ export default function LandingPage() {
                     width: 170px;
                     height: 52px;
                     background: var(--text-primary);
-                    top: 65%;
-                    left: 30%;
                     animation: float 30s infinite ease-in-out 10s;
                 }
                 .cloud-7::before {
@@ -325,8 +332,6 @@ export default function LandingPage() {
                     width: 130px;
                     height: 45px;
                     background: var(--text-primary);
-                    top: 75%;
-                    right: 35%;
                     animation: float 22s infinite ease-in-out 14s;
                 }
                 .cloud-8::before {
@@ -348,8 +353,6 @@ export default function LandingPage() {
                     width: 195px;
                     height: 58px;
                     background: var(--text-primary);
-                    top: 82%;
-                    left: 8%;
                     animation: float 36s infinite ease-in-out 8s;
                 }
                 .cloud-9::before {
@@ -371,8 +374,6 @@ export default function LandingPage() {
                     width: 160px;
                     height: 50px;
                     background: var(--text-primary);
-                    top: 90%;
-                    right: 15%;
                     animation: float 29s infinite ease-in-out 16s;
                 }
                 .cloud-10::before {
