@@ -1,0 +1,157 @@
+.pricingCard {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.pricingCard:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0 var(--border-color);
+}
+
+.pricingCard.featured {
+    border-color: var(--primary-color);
+    border-width: 3px;
+}
+
+.featuredBadge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    font-size: 11px;
+    padding: 6px 16px;
+    border-radius: 0;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 2px solid var(--border-color);
+}
+
+.cardHeader {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.tierName {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.priceContainer {
+    margin-bottom: 12px;
+}
+
+.price {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.period {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-left: 4px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.featuresList {
+    list-style: none;
+    margin: 0 0 32px 0;
+    padding: 0;
+    flex: 1;
+}
+
+.featureItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.checkIcon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    border-radius: 4px;
+    font-weight: 900;
+    font-size: 14px;
+    border: 2px solid var(--border-color);
+}
+
+.ctaButton {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ctaButton.primary {
+    background: var(--primary-color);
+    color: var(--bg-primary);
+}
+
+.ctaButton.primary:hover {
+    background: var(--primary-dark);
+    transform: translate(-2px, -2px);
+    box-shadow: 2px 2px 0 var(--border-color);
+}
+
+.ctaButton.secondary {
+    background: transparent;
+    color: var(--text-primary);
+}
+
+.ctaButton.secondary:hover {
+    background: var(--primary-color);
+    color: var(--bg-primary);
+    transform: translate(-2px, -2px);
+    box-shadow: 2px 2px 0 var(--border-color);
+}
+
+@media (max-width: 768px) {
+    .pricingCard {
+        padding: 32px 24px;
+    }
+
+    .tierName {
+        font-size: 24px;
+    }
+
+    .price {
+        font-size: 40px;
+    }
+}
