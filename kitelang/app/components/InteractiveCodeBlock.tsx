@@ -36,18 +36,15 @@ resource VPC vpc {
     name = "production-vpc"
     cidr = "10.0.0.0/16"
 }
-// creates 3 subnets: subnet-0 (10.0.0.0/24), subnet-1(10.1.0.0/24), subnet-2(10.2.0.0/24)
-// Implicit naming (Kite auto-generates: subnet-0, subnet-1, subnet-2). Explicit naming is also possible.
-@count(3) 
+
+@count(3)
 resource Subnet subnet {
     vpc_id      = vpc.id
-    cidr_block  = "10.\${count}.0.0/24" 
-}
-println(subnet) // prints subnet-0, subnet-1, subnet-2
-    `,
+    cidr_block  = "10.\${count}.0.0/24"
+}`,
         steps: [
-            {line: 7, label: 'Decorate resource with @count'},
-            {line: 4, label: 'Use count index'}
+            {line: 8, label: 'Decorate resource with @count'},
+            {line: 11, label: 'Use count in string interpolation'}
         ]
     },
     {
@@ -201,7 +198,24 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                 if (lineText[pos] === '@') {
                     const decoratorMatch = lineText.substring(pos).match(/^@\w+/);
                     if (decoratorMatch) {
-                        tokens.push(<span key={key++} className="decorator">{decoratorMatch[0]}</span>);
+                        const decoratorName = decoratorMatch[0];
+
+                        // Add tooltip for @count decorator
+                        if (decoratorName === '@count') {
+                            const tooltipText = "Creates 3 subnets with implicit naming:\n• subnet-0: 10.0.0.0/24\n• subnet-1: 10.1.0.0/24\n• subnet-2: 10.2.0.0/24";
+                            tokens.push(
+                                <span
+                                    key={key++}
+                                    className="decorator has-tooltip"
+                                    data-tooltip={tooltipText}
+                                >
+                                    {decoratorName}
+                                </span>
+                            );
+                        } else {
+                            tokens.push(<span key={key++} className="decorator">{decoratorName}</span>);
+                        }
+
                         pos += decoratorMatch[0].length;
                         matched = true;
                         continue;
@@ -424,12 +438,13 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
                     font-size: 14px;
                     line-height: 1.5;
                     color: var(--text-primary);
-                    overflow-x: auto;
+                    overflow-x: hidden;
                     overflow-y: auto;
                     height: 450px;
                     tab-size: 4;
                     -moz-tab-size: 4;
-                    white-space: pre;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
                 }
 
                 .code-line {
@@ -494,6 +509,41 @@ export default function InteractiveCodeBlock({examples = defaultCodeExamples}: I
 
                 :global(.decorator) {
                     color: #D97706;
+                }
+
+                :global(.decorator.has-tooltip) {
+                    cursor: help;
+                    text-decoration: underline dotted;
+                    text-decoration-color: #D97706;
+                    text-underline-offset: 2px;
+                    position: relative;
+                }
+
+                :global(.decorator.has-tooltip::before) {
+                    content: attr(data-tooltip);
+                    position: fixed;
+                    bottom: auto;
+                    left: var(--tooltip-x);
+                    top: var(--tooltip-y);
+                    transform: translate(-50%, -100%);
+                    background: var(--text-primary);
+                    color: var(--bg-primary);
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    white-space: pre-line;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.2s;
+                    z-index: 1000;
+                    max-width: 300px;
+                    line-height: 1.4;
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: 400;
+                }
+
+                :global(.decorator.has-tooltip:hover::before) {
+                    opacity: 1;
                 }
 
                 :global(.number) {
