@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import TopBar from './TopBar';
+import PageTransition from './PageTransition';
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -57,7 +58,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             </a>
             <TopBar theme={theme} toggleTheme={toggleTheme} activePage={getActivePage()} />
             <div id="main-content" className="main-content-wrapper">
-                {children}
+                <PageTransition>
+                    {children}
+                </PageTransition>
             </div>
         </>
     );
