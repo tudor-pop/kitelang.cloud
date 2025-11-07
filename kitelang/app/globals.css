@@ -3,6 +3,18 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Brutalist Design System */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --text-primary: #000000;
+  --text-secondary: #4A4A4A;
+  --text-muted: #6B6B6B;
+  --primary-color: #A855F7;
+  --primary-dark: #9333EA;
+  --primary-light: #C084FC;
+  --border-color: #000000;
+  --shadow: rgba(0, 0, 0, 0.2);
 }
 
 @theme inline {
@@ -10,6 +22,16 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #000000;
+  --bg-secondary: #1A1A1A;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B0B0B0;
+  --text-muted: #808080;
+  --border-color: #FFFFFF;
+  --shadow: rgba(255, 255, 255, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {

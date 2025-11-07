@@ -1427,9 +1427,199 @@ export default function Footer() { ... }
 
 ---
 
-**Document Version**: 2.2 (Brutalist + Component Modularity)
+## Landing Page (app/page.tsx)
+
+### Architecture Overview
+
+The landing page (`/`) is a Next.js 16 page showcasing Kite with:
+- Hero section with interactive code block
+- Feature highlights
+- Call-to-action buttons
+- Decorative cloud background animations
+- Shared footer component
+
+### Interactive Code Block Component
+
+**Location**: `/app/components/InteractiveCodeBlock.tsx`
+
+The landing page features a custom syntax-highlighted code block with tabbed navigation:
+
+#### Features
+- **6 code example tabs**: Resources, Decorators, Components, Multi-Cloud, Mixins, Renaming
+- **Custom Kite language syntax highlighting**:
+  - Keywords (purple): `package`, `import`, `resource`, `component`, `mixin`, `on`, `fun`, `val`, `input`, `output`
+  - Built-in types (blue): `string`, `int`, `float`, `double`, `boolean`
+  - Decorators (orange): `@count`, `@region`
+  - String interpolation: Green strings with orange `${}` delimiters and white variable names
+  - Numbers (cyan): `#06B6D4`
+  - Comments (gray): Both `//` and `#` syntax supported
+  - Functions and identifiers with optional tooltips
+- **Horizontal text wrapping**: `white-space: pre-wrap` - code wraps naturally
+- **Copy to clipboard**: Copy button for each code example
+- **Theme-aware**: Adapts to light/dark theme automatically
+
+#### Implementation Details
+
+```typescript
+// Custom tokenization with string interpolation support
+if (lineText[pos] === '"' || lineText[pos] === "'") {
+  const quote = lineText[pos];
+  // ... parse string with ${variable} and $variable interpolation
+  // String parts: green (#10B981)
+  // ${} delimiters: orange (#D97706)
+  // Variable names: white
+}
+```
+
+**Syntax Highlighting Colors**:
+```css
+.keyword { color: #A855F7; font-weight: 600; }  /* Purple */
+.type { color: #3B82F6; font-weight: 600; }     /* Blue */
+.decorator { color: #D97706; }                   /* Orange */
+.interpolation { color: #D97706; }               /* Orange */
+.string { color: #10B981; }                      /* Green */
+.number { color: #06B6D4; }                      /* Cyan */
+.comment { color: #6B7280; }                     /* Gray */
+```
+
+**Tooltips**: Uses `data-tooltip` attribute with CSS `::before` pseudo-elements
+```tsx
+<span className="has-tooltip" data-tooltip="index will be: 0, 1, 2, ..., n">
+  index
+</span>
+```
+
+```css
+.has-tooltip {
+  position: relative;
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+.has-tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  white-space: pre-line;
+  /* positioning and styling */
+}
+```
+
+### Decorative Cloud Background
+
+**Implementation**: CSS pseudo-elements technique in `app/page.tsx`
+
+#### Cloud Structure
+- **3 clouds** with varied sizes (large: 180px, small: 100px, medium: 145px)
+- Created using CSS pseudo-elements: `::before` and `::after`
+- Main body: Elongated oval with `border-radius: 100px`
+- `::before`: Smaller circular bump on left
+- `::after`: Larger circular bump on right
+
+#### Cloud CSS Pattern
+```css
+.cloud {
+  position: absolute;
+  border-radius: 100px;
+  opacity: 0.15;
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+}
+
+.cloud-1 {
+  width: 180px;
+  height: 50px;
+  background: var(--text-primary);  /* Black in light, white in dark */
+  top: 15%;
+  left: 10%;
+  animation: float 35s infinite ease-in-out;
+}
+
+.cloud-1::before {
+  width: 70px;
+  height: 70px;
+  background: var(--text-primary);
+  top: -35px;
+  left: 25px;
+}
+
+.cloud-1::after {
+  width: 95px;
+  height: 85px;
+  background: var(--text-primary);
+  top: -43px;
+  right: 28px;
+}
+```
+
+#### Animation
+```css
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-20px) translateX(10px); }
+  50% { transform: translateY(0) translateX(20px); }
+  75% { transform: translateY(20px) translateX(10px); }
+}
+```
+
+#### Key Principles
+- **Theme-aware**: Uses `var(--text-primary)` for automatic light/dark adaptation
+- **Subtle**: 15% opacity for non-intrusive background effect
+- **Varied speeds**: Different animation durations (35s, 40s, 38s) and delays (0s, 5s, 10s)
+- **Vertical distribution**: Positioned at 15%, 50%, and 80% of viewport height
+- **Z-index layering**: `z-index: 0` (clouds), `z-index: 1` (content), `z-index: 100` (top bar)
+- **Non-interactive**: `pointer-events: none` to avoid blocking clicks
+- **Random sizes**: Large (180px), small (100px), medium (145px) for natural appearance
+
+### Landing Page Layout
+
+```tsx
+<div className="landing-page">
+  {/* Decorative Clouds (z-index: 0) */}
+  <div className="clouds-container">
+    <div className="cloud cloud-1"></div>
+    <div className="cloud cloud-2"></div>
+    <div className="cloud cloud-3"></div>
+  </div>
+
+  {/* Top Navigation Bar (z-index: 100) */}
+  <nav className="top-bar">...</nav>
+
+  {/* Hero Section (z-index: 1) */}
+  <section className="hero">
+    <h1>Infrastructure as Code for the Multi-Cloud Era</h1>
+    <InteractiveCodeBlock />
+    <div className="cta-buttons">
+      <Link href="/docs">Get Started</Link>
+      <Link href="/#features">Learn More</Link>
+    </div>
+  </section>
+
+  {/* Features Section */}
+  <section className="features">...</section>
+
+  {/* Footer */}
+  <Footer />
+</div>
+```
+
+### Landing Page Styling Notes
+
+- **Full-width sections**: Hero and features span full viewport width
+- **Content islands**: Not used on landing page (docs.html pattern only)
+- **Gradient backgrounds**: Feature cards use subtle purple tints
+- **CTA buttons**: Primary (filled purple) and secondary (transparent with border)
+- **Responsive**: Mobile-first with breakpoints at 768px and 1200px
+
+---
+
+**Document Version**: 2.3 (Brutalist + Component Modularity + Landing Page)
 **Last Updated**: January 2025
-**Based on**: Next.js 16 component architecture with styled-jsx
+**Based on**: Next.js 16.0.1 + TypeScript 5.9.3 + React 19.2.0 + Node.js 24 LTS
 **Primary Color**: Material Design 3 Purple (#A855F7)
 **Design Philosophy**: Brutalism with high contrast and minimal decoration
 **Framework**: Next.js 16 (App Router) + TypeScript + styled-jsx
