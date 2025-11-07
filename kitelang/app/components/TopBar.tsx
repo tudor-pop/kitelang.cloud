@@ -109,12 +109,14 @@ export default function TopBar({ theme, toggleTheme, activePage = 'home' }: TopB
                 className={`${styles.mobileMenuOverlay} ${isMobileMenuOpen ? styles.mobileMenuOverlayOpen : ''}`}
                 onClick={closeMobileMenu}
                 aria-hidden={!isMobileMenuOpen}
+                style={{ display: isMobileMenuOpen ? 'block' : 'none' }}
             ></div>
             <div
                 className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}
                 role="dialog"
                 aria-modal="true"
                 aria-label="Mobile navigation menu"
+                style={{ display: isMobileMenuOpen ? 'block' : 'none' }}
             >
                 <div className={styles.mobileMenuHeader}>
                     <button
