@@ -206,17 +206,35 @@ The landing page features a custom syntax-highlighted code block with:
 
 ### Decorative Cloud Background (app/page.tsx)
 
-The landing page features subtle animated clouds using CSS pseudo-elements:
+The landing page features subtle animated clouds with randomized positions:
 
 **Cloud Structure:**
-- 3 clouds with varied sizes (large, small, medium)
+- **5 clouds** with varied sizes defined in `app/globals.css`
+- Positions randomized on each page load via React `useEffect` hook
 - Created using CSS pseudo-elements (`::before` and `::after`)
 - Main body: elongated oval with `border-radius: 100px`
 - `::before`: smaller circular bump on left
 - `::after`: larger circular bump on right
 
-**Styling:**
+**Implementation:**
 ```tsx
+const [cloudPositions, setCloudPositions] = useState<Array<{ top: number; left?: number; right?: number }>>([]);
+
+useEffect(() => {
+    // Generate random positions for clouds on mount
+    const positions = Array.from({ length: 5 }, () => ({
+        top: Math.random() * 80 + 10, // 10% to 90%
+        ...(Math.random() > 0.5
+            ? { left: Math.random() * 70 + 5 } // 5% to 75%
+            : { right: Math.random() * 70 + 5 }
+        )
+    }));
+    setCloudPositions(positions);
+}, []);
+```
+
+**Styling (in app/globals.css):**
+```css
 .cloud {
     position: absolute;
     border-radius: 100px;
@@ -224,9 +242,9 @@ The landing page features subtle animated clouds using CSS pseudo-elements:
 }
 
 .cloud-1 {
-    width: 280px;
-    height: 80px;
-    background: var(--text-primary);  // Black in light mode, white in dark mode
+    width: 180px;
+    height: 50px;
+    background: var(--text-primary);  /* Black in light mode, white in dark mode */
     animation: float 35s infinite ease-in-out;
 }
 ```
@@ -235,13 +253,14 @@ The landing page features subtle animated clouds using CSS pseudo-elements:
 - Floating animation moves clouds naturally across screen
 - Different speeds (25s-40s) and delays for variety
 - Movement includes translateY() and translateX() transformations
-- Positioned at 15%, 50%, and 80% vertical positions for good distribution
+- Positions randomized each page load for visual variety
 
 **Key Principles:**
-- Use `var(--text-primary)` for theme-aware gray clouds
+- Use `var(--text-primary)` for theme-aware clouds
 - Keep opacity at ~0.15 for subtle background effect
 - Z-index: 0 (behind all content)
 - `pointer-events: none` to avoid interfering with interactions
+- Random positioning prevents repetitive appearance
 
 ### Adding Syntax-Highlighted Code Block (Static HTML Pages)
 
@@ -304,9 +323,99 @@ The landing page features subtle animated clouds using CSS pseudo-elements:
 }
 ```
 
+### CSS Modules Architecture
+
+The Next.js components use CSS Modules for component-scoped styling:
+
+**File Naming Convention:**
+- CSS Module files use `.module.css` extension
+- Named after their component: `ComponentName.module.css`
+- Placed in the same directory as the component
+
+**Import Pattern:**
+```tsx
+import styles from './ComponentName.module.css';
+```
+
+**Usage in JSX:**
+```tsx
+export default function MyComponent() {
+    return (
+        <div className={styles.container}>
+            <h1 className={styles.title}>Hello</h1>
+            <p className={styles.description}>Content here</p>
+        </div>
+    );
+}
+```
+
+**Class Name Convention:**
+- Use camelCase in CSS modules: `.myClassName`
+- Access in JSX: `styles.myClassName`
+- Next.js automatically generates unique class names to prevent conflicts
+
+**When to Use CSS Modules vs globals.css:**
+- **CSS Modules** - Component-specific styles (`.container`, `.button`, `.card`)
+- **globals.css** - Theme variables, animations, global utilities, cloud styles, syntax highlighting
+
+**Example Component with CSS Module:**
+
+*app/components/Card.tsx*
+```tsx
+'use client';
+
+import React from 'react';
+import styles from './Card.module.css';
+
+interface CardProps {
+    title: string;
+    children: React.ReactNode;
+}
+
+export default function Card({ title, children }: CardProps) {
+    return (
+        <div className={styles.card}>
+            <h3 className={styles.cardTitle}>{title}</h3>
+            <div className={styles.cardContent}>
+                {children}
+            </div>
+        </div>
+    );
+}
+```
+
+*app/components/Card.module.css*
+```css
+.card {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.2s;
+}
+
+.card:hover {
+    transform: translate(-6px, -6px);
+    box-shadow: 6px 6px 0 var(--shadow);
+}
+
+.cardTitle {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.cardContent {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+```
+
 ### Updating Theme Colors
 
-All colors are defined in CSS variables:
+All colors are defined in CSS variables in `app/globals.css`:
 
 ```css
 :root {
@@ -314,6 +423,7 @@ All colors are defined in CSS variables:
     --text-primary: #000000;
     --primary-color: #A855F7;
     --border-color: #000000;
+    --code-bg: #F5F5F5;
     /* etc. */
 }
 
@@ -321,6 +431,7 @@ All colors are defined in CSS variables:
     --bg-primary: #000000;
     --text-primary: #FFFFFF;
     --border-color: #FFFFFF;
+    --code-bg: #1A1A1A;
     /* etc. */
 }
 ```
@@ -329,11 +440,23 @@ All colors are defined in CSS variables:
 
 ### CSS Conventions
 
+**For Next.js Components (CSS Modules):**
+- Use `.module.css` files co-located with components
+- Use camelCase for class names in CSS modules
+- Import as: `import styles from './Component.module.css'`
+- Apply as: `className={styles.className}`
+- Never use global class names in CSS modules unless wrapped in `:global()`
+
+**For Static HTML Pages:**
+- Use kebab-case for class names (`.content-island`, `.code-block-wrapper`)
+- Keep styles embedded in `<style>` tags for self-containment
+
+**Universal Conventions:**
 - Use CSS variables for all colors (never hardcode colors except in variable definitions)
-- Component-scoped class names (`.content-island`, `.code-block-wrapper`)
-- Theme variants via `[data-theme="dark"]` selector
+- Theme variants via `[data-theme="dark"]` selector in `app/globals.css`
 - All shadows should be `transparent` except hard-edged drop shadows (`0 4px 0 rgba(0, 0, 0, 0.5)`)
 - Border radius: 4px (small), 8px (medium), 12px (large mobile), 16px (islands)
+- CSS properties alphabetically ordered within logical groups
 
 ### JavaScript Conventions
 
@@ -393,7 +516,9 @@ All colors are defined in CSS variables:
 - **Don't soften the brutalism** - No gradients, soft shadows, or excessive rounded corners
 - **Don't change the primary color** - #A855F7 is the brand color
 - **Don't add frameworks** - Keep vanilla JavaScript
-- **Don't create separate CSS files** - Keep styles embedded for self-containment
+- **Don't use styled-jsx or CSS-in-JS** - Use CSS modules for Next.js components, embedded `<style>` tags for static HTML
+- **Don't use global class names in CSS modules** - Always use the `styles.className` pattern
+- **Don't mix styling approaches** - CSS modules for Next.js, embedded styles for static HTML, globals.css for shared utilities
 - **Don't use utility CSS frameworks** (Tailwind, etc.) - Maintain component-scoped styles
 
 ## Testing Checklist
