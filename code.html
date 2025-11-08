@@ -127,11 +127,11 @@ resource Bucket photos {
   name = "my-photos"
 }
 // Resource properties tailored to each cloud provider
-mixin gcp on photos { uniform_bucket_level_access = true }
+mixin gcp on photos { location = "US" }
 mixin aws on photos { account_id = "421123456670" }
 
 // type specific properties on all instances
-mixin gcp on Bucket { uniform_bucket_level_access = true }
+mixin gcp on Bucket { location = "US" }
 mixin aws on Bucket { account_id = "421123456670" }
 
 // properties on all gcp resources
