@@ -117,11 +117,11 @@ resource Bucket photos {
 }
 // resource property applied to just one resource
 mixin gcp on photos { location = "US" }
-mixin aws on photos { account_id = "00000" }
+mixin aws on photos { accountId = "00000" }
 
 // type property applied to all instances
 mixin gcp on Bucket { location = "US" }
-mixin aws on Bucket { account_id = "00000" }
+mixin aws on Bucket { accountId = "00000" }
 
 // properties on all buckets
 mixin Bucket { tags = { env: 'prod' } }
