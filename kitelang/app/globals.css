@@ -131,10 +131,22 @@ body {
 .cloud {
     position: absolute;
     border-radius: 100px;
-    opacity: 0.15;
+    opacity: 0;
     will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
+    animation: cloudFadeIn 1.5s ease-out forwards;
+}
+
+@keyframes cloudFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 0.15;
+        transform: translateY(0);
+    }
 }
 
 .cloud::before,

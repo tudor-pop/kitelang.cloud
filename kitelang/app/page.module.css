@@ -49,11 +49,24 @@
     gap: 24px;
     width: 100%;
     max-width: 100%;
+    animation: fadeInSlideUp 0.8s ease-out;
 }
 
 .heroCode {
     width: 100%;
     max-width: 100%;
+    animation: fadeInSlideUp 0.8s ease-out 0.2s backwards;
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .heroTitle {
@@ -74,6 +87,7 @@
     display: flex;
     gap: 16px;
     margin-top: 16px;
+    animation: fadeInSlideUp 0.8s ease-out 0.3s backwards;
 }
 
 .primaryButton {
@@ -91,7 +105,7 @@
 }
 
 .primaryButton:hover {
-    transform: translate(-4px, -4px);
+    transform: translate(-4px, -4px) scale(1.02);
     box-shadow: 4px 4px 0 var(--border-color);
 }
 
@@ -115,7 +129,7 @@
 }
 
 .secondaryButton:hover {
-    transform: translate(-4px, -4px);
+    transform: translate(-4px, -4px) scale(1.02);
     box-shadow: 4px 4px 0 var(--border-color);
 }
 
