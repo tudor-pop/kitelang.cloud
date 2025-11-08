@@ -134,12 +134,25 @@
     box-sizing: border-box;
 }
 
+.featuresHeader {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
 .sectionTitle {
     font-size: 48px;
     font-weight: 900;
-    text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 16px;
     color: var(--text-primary);
+}
+
+.sectionSubtitle {
+    font-size: 20px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
 }
 
 .featuresGrid {
@@ -153,19 +166,87 @@
 .featureCard {
     background: var(--bg-primary);
     border: 2px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 12px;
     padding: 32px;
-    transition: all 0.2s;
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.featureCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.featureCard:hover::before {
+    transform: scaleX(1);
 }
 
 .featureCard:hover {
-    transform: translate(-6px, -6px);
-    box-shadow: 6px 6px 0 var(--shadow);
+    border-color: var(--primary-color);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+.featureNumber {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 14px;
+    font-weight: 900;
+    font-family: 'Roboto Mono', monospace;
+    color: var(--text-muted);
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.featureCard:hover .featureNumber {
+    opacity: 1;
+    color: var(--primary-color);
+    transform: scale(1.2);
 }
 
 .featureIcon {
-    font-size: 40px;
-    margin-bottom: 16px;
+    font-size: 48px;
+    margin-bottom: 20px;
+    display: block;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.featureCard:hover .featureIcon {
+    transform: scale(1.1) rotate(-5deg);
+    animation: iconBounce 0.6s ease;
+}
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: scale(1.1) rotate(-5deg) translateY(0);
+    }
+    50% {
+        transform: scale(1.1) rotate(-5deg) translateY(-10px);
+    }
 }
 
 .featureTitle {
@@ -173,12 +254,22 @@
     font-weight: 700;
     margin-bottom: 12px;
     color: var(--text-primary);
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.featureCard:hover .featureTitle {
+    color: var(--primary-color);
 }
 
 .featureDescription {
     font-size: 16px;
     line-height: 1.6;
     color: var(--text-secondary);
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
 }
 
 /* Comparison CTA Section */
@@ -246,6 +337,7 @@
 
     .featuresGrid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
     }
 }
 
@@ -293,13 +385,41 @@
         padding: 60px 24px;
     }
 
+    .featuresHeader {
+        margin-bottom: 48px;
+    }
+
+    .sectionTitle {
+        font-size: 36px;
+    }
+
+    .sectionSubtitle {
+        font-size: 18px;
+    }
+
     .featuresGrid {
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 20px;
     }
 
     .featureCard {
-        padding: 24px;
+        padding: 28px;
+    }
+
+    .featureCard:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    .featureIcon {
+        font-size: 40px;
+        margin-bottom: 16px;
+    }
+
+    .featureNumber {
+        font-size: 12px;
+        top: 12px;
+        right: 12px;
     }
 
     .comparisonCta {
@@ -363,13 +483,41 @@
         padding: 40px 16px;
     }
 
-    .sectionTitle {
-        font-size: 32px;
+    .featuresHeader {
         margin-bottom: 32px;
     }
 
-    .featureIcon {
+    .sectionTitle {
         font-size: 32px;
+        margin-bottom: 12px;
+    }
+
+    .sectionSubtitle {
+        font-size: 16px;
+    }
+
+    .featuresGrid {
+        gap: 16px;
+    }
+
+    .featureCard {
+        padding: 24px;
+    }
+
+    .featureCard:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    .featureIcon {
+        font-size: 36px;
+        margin-bottom: 12px;
+    }
+
+    .featureNumber {
+        font-size: 11px;
+        top: 10px;
+        right: 10px;
     }
 
     .featureTitle {

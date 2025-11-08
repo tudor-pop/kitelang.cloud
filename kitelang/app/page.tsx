@@ -63,44 +63,55 @@ export default function LandingPage() {
 
                 {/* Features Section */}
                 <section id="features" className={styles.featuresSection}>
-                    <h2 className={styles.sectionTitle}>Why Kite?</h2>
+                    <div className={styles.featuresHeader}>
+                        <h2 className={styles.sectionTitle}>Why it's better</h2>
+                        <p className={styles.sectionSubtitle}>
+                            Built for the modern cloud era. Designed for developer productivity.
+                        </p>
+                    </div>
                     <div className={styles.featuresGrid}>
-                        <div className={styles.featureCard}>
+                        <div className={styles.featureCard} style={{ animationDelay: '0ms' }}>
+                            <div className={styles.featureNumber}>01</div>
                             <div className={styles.featureIcon}>🚀</div>
                             <h3 className={styles.featureTitle}>Multi-Cloud Native</h3>
                             <p className={styles.featureDescription}>
                                 One language for AWS, GCP, Azure, and more. True portability without the pain.
                             </p>
                         </div>
-                        <div className={styles.featureCard}>
+                        <div className={styles.featureCard} style={{ animationDelay: '100ms' }}>
+                            <div className={styles.featureNumber}>02</div>
                             <div className={styles.featureIcon}>🔒</div>
                             <h3 className={styles.featureTitle}>Type Safe</h3>
                             <p className={styles.featureDescription}>
                                 Catch configuration errors before deployment. Strong typing meets infrastructure.
                             </p>
                         </div>
-                        <div className={styles.featureCard}>
+                        <div className={styles.featureCard} style={{ animationDelay: '200ms' }}>
+                            <div className={styles.featureNumber}>03</div>
                             <div className={styles.featureIcon}>⚡</div>
                             <h3 className={styles.featureTitle}>Blazing Fast</h3>
                             <p className={styles.featureDescription}>
                                 Optimized compilation and execution. Deploy in seconds, not minutes.
                             </p>
                         </div>
-                        <div className={styles.featureCard}>
+                        <div className={styles.featureCard} style={{ animationDelay: '300ms' }}>
+                            <div className={styles.featureNumber}>04</div>
                             <div className={styles.featureIcon}>🎯</div>
                             <h3 className={styles.featureTitle}>Developer First</h3>
                             <p className={styles.featureDescription}>
                                 Clean syntax inspired by modern languages. Familiar patterns, powerful features.
                             </p>
                         </div>
-                        <div className={styles.featureCard}>
+                        <div className={styles.featureCard} style={{ animationDelay: '400ms' }}>
+                            <div className={styles.featureNumber}>05</div>
                             <div className={styles.featureIcon}>🔄</div>
                             <h3 className={styles.featureTitle}>State Management</h3>
                             <p className={styles.featureDescription}>
                                 Database-backed state. Automatic versioning. Team collaboration built-in.
                             </p>
                         </div>
-                        <div className={styles.featureCard}>
+                        <div className={styles.featureCard} style={{ animationDelay: '500ms' }}>
+                            <div className={styles.featureNumber}>06</div>
                             <div className={styles.featureIcon}>🛠️</div>
                             <h3 className={styles.featureTitle}>Extensible</h3>
                             <p className={styles.featureDescription}>
