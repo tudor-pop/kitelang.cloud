@@ -205,7 +205,7 @@
 .featureCard:hover {
     border-color: var(--primary-color);
     transform: translateY(-8px);
-    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.15);
 }
 
 .featureNumber {
@@ -408,7 +408,7 @@
 
     .featureCard:hover {
         transform: translateY(-4px);
-        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
     }
 
     .featureIcon {
@@ -506,7 +506,7 @@
 
     .featureCard:hover {
         transform: translateY(-4px);
-        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
     }
 
     .featureIcon {
