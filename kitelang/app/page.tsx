@@ -121,6 +121,54 @@ export default function LandingPage() {
                     </div>
                 </section>
 
+                {/* Who Is It For Section */}
+                <section className={styles.whoSection}>
+                    <div className={styles.whoHeader}>
+                        <h2 className={styles.sectionTitle}>Who is it for</h2>
+                        <p className={styles.sectionSubtitle}>
+                            Built for teams who want to move fast without sacrificing control
+                        </p>
+                    </div>
+                    <div className={styles.whoList}>
+                        <div className={styles.whoItem}>
+                            <div className={styles.whoIconLarge}>👨‍💻</div>
+                            <div className={styles.whoContent}>
+                                <h3 className={styles.whoTitle}>DevOps Engineers</h3>
+                                <p className={styles.whoDescription}>
+                                    Manage multi-cloud infrastructure with one language
+                                </p>
+                            </div>
+                        </div>
+                        <div className={styles.whoItem}>
+                            <div className={styles.whoIconLarge}>🚀</div>
+                            <div className={styles.whoContent}>
+                                <h3 className={styles.whoTitle}>Platform Teams</h3>
+                                <p className={styles.whoDescription}>
+                                    Build reusable components with type safety
+                                </p>
+                            </div>
+                        </div>
+                        <div className={styles.whoItem}>
+                            <div className={styles.whoIconLarge}>💡</div>
+                            <div className={styles.whoContent}>
+                                <h3 className={styles.whoTitle}>Startups</h3>
+                                <p className={styles.whoDescription}>
+                                    Scale from prototype to production quickly
+                                </p>
+                            </div>
+                        </div>
+                        <div className={styles.whoItem}>
+                            <div className={styles.whoIconLarge}>🏢</div>
+                            <div className={styles.whoContent}>
+                                <h3 className={styles.whoTitle}>Enterprises</h3>
+                                <p className={styles.whoDescription}>
+                                    Reduce vendor lock-in across cloud providers
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 {/* Waitlist Section */}
                 <Suspense fallback={<div style={{ minHeight: '400px' }} />}>
                     <Waitlist />
