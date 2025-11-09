@@ -178,6 +178,27 @@ git push origin main
 
 Remote repository: https://github.com/tudor-pop/kitelang.cloud.git
 
+### Building and Deployment
+
+**Build for Production:**
+```bash
+npm run build
+```
+
+This creates an `out` folder with static HTML/CSS/JS files ready for deployment.
+
+**Deploy to Hostinger:**
+1. Build the project: `npm run build`
+2. Navigate to the `out` folder
+3. Upload all contents to Hostinger's `public_html` directory via FTP or File Manager
+4. Ensure `index.html` is in the root of your domain folder
+5. The site is now live!
+
+**Configuration:**
+- `next.config.ts` is set to `output: 'export'` for static export
+- Images are configured as `unoptimized: true` for compatibility
+- All pages are pre-rendered as static HTML
+
 ## Common Modifications
 
 ### Interactive Code Block Component (app/components/InteractiveCodeBlock.tsx)
