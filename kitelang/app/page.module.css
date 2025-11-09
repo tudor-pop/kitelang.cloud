@@ -328,6 +328,20 @@
     display: flex;
     flex-direction: column;
     gap: 0;
+    position: relative;
+}
+
+.whoList::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg,
+        var(--primary-color) 0%,
+        var(--primary-color) 100%);
+    opacity: 0.2;
 }
 
 .whoItem {
@@ -337,13 +351,32 @@
     padding: 32px 40px;
     border-left: 4px solid var(--primary-color);
     position: relative;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    animation: slideInFromLeft 0.6s ease-out forwards;
+}
+
+.whoItem:nth-child(1) { animation-delay: 0.1s; }
+.whoItem:nth-child(2) { animation-delay: 0.2s; }
+.whoItem:nth-child(3) { animation-delay: 0.3s; }
+.whoItem:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .whoItem:hover {
     background: var(--bg-secondary);
     border-left-width: 6px;
     padding-left: 38px;
+    transform: translateX(8px);
 }
 
 .whoItem::before {
@@ -358,18 +391,54 @@
     border: 2px solid var(--bg-primary);
     border-radius: 50%;
     transition: all 0.3s ease;
+    box-shadow: 0 0 0 0 var(--primary-color);
 }
 
 .whoItem:hover::before {
     width: 16px;
     height: 16px;
     left: -10px;
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(168, 85, 247, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(168, 85, 247, 0);
+    }
+}
+
+.whoItem::after {
+    content: '→';
+    position: absolute;
+    right: 40px;
+    font-size: 24px;
+    color: var(--primary-color);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.whoItem:hover::after {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .whoIconLarge {
     font-size: 64px;
     flex-shrink: 0;
     line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.whoItem:hover .whoIconLarge {
+    transform: scale(1.1) rotate(-5deg);
 }
 
 .whoContent {
@@ -381,6 +450,11 @@
     font-weight: 700;
     margin-bottom: 8px;
     color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.whoItem:hover .whoTitle {
+    color: var(--primary-color);
 }
 
 .whoDescription {
@@ -388,6 +462,11 @@
     line-height: 1.6;
     color: var(--text-secondary);
     margin: 0;
+    transition: color 0.3s ease;
+}
+
+.whoItem:hover .whoDescription {
+    color: var(--text-primary);
 }
 
 /* Trust Badges Section */
