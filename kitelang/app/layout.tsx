@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Roboto, Roboto_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Roboto, Roboto_Mono, Audiowide } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./components/ClientLayout";
 
@@ -26,6 +26,13 @@ const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  display: 'swap',
+});
+
+const audiowide = Audiowide({
+  variable: "--font-audiowide",
+  subsets: ["latin"],
+  weight: ["400"],
   display: 'swap',
 });
 
@@ -123,7 +130,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${robotoMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} ${robotoMono.variable} ${audiowide.variable} antialiased`}
       >
         <script
           type="application/ld+json"

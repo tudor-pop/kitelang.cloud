@@ -151,23 +151,45 @@
 .featuresHeader {
     text-align: center;
     margin-bottom: 60px;
+    position: relative;
 }
 
 .sectionTitle {
+    font-family: var(--font-audiowide), 'Audiowide', sans-serif;
     font-size: 48px;
-    font-weight: 900;
-    margin-bottom: 16px;
-    color: var(--text-primary);
+    font-weight: 400;
+    margin-bottom: 32px;
+    color: #FFFFFF;
+    position: relative;
+    display: inline-block;
+    padding: 20px 48px;
+    background: var(--primary-color);
+    border: 2px solid var(--border-color);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.sectionTitle::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: -8px;
+    bottom: -8px;
+    background: var(--text-primary);
+    z-index: -1;
+    border: 2px solid var(--border-color);
 }
 
 .sectionSubtitle {
     font-size: 20px;
     color: var(--text-secondary);
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+    position: relative;
 }
+
 
 .featuresGrid {
     display: grid;
@@ -286,60 +308,49 @@
     z-index: 1;
 }
 
-/* Comparison CTA Section */
-.comparisonCta {
+/* Trust Badges Section */
+.trustSection {
     padding: 60px 40px;
-    background: var(--bg-primary);
+    background: var(--bg-secondary);
+    border-top: 2px solid var(--border-color);
     width: 100%;
     box-sizing: border-box;
 }
 
-.comparisonContent {
-    max-width: 800px;
+.trustContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 900px;
     margin: 0 auto;
-    text-align: center;
-    padding: 48px;
-    background: var(--bg-secondary);
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
 }
 
-.comparisonTitle {
-    font-size: 36px;
-    font-weight: 900;
-    color: var(--text-primary);
+.trustBadge {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.trustBadge:hover {
+    transform: translateY(-4px);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
+    border-color: var(--primary-color);
+}
+
+.trustIcon {
+    font-size: 32px;
     margin-bottom: 12px;
 }
 
-.comparisonText {
-    font-size: 18px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 24px;
-}
-
-.comparisonButton {
-    display: inline-block;
-    padding: 14px 32px;
-    background: var(--primary-color);
-    color: #FFFFFF;
-    border: 2px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: 900;
-    text-decoration: none;
+.trustText {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    transition: background 0.2s;
-}
-
-.comparisonButton:hover {
-    background: var(--primary-dark);
-}
-
-.comparisonButton:focus-visible {
-    outline: 3px solid var(--primary-dark);
-    outline-offset: 2px;
 }
 
 /* Responsive */
@@ -352,6 +363,11 @@
     .featuresGrid {
         grid-template-columns: repeat(2, 1fr);
         gap: 28px;
+    }
+
+    .trustContainer {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
 }
 
@@ -404,7 +420,15 @@
     }
 
     .sectionTitle {
-        font-size: 36px;
+        font-size: 38px;
+        padding: 16px 32px;
+    }
+
+    .sectionTitle::before {
+        top: 6px;
+        left: 6px;
+        right: -6px;
+        bottom: -6px;
     }
 
     .sectionSubtitle {
@@ -436,24 +460,26 @@
         right: 12px;
     }
 
-    .comparisonCta {
-        padding: 40px 20px;
+    .trustSection {
+        padding: 40px 24px;
     }
 
-    .comparisonContent {
-        padding: 32px 24px;
+    .trustContainer {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
     }
 
-    .comparisonTitle {
+    .trustBadge {
+        padding: 20px 16px;
+    }
+
+    .trustIcon {
         font-size: 28px;
+        margin-bottom: 8px;
     }
 
-    .comparisonText {
-        font-size: 16px;
-    }
-
-    .comparisonButton {
-        width: 100%;
+    .trustText {
+        font-size: 12px;
     }
 }
 
@@ -502,8 +528,16 @@
     }
 
     .sectionTitle {
-        font-size: 32px;
-        margin-bottom: 12px;
+        font-size: 28px;
+        margin-bottom: 24px;
+        padding: 12px 24px;
+    }
+
+    .sectionTitle::before {
+        top: 5px;
+        left: 5px;
+        right: -5px;
+        bottom: -5px;
     }
 
     .sectionSubtitle {
@@ -542,24 +576,25 @@
         font-size: 15px;
     }
 
-    .comparisonCta {
+    .trustSection {
         padding: 32px 16px;
     }
 
-    .comparisonContent {
-        padding: 24px 16px;
+    .trustContainer {
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
 
-    .comparisonTitle {
+    .trustBadge {
+        padding: 16px 12px;
+    }
+
+    .trustIcon {
         font-size: 24px;
+        margin-bottom: 6px;
     }
 
-    .comparisonText {
-        font-size: 15px;
-    }
-
-    .comparisonButton {
-        padding: 12px 20px;
-        font-size: 14px;
+    .trustText {
+        font-size: 11px;
     }
 }
