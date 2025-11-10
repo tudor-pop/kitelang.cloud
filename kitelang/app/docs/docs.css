@@ -62,7 +62,8 @@
     font-weight: 400;
     min-height: 100vh;
     isolation: isolate;
-    padding-top: 72px; /* Account for global TopBar (70px + 2px border) */
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .html {
@@ -77,9 +78,11 @@
     grid-template-areas:
         '. main right'
         '. footer footer';
-    min-height: calc(100vh - 72px); /* Subtract topbar height */
+    min-height: calc(100vh); /* Subtract topbar height */
     gap: 0;
     width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 /* Left Sidebar - Floating overlay (defined in Sidebar.module.css) */
@@ -279,7 +282,7 @@
 .main-content {
     grid-area: main;
     padding: 0;
-    margin: 0 40px 0 0;
+    margin: 0;
     background-color: transparent;
     min-width: 0; /* Allow grid to shrink content properly */
     overflow-x: hidden;
@@ -291,8 +294,8 @@
 .content-island {
     background: #FFFFFF;
     border-radius: 16px;
-    padding: 48px 56px;
-    margin: 24px 32px;
+    padding: 0;
+    margin: 0;
     border: 2px solid var(--border-color);
     box-shadow: none;
     transition: none;
@@ -322,7 +325,6 @@
     font-weight: 500;
     transition: all 0.2s;
     border-bottom: 2px solid transparent;
-    padding-bottom: 2px;
     display: inline-block;
 }
 
@@ -482,7 +484,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 48px;
-    margin-bottom: 40px;
 }
 
 .footer-section h3 {
@@ -894,7 +895,6 @@
     }
 
     .main-content {
-        margin-right: 40px;
     }
 
     .content-island {

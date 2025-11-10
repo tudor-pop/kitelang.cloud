@@ -1,6 +1,5 @@
 .mainContent {
     grid-area: main;
-    padding: 0 32px; /* Add horizontal padding for breathing room */
     margin: 0;
     background-color: transparent;
     min-width: 0;
@@ -14,6 +13,7 @@
 
 :global(.page-section) {
     display: none;
+    padding: 0 24px;
 }
 
 :global(.page-section.active) {
@@ -23,8 +23,8 @@
 :global(.content-island) {
     background: #FFFFFF;
     border-radius: 16px;
-    padding: 48px 56px;
-    margin: 24px auto; /* Center and allow max-width */
+    padding: 48px;
+    margin: 32px auto; /* Center and allow max-width */
     border: 2px solid var(--border-color);
     box-shadow: none;
     transition: none;
@@ -46,7 +46,7 @@
     margin-bottom: 32px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 24px;
 }
 
 :global(.breadcrumb a) {
@@ -318,37 +318,26 @@
 
 @media (max-width: 1400px) {
     .mainContent {
-        margin-right: 40px !important;
     }
 
     :global(.content-island) {
-        margin: 24px 32px;
     }
 }
 
 @media (max-width: 1100px) {
     .mainContent {
-        margin-left: 0;
-        margin-right: 16px !important;
     }
 
     :global(.content-island) {
-        margin: 24px 16px;
-        padding: 40px 32px;
     }
 }
 
 @media (max-width: 900px) {
     .mainContent {
-        margin-left: 0;
-        margin-right: 0 !important;
-        padding: 0;
         width: 100%;
     }
 
     :global(.content-island) {
-        margin: 16px;
-        padding: 32px 20px;
         border-radius: 12px;
     }
 
