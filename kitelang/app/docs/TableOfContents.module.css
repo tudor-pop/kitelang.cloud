@@ -1,15 +1,15 @@
 .rightSidebar {
-    width: 280px;
+    grid-area: right;
     background: transparent;
     border-left: none;
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    position: sticky;
+    top: 72px; /* Position below global TopBar */
+    max-height: calc(100vh - 72px - 100px);
     overflow-y: auto;
     padding: 16px 24px 24px 8px;
     transition: background-color 0.3s ease;
     z-index: 1;
+    align-self: start;
 }
 
 .tocIsland {

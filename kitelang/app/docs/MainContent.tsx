@@ -102,12 +102,12 @@ export default function MainContent({
                              style={{ background: '#FAF5FF', border: 'none', borderRadius: '16px', padding: '32px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
                                 <div style={{ fontSize: '32px' }}>👷</div>
-                                <h3 style={{ margin: 0, fontSize: '24px', fontWeight: 600 }}>Develop providers</h3>
+                                <h3 style={{ margin: 0, fontSize: '24px', fontWeight: 600 }}>Developers</h3>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                 <a href="#develop-plugins"
                                    style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '15px', transition: 'color 0.2s' }}>
-                                    <span style={{ color: '#5BB4FF' }}>🎯</span> Develop provider plugins
+                                    <span style={{ color: '#5BB4FF' }}>🎯</span> Create provider plugins
                                 </a>
                             </div>
                         </div>

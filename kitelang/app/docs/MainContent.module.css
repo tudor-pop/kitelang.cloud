@@ -1,10 +1,11 @@
 .mainContent {
-    flex: 1;
-    margin-left: 280px;
-    margin-right: 40px;
-    padding: 0;
+    grid-area: main;
+    padding: 0 32px; /* Add horizontal padding for breathing room */
+    margin: 0;
     background-color: transparent;
-    max-width: 100%;
+    min-width: 0;
+    width: 100%; /* Fill horizontally */
+    min-height: 100%; /* Fill the grid cell */
     overflow-x: hidden;
     box-sizing: border-box;
     position: relative;
@@ -23,11 +24,12 @@
     background: #FFFFFF;
     border-radius: 16px;
     padding: 48px 56px;
-    margin: 24px 32px;
+    margin: 24px auto; /* Center and allow max-width */
     border: 2px solid var(--border-color);
     box-shadow: none;
     transition: none;
-    max-width: 100%;
+    width: 100%;
+    max-width: 1200px; /* Limit width on very large screens for readability */
     box-sizing: border-box;
     overflow-x: auto;
 }
