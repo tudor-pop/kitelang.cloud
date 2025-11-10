@@ -10,7 +10,13 @@ const Waitlist = lazy(() => import('./components/Waitlist'));
 const Footer = lazy(() => import('./components/Footer'));
 
 export default function LandingPage() {
-    const [cloudPositions, setCloudPositions] = useState<Array<{ top: number; left?: number; right?: number }>>([]);
+    const [cloudPositions, setCloudPositions] = useState<Array<{ top: number; left?: number; right?: number }>>([
+        { top: 20, left: 10 },
+        { top: 40, right: 15 },
+        { top: 60, left: 70 },
+        { top: 30, right: 60 },
+        { top: 75, left: 40 }
+    ]);
 
     useEffect(() => {
         // Generate random positions for clouds on mount
