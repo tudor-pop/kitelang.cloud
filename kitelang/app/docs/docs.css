@@ -4,86 +4,6 @@
     box-sizing: border-box;
 }
 
-/* Top Navigation Bar */
-.top-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-    background: var(--bg-primary);
-    border-bottom: 2px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 40px;
-    z-index: 1000;
-    transition: background-color 0.3s ease;
-}
-
-.top-bar .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.top-bar .logo-text {
-    font-size: 28px;
-    font-weight: 900;
-    color: var(--text-primary);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.top-bar .version-badge {
-    background: var(--primary-color);
-    color: var(--bg-primary);
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 0;
-    font-weight: 900;
-    letter-spacing: 1px;
-    border: 2px solid var(--border-color);
-    font-family: 'Roboto Mono', monospace;
-}
-
-.top-bar .nav-buttons {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.top-bar .nav-button {
-    padding: 10px 20px;
-    background: transparent;
-    border: 2px solid var(--border-color);
-    border-radius: 4px;
-    color: var(--text-primary);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.top-bar .nav-button:hover {
-    background: var(--primary-color);
-    color: var(--bg-primary);
-    transform: translate(-2px, -2px);
-    box-shadow: 2px 2px 0 var(--border-color);
-}
-
-.top-bar .nav-button.active {
-    background: var(--primary-color);
-    color: var(--bg-primary);
-}
-
-.top-bar .theme-toggle {
-    font-size: 18px;
-    padding: 8px 12px;
-}
-
 :root {
     --bg-primary: #F8FAFC;
     --bg-secondary: #E2E8F0;
@@ -142,6 +62,7 @@
     font-weight: 400;
     min-height: 100vh;
     isolation: isolate;
+    padding-top: 72px; /* Account for global TopBar (70px + 2px border) */
 }
 
 .html {
@@ -151,7 +72,7 @@
 /* Main Layout Container */
 .container {
     display: flex;
-    min-height: 100vh;
+    min-height: calc(100vh - 72px); /* Subtract topbar height */
 }
 
 /* Left Sidebar - Brutalist */
@@ -162,7 +83,7 @@
     overflow-y: auto;
     position: fixed;
     left: 0;
-    top: 0;
+    top: 72px; /* Position below global TopBar */
     bottom: 0;
     padding: 24px 0;
     transition: none;
@@ -733,7 +654,7 @@
     border-left: none;
     position: fixed;
     right: 0;
-    top: 0;
+    top: 72px; /* Position below global TopBar */
     bottom: 0;
     overflow-y: auto;
     padding: 16px 24px 24px 8px;
@@ -876,7 +797,7 @@
 /* Reading Progress Indicator */
 .reading-progress {
     position: fixed;
-    top: 0;
+    top: 72px; /* Position below global TopBar (70px + 2px border) */
     left: 0;
     width: 0%;
     height: 3px;
@@ -890,7 +811,7 @@
 .hamburger {
     display: none;
     position: fixed;
-    top: 20px;
+    top: 92px; /* Position below global TopBar (72px + 20px spacing) */
     left: 20px;
     z-index: 101;
     background: linear-gradient(135deg, #7F52FF 0%, #5C3FBF 100%);

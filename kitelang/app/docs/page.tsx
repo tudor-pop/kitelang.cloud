@@ -8,7 +8,6 @@ import MainContent from './MainContent';
 
 export default function DocsPage() {
     const [activePage, setActivePage] = useState('page-home');
-    const [theme, setTheme] = useState<'light' | 'dark'>('light');
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [hamburgerActive, setHamburgerActive] = useState(false);
     const [expandedMenus, setExpandedMenus] = useState<{ [key: string]: boolean }>({
@@ -37,36 +36,6 @@ export default function DocsPage() {
             .then(res => res.json())
             .then(dates => setPageDates(dates))
             .catch(err => console.error('Failed to fetch page dates:', err));
-    }, []);
-
-    // Detect system theme on mount
-    useEffect(() => {
-        const detectSystemTheme = () => {
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                return 'dark';
-            }
-            return 'light';
-        };
-
-        // Check for saved preference, otherwise use system preference
-        const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-        const initialTheme = savedTheme || detectSystemTheme();
-        setTheme(initialTheme);
-        document.documentElement.setAttribute('data-theme', initialTheme);
-
-        // Listen for system theme changes
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const handleChange = (e: MediaQueryListEvent) => {
-            const savedTheme = localStorage.getItem('theme');
-            if (!savedTheme) {
-                const newTheme = e.matches ? 'dark' : 'light';
-                setTheme(newTheme);
-                document.documentElement.setAttribute('data-theme', newTheme);
-            }
-        };
-
-        mediaQuery.addEventListener('change', handleChange);
-        return () => mediaQuery.removeEventListener('change', handleChange);
     }, []);
 
     // Reading progress indicator
@@ -111,14 +80,6 @@ export default function DocsPage() {
             headings.forEach(heading => observer.unobserve(heading));
         };
     }, [activePage]);
-
-    // Handle theme toggle
-    const toggleTheme = () => {
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        setTheme(newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-    };
 
     // Handle sidebar toggle
     const toggleSidebar = () => {
@@ -191,25 +152,6 @@ export default function DocsPage() {
 
     return (
         <div className="body">
-            {/* Top Navigation Bar */}
-            <nav className="top-bar">
-                <div className="logo">
-                    <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <span className="logo-text">Kite</span>
-                        <span className="version-badge">v0.0.2</span>
-                    </a>
-                </div>
-                <div className="nav-buttons">
-                    <a href="/docs" className="nav-button active">Documentation</a>
-                    <a href="/#features" className="nav-button">Features</a>
-                    <a href="/pricing" className="nav-button">Pricing</a>
-                    <a href="https://github.com/tudor-pop/kitelang" target="_blank" rel="noopener noreferrer" className="nav-button">GitHub</a>
-                    <button onClick={toggleTheme} className="nav-button theme-toggle">
-                        {theme === 'dark' ? '☀️' : '🌙'}
-                    </button>
-                </div>
-            </nav>
-
             {/* Reading Progress Indicator */}
             <div className="reading-progress" style={{ width: `${readingProgress}%` }}></div>
 

@@ -72,13 +72,6 @@ export default function MainContent({
                         without sacrificing control.
                     </p>
 
-                    {/* Accent Section */}
-                    <div style={{ background: '#FBFBFB', border: '2px solid var(--border-color)', borderRadius: '16px', padding: '32px', margin: '48px 0', boxShadow: '-8px 8px 0 var(--shadow)' }}>
-                        <p style={{ margin: 0, fontSize: '20px', fontWeight: 700, textAlign: 'center', color: '#000' }}>
-                            Ready to transform your infrastructure workflow? Explore Kite today!
-                        </p>
-                    </div>
-
                     {/* Feature Cards */}
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginTop: '48px' }}>
                         {/* Get Started Card */}
