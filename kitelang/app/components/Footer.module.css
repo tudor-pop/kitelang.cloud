@@ -84,7 +84,7 @@
 
     .footerContent {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 0;
     }
 
     .footerColumn {
@@ -92,7 +92,7 @@
     }
 
     .footerTitle {
-        margin-bottom: 4px;
+        margin-bottom: 16px;
     }
 }
 
@@ -102,25 +102,29 @@
     }
 
     .footerContent {
-        gap: 16px;
+        gap: 0;
     }
 
     .footerColumn {
-        gap: 1px;
+        gap: 0;
+        margin-bottom: 16px;
     }
 
     .footerTitle {
         font-size: 12px;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
     }
 
     .footerColumn a,
     .footerText {
         font-size: 12px;
+        line-height: 1.2;
+        margin-bottom: 2px;
+        display: block;
     }
 
     .footerCopyright {
         font-size: 11px;
-        margin-top: 4px;
+        margin-top: 8px;
     }
 }
