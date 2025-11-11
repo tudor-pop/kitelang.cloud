@@ -53,20 +53,82 @@ CLAUDE.md                       # This file - developer guidance
 
 **Note:** The main landing page uses Next.js/React, while docs, pricing, and license pages remain static HTML files for simplicity.
 
-### docs.html SPA Pattern
+### Docs Page Layout (app/docs/)
 
-The documentation page uses a **client-side routing system** within a single HTML file:
+The documentation page uses **Next.js with CSS Grid layout** for a three-column structure:
+
+#### Grid Layout Structure - DO NOT CHANGE
+
+**CRITICAL**: This layout has been finalized and MUST NOT be modified. The grid structure below is the correct implementation:
+
+```css
+/* Container Grid - FIXED LAYOUT */
+.container {
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;  /* left sidebar | main content | right TOC */
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+        'side main right'
+        'side footer footer';
+    gap: 0;
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    overflow: hidden;  /* Body scroll disabled */
+}
+```
+
+**Layout Components:**
+1. **Left Sidebar** (`Sidebar.tsx`)
+   - Width: 280px fixed
+   - Grid area: `side`
+   - Position: `sticky` with `top: 72px`
+   - Height: `calc(100vh - 72px)`
+   - Has internal scroll: `overflow-y: auto`
+   - Stays fixed when main content scrolls
+
+2. **Main Content** (`MainContent.tsx`)
+   - Width: `1fr` (flexible, fills remaining space)
+   - Grid area: `main`
+   - Height: `100%`
+   - Only scrollable area: `overflow-y: auto`
+   - Z-index: 1 (below TOC)
+
+3. **Right Sidebar TOC** (`TableOfContents.tsx`)
+   - Width: 280px fixed
+   - Grid area: `right`
+   - Position: `sticky` with `top: 72px`
+   - Max height: `calc(100vh - 72px - 100px)`
+   - Has internal scroll: `overflow-y: auto`
+   - Z-index: 20 (above main content)
+
+**Scrolling Behavior:**
+- Body: `overflow: hidden` - NO scroll at body level
+- Container: NO overflow property - allows grid layout
+- Left Sidebar: Independent scroll for menu items
+- Main Content: ONLY scrollable area for page content
+- Right TOC: Independent scroll for long TOCs
+
+**Why This Layout:**
+- Prevents double scrolling issues
+- Sidebars remain visible during content scroll
+- Clean separation of scrollable regions
+- Proper z-index stacking for TOC interaction
+- Full-width container fills viewport
+
+#### Multi-Page SPA Pattern
+
+The docs page uses **client-side routing** within a single Next.js page:
 
 - Multiple `.page-section` divs with `display: none` by default
 - JavaScript `showPage(pageId)` function toggles visibility
-- Three-column layout: Left sidebar (navigation), Main content (island), Right TOC
 - Dynamic TOC updates based on active page
 - Layout adjustments (shows/hides TOC sidebar, repositions FABs)
 
 **When adding new documentation pages:**
-1. Add a new `.page-section` div with unique ID
-2. Update `showPage()` function to handle the new page
-3. Add navigation link in `.sidebar-menu`
+1. Add a new `.page-section` div with unique ID in `MainContent.tsx`
+2. Update `showPage()` function to handle the new page in `page.tsx`
+3. Add navigation link in `Sidebar.tsx` `.sidebar-menu`
 4. Define TOC structure for that page in the `showPage()` switch statement
 
 ## Design System (Brutalism)
