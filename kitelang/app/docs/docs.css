@@ -641,8 +641,7 @@
     background: transparent;
     border-left: none;
     position: sticky;
-    top: 72px; /* Position below global TopBar */
-    max-height: calc(100vh - 72px - 100px); /* Leave space for scrolling */
+    max-height: calc(100vh - 100px); /* Leave space for scrolling */
     overflow-y: auto;
     padding: 16px 24px 24px 8px;
     transition: background-color 0.3s ease;
@@ -894,7 +893,7 @@
     }
 
     .content-island {
-        margin: 24px 32px;
+        margin: 24px 24px;
     }
 
     .fab-container {

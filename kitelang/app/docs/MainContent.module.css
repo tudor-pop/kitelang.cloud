@@ -25,7 +25,7 @@
     background: #FFFFFF;
     border-radius: 16px;
     padding: 48px;
-    margin: 32px auto; /* Center and allow max-width */
+    margin: 24px auto; /* Center and allow max-width */
     border: 2px solid var(--border-color);
     box-shadow: none;
     transition: none;

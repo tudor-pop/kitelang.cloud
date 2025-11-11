@@ -8,8 +8,8 @@
     z-index: 100;
     grid-area: side;
     position: sticky;
-    top: 72px; /* Stick below global TopBar */
-    height: calc(100vh - 72px); /* Full viewport height minus topbar */
+    top: 0px; /* Stick below global TopBar */
+    height: calc(100vh); /* Full viewport height minus topbar */
     align-self: start;
 }
 
