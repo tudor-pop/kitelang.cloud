@@ -993,3 +993,57 @@
         font-size: 18px;
     }
 }
+
+@media (max-width: 415px) {
+    /* Extra small mobile (iPhone SE, etc.) */
+    .content-island {
+        margin: 8px;
+        padding: 20px 12px;
+        border-radius: 8px;
+    }
+
+    .content-island h1 {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+
+    .content-island h2 {
+        font-size: 20px;
+        line-height: 1.3;
+    }
+
+    .content-island p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .footer-island {
+        margin: 16px 8px 8px 8px;
+        padding: 20px 12px;
+        border-radius: 8px;
+    }
+
+    .fab-container {
+        right: 12px;
+        bottom: 20px;
+    }
+
+    .fab {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    /* Ensure code blocks don't overflow */
+    .code-block {
+        margin: 20px 0;
+        padding: 16px;
+        border-radius: 8px;
+        overflow-x: auto;
+    }
+
+    .code-block code {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+}

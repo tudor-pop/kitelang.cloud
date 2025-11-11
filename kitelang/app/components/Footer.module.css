@@ -62,3 +62,42 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 40px 24px 24px;
+    }
+
+    .footerContent {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 415px) {
+    .footer {
+        padding: 32px 16px 20px;
+    }
+
+    .footerContent {
+        gap: 20px;
+    }
+
+    .footerColumn {
+        gap: 8px;
+    }
+
+    .footerTitle {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .footerColumn a,
+    .footerText {
+        font-size: 12px;
+    }
+
+    .footerCopyright {
+        font-size: 11px;
+    }
+}

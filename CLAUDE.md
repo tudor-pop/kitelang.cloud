@@ -62,7 +62,7 @@ The documentation page uses **Next.js with simplified CSS Grid + floating TOC** 
 **IMPORTANT**: This is the current, finalized layout. The structure is:
 
 ```css
-/* Container Grid - Simple 2-column layout */
+/* Container Grid - Simple 2-column layout (desktop) */
 .container {
     display: grid;
     grid-template-columns: 280px 1fr;  /* left sidebar | content area */
@@ -76,7 +76,7 @@ The documentation page uses **Next.js with simplified CSS Grid + floating TOC** 
 
 /* Main with Footer - Scrollable container */
 .main-with-footer {
-    height: 100%;
+    height: calc(100vh - 70px);  /* Account for 70px TopBar */
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
@@ -98,52 +98,66 @@ The documentation page uses **Next.js with simplified CSS Grid + floating TOC** 
     right: 0;
     top: 44px;  /* Below navigation bar */
     width: 280px;
-    height: 100%;
+    max-height: calc(100vh - 44px);
     overflow-y: auto;
     z-index: 20;
 }
 ```
 
 **Layout Components:**
-1. **Left Sidebar** (`Sidebar.tsx`)
+1. **TopBar** (global, 70px height)
+   - Fixed at top of viewport
+   - Always visible across all pages
+   - Contains logo, navigation, theme toggle
+
+2. **Left Sidebar** (`Sidebar.tsx`)
    - Width: 280px fixed (column 1 of container)
    - Position: Part of grid, sticky within its column
    - Height: `100vh`
    - Has internal scroll: `overflow-y: auto`
    - Stays fixed when main content scrolls
    - Z-index: 100
+   - **Responsive**: Hidden on screens ≤1100px (replaced by hamburger menu)
 
-2. **Main with Footer** (`div.main-with-footer`)
+3. **Main with Footer** (`div.main-with-footer`)
    - Column 2 of container
+   - Height: `calc(100vh - 70px)` to account for TopBar
    - Contains MainContent and Footer as siblings
    - This div scrolls, containing both main content and footer
    - Dynamically adjusts `margin-right` based on TOC visibility:
      - `with-toc` class: 280px margin (makes space for TOC)
      - `no-toc` class: 0px margin (fills full width)
+   - **Responsive**: Full width on screens ≤1100px
 
-3. **Main Content** (`MainContent.tsx`)
+4. **Main Content** (`MainContent.tsx`)
    - First child of `main-with-footer`
    - No scrolling properties (scrolling handled by parent)
    - Contains page sections with content islands
-   - Z-index: 1
+   - Padding/margins adjust at responsive breakpoints
 
-4. **Footer** (`Footer.tsx`)
+5. **Footer** (`Footer.tsx`)
    - Second child of `main-with-footer` (sibling to MainContent)
+   - **Island styling on docs page only** (via `isIsland={true}` prop)
    - Styled as an island: bordered, rounded corners (16px)
-   - Margin: `32px 24px 24px 24px`
+   - Margin: `32px 24px 24px 24px` (desktop)
    - Width: `auto` (fits within container)
+   - Font: `Roboto Mono` (monospace) everywhere
    - Scrolls together with main content
+   - **Responsive margins**: Adjust at 1100px, 900px, 600px breakpoints
 
-5. **Right TOC** (`TableOfContents.tsx`)
+6. **Right TOC** (`TableOfContents.tsx`)
    - Position: `fixed` at `right: 0, top: 44px`
    - Width: 280px
+   - Max-height: `calc(100vh - 44px)` (content-based height, not full screen)
    - Floats above content (not part of grid)
    - Has internal scroll: `overflow-y: auto`
    - Only rendered when `showToc` is `true`
    - Z-index: 20
+   - **Responsive**: Hidden on screens ≤900px
 
 **Scrolling Behavior:**
-- Body (`.body` class): `overflow: hidden` - NO scroll at body level (docs page only)
+- HTML/Body: `overflow: hidden` set via useEffect (docs page only, removed on unmount)
+- Body (`.body` class): `overflow: hidden` - NO scroll at body level
 - Container: `overflow: hidden` - NO scroll
 - Left Sidebar: Independent scroll (`overflow-y: auto`)
 - **Main-with-footer: PRIMARY scroll area** (`overflow-y: auto`) - scrolls both content AND footer together
@@ -151,14 +165,36 @@ The documentation page uses **Next.js with simplified CSS Grid + floating TOC** 
 - Right TOC: Independent scroll (`overflow-y: auto`)
 - Footer: Scrolls with main content (inside main-with-footer)
 
+**Responsive Breakpoints:**
+
+1. **≤900px** - Hide TOC
+   - TOC disappears (display: none)
+   - Main content margin-right becomes 0
+   - Content islands get smaller margins (16px)
+
+2. **≤1100px** - Hide sidebar, show hamburger
+   - Left sidebar hidden by default
+   - Container becomes single column (grid-template-columns: 1fr)
+   - Hamburger menu button appears
+   - Sidebar appears as fixed overlay when hamburger is clicked
+   - Main content full width with no TOC margin
+
+3. **≤600px** - Extra small mobile
+   - Further reduced margins (12px)
+   - Smaller typography (h1: 28px, h2: 22px, p: 15px)
+   - Smaller FAB button (44px)
+   - Footer padding reduced to 24px 16px
+
 **Why This Layout:**
-- **Simplified structure** - Removed nested grid complexity
+- **Simplified structure** - Single 2-column grid, TOC floats separately
 - **Floating TOC** - Fixed position on right, doesn't affect grid
-- **Dynamic width** - Main content expands to full width when TOC is hidden (home page)
+- **Dynamic width** - Main content expands to full width when TOC is hidden
 - **Single scroll container** - Main-with-footer handles all content scrolling
-- **Footer as island** - Styled consistently with other content islands
+- **Footer as island** - Styled consistently with other content islands (docs page only)
 - **No double scrollbars** - Only main-with-footer scrolls
-- **Positioned below nav** - TOC starts at 44px from top to avoid overlap
+- **TopBar accounted for** - Heights use calc() to account for 70px TopBar
+- **Content-based TOC height** - Uses max-height instead of height for natural sizing
+- **Mobile-friendly** - Progressive enhancement with hamburger menu and hidden TOC
 
 #### Multi-Page SPA Pattern
 
