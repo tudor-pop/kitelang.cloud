@@ -895,6 +895,181 @@ All major content sections are "islands" - bordered sections with:
 
 ---
 
+## Docs Page Grid Layout - CRITICAL DOCUMENTATION
+
+### DO NOT CHANGE THIS LAYOUT
+
+**IMPORTANT**: The layout structure below has been finalized after extensive testing and debugging. Modifying this layout will cause scrolling issues, z-index problems, and layout breakage. If you need to make changes to the docs page, you MUST preserve this exact structure.
+
+### Container Grid Structure
+
+```css
+/* File: app/docs/docs.css */
+.body {
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;  /* CRITICAL: No body scroll */
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;  /* FIXED: left sidebar | main content | right TOC */
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+        'side main right'
+        'side footer footer';
+    gap: 0;
+    width: 100vw;      /* CRITICAL: Full viewport width */
+    max-width: 100%;   /* CRITICAL: Prevents overflow */
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+    /* NO overflow property - allows grid to work */
+}
+```
+
+### Component-Specific Styles
+
+#### Left Sidebar (Sidebar.module.css)
+```css
+.leftSidebar {
+    width: 280px;                    /* FIXED WIDTH */
+    grid-area: side;                 /* Grid placement */
+    position: sticky;                /* STICKY, not fixed */
+    top: 72px;                       /* Below global topbar */
+    height: calc(100vh - 72px);      /* Full height minus topbar */
+    overflow-y: auto;                /* Internal scroll */
+    align-self: start;               /* Aligns to top of grid cell */
+    z-index: 100;                    /* Above main content */
+}
+```
+
+#### Main Content (MainContent.module.css)
+```css
+.mainContent {
+    grid-area: main;                 /* Grid placement */
+    height: 100%;                    /* CRITICAL: Fill grid cell */
+    overflow-y: auto;                /* ONLY scrollable area */
+    overflow-x: hidden;
+    max-width: 100%;                 /* Prevents horizontal overflow */
+    z-index: 1;                      /* Below sidebars */
+}
+
+:global(.content-island) {
+    padding: 48px;                   /* RESTORED: Do not set to 0 */
+    margin: 32px auto;               /* RESTORED: Do not set to 0 */
+    width: 100%;
+    box-sizing: border-box;
+}
+```
+
+#### Right TOC Sidebar (TableOfContents.module.css)
+```css
+.rightSidebar {
+    grid-area: right;                /* Grid placement */
+    position: sticky;                /* STICKY, not fixed */
+    top: 72px;                       /* Below global topbar */
+    max-height: calc(100vh - 72px - 100px);  /* Leave space at bottom */
+    overflow-y: auto;                /* Internal scroll for long TOCs */
+    z-index: 20;                     /* CRITICAL: Above main content */
+    align-self: start;               /* Aligns to top of grid cell */
+}
+```
+
+### Scrolling Behavior - How It Works
+
+1. **Body Level** (`overflow: hidden`)
+   - NO scrolling at body level
+   - Prevents double-scroll issues
+   - Forces all scrolling to happen within grid children
+
+2. **Container Level** (NO overflow property)
+   - Grid layout needs to flow naturally
+   - No overflow property allows grid to size correctly
+   - Width: `100vw` with `max-width: 100%` prevents horizontal overflow
+
+3. **Left Sidebar** (`overflow-y: auto`)
+   - Independent vertical scroll
+   - Only scrolls menu items
+   - Sticky positioning keeps it visible
+
+4. **Main Content** (`overflow-y: auto`)
+   - PRIMARY scroll area
+   - Only this area scrolls page content
+   - `height: 100%` fills grid cell completely
+
+5. **Right TOC** (`overflow-y: auto`)
+   - Independent vertical scroll
+   - Only scrolls TOC items when list is long
+   - Sticky positioning keeps it visible
+
+### Z-Index Hierarchy
+
+```
+100  - Left Sidebar (above all content)
+20   - Right TOC (above main content)
+1    - Main Content (base layer)
+1    - Container (base layer)
+```
+
+**Why TOC needs z-index 20**: Prevents main content from overlaying TOC when scrolling. Without this, gray areas would appear to cover the TOC.
+
+### Common Mistakes to Avoid
+
+❌ **DON'T**: Change grid columns from `280px 1fr 280px`
+- Result: Layout breaks, content doesn't fill width
+
+❌ **DON'T**: Change container width from `100vw` to `100%`
+- Result: Container doesn't fill full body width
+
+❌ **DON'T**: Add `overflow: hidden` to container
+- Result: TOC gets cut off, appears covered by gray area
+
+❌ **DON'T**: Remove `overflow: hidden` from body
+- Result: Double scrolling - both body and main content scroll
+
+❌ **DON'T**: Change main content height from `100%` to `min-height: 100%`
+- Result: Double scrolling, layout height issues
+
+❌ **DON'T**: Remove padding/margin from `.content-island`
+- Result: Content touches edges, poor visual spacing
+
+❌ **DON'T**: Change sidebars from `position: sticky` to `position: fixed`
+- Result: Sidebars not part of grid, layout breaks
+
+❌ **DON'T**: Lower TOC z-index below 20
+- Result: Main content overlays TOC, appears covered
+
+### Layout Benefits
+
+✅ Prevents double scrolling
+✅ Sidebars stay visible during content scroll
+✅ Clean separation of scrollable regions
+✅ Proper z-index stacking for interaction
+✅ Full-width container fills viewport
+✅ Responsive grid layout
+✅ No horizontal overflow issues
+
+### Testing Checklist
+
+When modifying docs page, verify:
+
+- [ ] No double scrolling (body should NOT scroll)
+- [ ] Main content scrolls smoothly
+- [ ] Left sidebar stays fixed when content scrolls
+- [ ] Right TOC stays fixed when content scrolls
+- [ ] TOC is fully interactive (not covered by anything)
+- [ ] Container fills full width of viewport
+- [ ] No horizontal scrollbar appears
+- [ ] Content islands have proper padding/margin
+- [ ] All three columns visible on desktop
+- [ ] Responsive behavior works at breakpoints
+
+---
+
 ## Next.js Component Architecture
 
 ### Project Migration (docs.html → Next.js)
