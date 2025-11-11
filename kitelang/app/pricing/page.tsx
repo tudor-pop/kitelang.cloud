@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import TopBar from '../components/TopBar';
 import Footer from '../components/Footer';
 import PricingCard from './components/PricingCard';
 import FAQItem from './components/FAQItem';
@@ -110,9 +111,31 @@ const faqs = [
 ];
 
 export default function PricingPage() {
+    const [theme, setTheme] = useState('light');
+
+    useEffect(() => {
+        // Check localStorage and system preference for theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setTheme('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    }, []);
+
+    const toggleTheme = () => {
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    };
 
     return (
         <div className={styles.pricingPage}>
+            <TopBar theme={theme} toggleTheme={toggleTheme} activePage="pricing" />
+
             {/* Main Content */}
             <main className={styles.mainContent}>
                 {/* Pricing Section */}
