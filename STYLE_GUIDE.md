@@ -812,6 +812,29 @@ All major content sections are "islands" - bordered sections with:
   - Footer: padding 32px 24px
   - FAB: right 20px
 }
+
+/* Small Mobile: max-width: 600px */
+@media (max-width: 600px) {
+  - Footer: 2-column grid
+  - Further reduced content island margins (12px)
+  - Smaller typography
+}
+
+/* Extra Small Mobile: max-width: 480px */
+@media (max-width: 480px) {
+  - Footer: single column
+  - Buttons stack vertically on landing page
+  - Reduced footer padding (32px 20px 20px)
+}
+
+/* Minimal Mobile: max-width: 415px */
+@media (max-width: 415px) {
+  - Footer: minimal spacing (margin-bottom: 2px on links)
+  - Use explicit margins instead of flexbox gap
+  - display: block on footer links for reliable spacing
+  - line-height: 1.2 to control vertical rhythm
+  - Content island: 8px padding
+}
 ```
 
 ---

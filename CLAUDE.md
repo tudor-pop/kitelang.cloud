@@ -278,9 +278,21 @@ Content is organized into "islands" - distinct bordered sections:
 
 ### Responsive Breakpoints
 
+**Landing Page (app/page.tsx):**
+- **1000px** - InteractiveCodeBlock side-by-side with buttons (above) / below buttons (below)
+- **500px** - InteractiveCodeBlock jumps below "Get Started" buttons using flexbox order
+- **480px** - "Get Started" and "See Demo" buttons stack vertically (full width)
+
+**Documentation Page (app/docs/):**
 - **1400px** - Hide right TOC sidebar
 - **1100px** - Show hamburger menu, hide left sidebar until clicked
-- **900px** - Single column layout, reduced typography
+- **900px** - Hide TOC, reduce content island margins
+
+**Footer Component (app/components/Footer.tsx):**
+- **768px** - Switch to 3 columns for footer links
+- **600px** - Switch to 2 columns for footer links
+- **480px** - Single column footer, reduced padding
+- **415px** - Minimal spacing with explicit margins (not flexbox gap)
 
 ## Development Workflow
 
@@ -575,6 +587,53 @@ export default function Card({ title, children }: CardProps) {
     color: var(--text-secondary);
 }
 ```
+
+### Responsive Design Best Practices
+
+**Learned from Footer Spacing Issues:**
+
+When reducing spacing on small screens in CSS Modules, the following approach works reliably:
+
+1. **Use explicit margins instead of flexbox gap** - Flexbox `gap` property may not respond as expected in media queries
+2. **Set `display: block`** on elements to ensure margins are applied correctly
+3. **Use `margin-bottom` on child elements** instead of `gap` on parent containers
+4. **Apply to specific elements** (`.footerColumn a`, `.footerText`) rather than generic selectors
+5. **Include `line-height` control** to prevent unwanted vertical spacing
+
+**Working Example (Footer.module.css @415px breakpoint):**
+```css
+@media (max-width: 415px) {
+    .footerColumn {
+        gap: 0;
+        margin-bottom: 16px;
+    }
+
+    .footerTitle {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .footerColumn a,
+    .footerText {
+        font-size: 12px;
+        line-height: 1.2;
+        margin-bottom: 2px;
+        display: block;
+    }
+}
+```
+
+**Why This Works:**
+- `gap: 0` disables flexbox spacing
+- `margin-bottom` provides explicit, predictable spacing
+- `display: block` ensures margins collapse correctly
+- `line-height: 1.2` prevents excessive vertical spacing from font metrics
+
+**What Doesn't Work:**
+- Relying on flexbox `gap` changes in media queries
+- Using `line-height` adjustments alone
+- Using adjacent sibling selectors (`a + a`) with margins
+- Over-using `!important` flags (use only when necessary for specificity)
 
 ### Updating Theme Colors
 
