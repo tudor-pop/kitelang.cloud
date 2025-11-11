@@ -468,8 +468,8 @@
     content: none;
 }
 
-/* Footer styling - Island within main content */
-.footer {
+/* Footer styling - Island within main content (docs page only) */
+.footer-island {
     background: #FFFFFF;
     border-radius: 16px;
     border: 2px solid var(--border-color);
@@ -479,10 +479,14 @@
     width: auto;
     position: relative;
     transition: none;
-    font-family: 'Roboto Mono', 'Consolas', monospace;
+    font-family: 'Roboto Mono', 'Consolas', monospace !important;
 }
 
-[data-theme="dark"] .footer {
+.footer-island * {
+    font-family: 'Roboto Mono', 'Consolas', monospace !important;
+}
+
+[data-theme="dark"] .footer-island {
     background: #1A1A1A;
     border-color: #2A2A2A;
     box-shadow: none;
@@ -913,7 +917,7 @@
         right: 40px;
     }
 
-    .footer {
+    .footer-island {
         margin: 32px 0 24px 0;
     }
 }
@@ -944,7 +948,7 @@
         padding: 40px 32px;
     }
 
-    .footer {
+    .footer-island {
         margin: 32px 0 24px 0;
     }
 }
@@ -986,7 +990,7 @@
         font-size: 26px;
     }
 
-    .footer {
+    .footer-island {
         margin: 32px 0 16px 0;
         padding: 32px 24px;
         border-radius: 12px;

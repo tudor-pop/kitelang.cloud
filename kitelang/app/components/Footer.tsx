@@ -3,9 +3,13 @@
 import React from 'react';
 import styles from './Footer.module.css';
 
-export default function Footer() {
+interface FooterProps {
+    isIsland?: boolean;
+}
+
+export default function Footer({ isIsland = false }: FooterProps) {
     return (
-        <footer className={`${styles.footer} footer`}>
+        <footer className={`${styles.footer} ${isIsland ? 'footer-island' : 'footer'}`}>
             <div className={styles.footerContent}>
                 <div className={styles.footerColumn}>
                     <h4 className={styles.footerTitle}>Product</h4>

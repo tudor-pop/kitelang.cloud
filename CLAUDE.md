@@ -55,14 +55,14 @@ CLAUDE.md                       # This file - developer guidance
 
 ### Docs Page Layout (app/docs/)
 
-The documentation page uses **Next.js with CSS Grid layout** for a three-column structure:
+The documentation page uses **Next.js with simplified CSS Grid + floating TOC** layout:
 
-#### Grid Layout Structure - DO NOT CHANGE
+#### Grid Layout Structure - CURRENT IMPLEMENTATION
 
-**CRITICAL**: This layout has been finalized and MUST NOT be modified. The grid structure below is the correct implementation:
+**IMPORTANT**: This is the current, finalized layout. The structure is:
 
 ```css
-/* Container Grid - FIXED LAYOUT (2 columns) */
+/* Container Grid - Simple 2-column layout */
 .container {
     display: grid;
     grid-template-columns: 280px 1fr;  /* left sidebar | content area */
@@ -74,68 +74,91 @@ The documentation page uses **Next.js with CSS Grid layout** for a three-column 
     overflow: hidden;
 }
 
-/* Content Wrapper Grid - FIXED LAYOUT (3 columns, 2 rows) */
-.content-wrapper {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1fr;  /* main spans 2 cols, TOC 1 col */
-    grid-template-rows: 1fr auto;
-    grid-template-areas:
-        'main main toc'
-        'footer footer footer';
+/* Main with Footer - Scrollable container */
+.main-with-footer {
     height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Dynamic margin based on TOC visibility */
+.main-with-footer.with-toc {
+    margin-right: 280px;  /* Space for floating TOC */
+}
+
+.main-with-footer.no-toc {
+    margin-right: 0;  /* Full width when TOC hidden */
+}
+
+/* TOC - Floating fixed position */
+.rightSidebar {
+    position: fixed;
+    right: 0;
+    top: 44px;  /* Below navigation bar */
+    width: 280px;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 20;
 }
 ```
 
 **Layout Components:**
 1. **Left Sidebar** (`Sidebar.tsx`)
    - Width: 280px fixed (column 1 of container)
-   - Position: `sticky` with `top: 0`
+   - Position: Part of grid, sticky within its column
    - Height: `100vh`
    - Has internal scroll: `overflow-y: auto`
    - Stays fixed when main content scrolls
    - Z-index: 100
 
-2. **Content Wrapper** (`div.content-wrapper`)
+2. **Main with Footer** (`div.main-with-footer`)
    - Column 2 of container
-   - Contains main content, TOC, and footer in its own 3-column grid
+   - Contains MainContent and Footer as siblings
+   - This div scrolls, containing both main content and footer
+   - Dynamically adjusts `margin-right` based on TOC visibility:
+     - `with-toc` class: 280px margin (makes space for TOC)
+     - `no-toc` class: 0px margin (fills full width)
 
 3. **Main Content** (`MainContent.tsx`)
-   - Grid area: `main` (spans columns 1-2 of content-wrapper)
-   - Height: `100%`
-   - Only scrollable area: `overflow-y: auto`
+   - First child of `main-with-footer`
+   - No scrolling properties (scrolling handled by parent)
+   - Contains page sections with content islands
    - Z-index: 1
 
-4. **Right TOC** (`TableOfContents.tsx`)
-   - Grid area: `toc` (column 3 of content-wrapper)
-   - Position: `sticky` with `top: 0`
-   - Max height: `100vh`
+4. **Footer** (`Footer.tsx`)
+   - Second child of `main-with-footer` (sibling to MainContent)
+   - Styled as an island: bordered, rounded corners (16px)
+   - Margin: `32px 24px 24px 24px`
+   - Width: `auto` (fits within container)
+   - Scrolls together with main content
+
+5. **Right TOC** (`TableOfContents.tsx`)
+   - Position: `fixed` at `right: 0, top: 44px`
+   - Width: 280px
+   - Floats above content (not part of grid)
    - Has internal scroll: `overflow-y: auto`
-   - Stays fixed when main content scrolls
+   - Only rendered when `showToc` is `true`
    - Z-index: 20
 
-5. **Footer** (`Footer.tsx`)
-   - Grid area: `footer` (spans all 3 columns of content-wrapper)
-   - Positioned in row 2 of content-wrapper
-   - Spans from sidebar edge to screen right edge
-   - Only visible when scrolling main content to the end
-
 **Scrolling Behavior:**
-- Body: `overflow: hidden` - NO scroll at body level
+- Body (`.body` class): `overflow: hidden` - NO scroll at body level (docs page only)
 - Container: `overflow: hidden` - NO scroll
-- Content-wrapper: `overflow: hidden` - NO scroll
 - Left Sidebar: Independent scroll (`overflow-y: auto`)
-- Main Content: PRIMARY scroll area (`overflow-y: auto`)
+- **Main-with-footer: PRIMARY scroll area** (`overflow-y: auto`) - scrolls both content AND footer together
+- Main Content: NO scroll properties (relies on parent)
 - Right TOC: Independent scroll (`overflow-y: auto`)
-- Footer: Scrolls with main content (inside content-wrapper grid)
+- Footer: Scrolls with main content (inside main-with-footer)
 
 **Why This Layout:**
-- Prevents double scrolling issues
-- Sidebar and TOC remain visible during content scroll
-- Footer spans full width (from sidebar edge to screen edge)
-- Footer only appears when scrolling to bottom
-- Clean separation of scrollable regions
-- Proper z-index stacking for TOC interaction
+- **Simplified structure** - Removed nested grid complexity
+- **Floating TOC** - Fixed position on right, doesn't affect grid
+- **Dynamic width** - Main content expands to full width when TOC is hidden (home page)
+- **Single scroll container** - Main-with-footer handles all content scrolling
+- **Footer as island** - Styled consistently with other content islands
+- **No double scrollbars** - Only main-with-footer scrolls
+- **Positioned below nav** - TOC starts at 44px from top to avoid overlap
 
 #### Multi-Page SPA Pattern
 

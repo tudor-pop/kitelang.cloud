@@ -31,6 +31,21 @@ export default function DocsPage() {
     // Refs
     const mainContentRef = useRef<HTMLElement>(null);
 
+    // Prevent body scrolling (docs page only)
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        document.body.style.height = '100vh';
+        document.documentElement.style.overflow = 'hidden';
+        document.documentElement.style.height = '100vh';
+
+        return () => {
+            document.body.style.overflow = '';
+            document.body.style.height = '';
+            document.documentElement.style.overflow = '';
+            document.documentElement.style.height = '';
+        };
+    }, []);
+
     // Fetch page modification dates on mount
     useEffect(() => {
         fetch('/api/page-dates')
@@ -189,7 +204,7 @@ export default function DocsPage() {
                         showToc={showToc}
                         pageDates={pageDates}
                     />
-                    <Footer />
+                    <Footer isIsland={true} />
                 </div>
 
                 {/* Right Sidebar - Table of Contents (floating) */}
