@@ -178,9 +178,8 @@ export default function DocsPage() {
                     onShowPage={showPage}
                 />
 
-                {/* Content Area: Main + TOC + Footer */}
-                <div className="content-wrapper">
-                    {/* Main Content */}
+                {/* Content Area: Main + Footer (TOC floats) */}
+                <div className={`main-with-footer ${showToc ? 'with-toc' : 'no-toc'}`}>
                     <MainContent
                         activePage={activePage}
                         onShowPage={showPage}
@@ -190,13 +189,11 @@ export default function DocsPage() {
                         showToc={showToc}
                         pageDates={pageDates}
                     />
-
-                    {/* Right Sidebar - Table of Contents */}
-                    {showToc && <TableOfContents content={tocContent} show={showToc} />}
-
-                    {/* Footer */}
                     <Footer />
                 </div>
+
+                {/* Right Sidebar - Table of Contents (floating) */}
+                {showToc && <TableOfContents content={tocContent} show={showToc} />}
 
                 {/* Floating Action Buttons */}
                 <div className="fab-container">

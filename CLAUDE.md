@@ -62,59 +62,80 @@ The documentation page uses **Next.js with CSS Grid layout** for a three-column 
 **CRITICAL**: This layout has been finalized and MUST NOT be modified. The grid structure below is the correct implementation:
 
 ```css
-/* Container Grid - FIXED LAYOUT */
+/* Container Grid - FIXED LAYOUT (2 columns) */
 .container {
     display: grid;
-    grid-template-columns: 280px 1fr 280px;  /* left sidebar | main content | right TOC */
-    grid-template-rows: 1fr auto;
-    grid-template-areas:
-        'side main right'
-        'side footer footer';
+    grid-template-columns: 280px 1fr;  /* left sidebar | content area */
+    grid-template-rows: 1fr;
     gap: 0;
     width: 100vw;
     max-width: 100%;
     height: 100vh;
-    overflow: hidden;  /* Body scroll disabled */
+    overflow: hidden;
+}
+
+/* Content Wrapper Grid - FIXED LAYOUT (3 columns, 2 rows) */
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;  /* main spans 2 cols, TOC 1 col */
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+        'main main toc'
+        'footer footer footer';
+    height: 100%;
+    overflow: hidden;
 }
 ```
 
 **Layout Components:**
 1. **Left Sidebar** (`Sidebar.tsx`)
-   - Width: 280px fixed
-   - Grid area: `side`
-   - Position: `sticky` with `top: 72px`
-   - Height: `calc(100vh - 72px)`
+   - Width: 280px fixed (column 1 of container)
+   - Position: `sticky` with `top: 0`
+   - Height: `100vh`
    - Has internal scroll: `overflow-y: auto`
    - Stays fixed when main content scrolls
+   - Z-index: 100
 
-2. **Main Content** (`MainContent.tsx`)
-   - Width: `1fr` (flexible, fills remaining space)
-   - Grid area: `main`
+2. **Content Wrapper** (`div.content-wrapper`)
+   - Column 2 of container
+   - Contains main content, TOC, and footer in its own 3-column grid
+
+3. **Main Content** (`MainContent.tsx`)
+   - Grid area: `main` (spans columns 1-2 of content-wrapper)
    - Height: `100%`
    - Only scrollable area: `overflow-y: auto`
-   - Z-index: 1 (below TOC)
+   - Z-index: 1
 
-3. **Right Sidebar TOC** (`TableOfContents.tsx`)
-   - Width: 280px fixed
-   - Grid area: `right`
-   - Position: `sticky` with `top: 72px`
-   - Max height: `calc(100vh - 72px - 100px)`
+4. **Right TOC** (`TableOfContents.tsx`)
+   - Grid area: `toc` (column 3 of content-wrapper)
+   - Position: `sticky` with `top: 0`
+   - Max height: `100vh`
    - Has internal scroll: `overflow-y: auto`
-   - Z-index: 20 (above main content)
+   - Stays fixed when main content scrolls
+   - Z-index: 20
+
+5. **Footer** (`Footer.tsx`)
+   - Grid area: `footer` (spans all 3 columns of content-wrapper)
+   - Positioned in row 2 of content-wrapper
+   - Spans from sidebar edge to screen right edge
+   - Only visible when scrolling main content to the end
 
 **Scrolling Behavior:**
 - Body: `overflow: hidden` - NO scroll at body level
-- Container: NO overflow property - allows grid layout
-- Left Sidebar: Independent scroll for menu items
-- Main Content: ONLY scrollable area for page content
-- Right TOC: Independent scroll for long TOCs
+- Container: `overflow: hidden` - NO scroll
+- Content-wrapper: `overflow: hidden` - NO scroll
+- Left Sidebar: Independent scroll (`overflow-y: auto`)
+- Main Content: PRIMARY scroll area (`overflow-y: auto`)
+- Right TOC: Independent scroll (`overflow-y: auto`)
+- Footer: Scrolls with main content (inside content-wrapper grid)
 
 **Why This Layout:**
 - Prevents double scrolling issues
-- Sidebars remain visible during content scroll
+- Sidebar and TOC remain visible during content scroll
+- Footer spans full width (from sidebar edge to screen edge)
+- Footer only appears when scrolling to bottom
 - Clean separation of scrollable regions
 - Proper z-index stacking for TOC interaction
-- Full-width container fills viewport
 
 #### Multi-Page SPA Pattern
 

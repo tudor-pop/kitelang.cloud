@@ -63,14 +63,10 @@
     overflow: hidden;
 }
 
-.html {
-    scroll-behavior: auto;
-}
-
-/* Main Layout Container - Grid Areas Layout */
+/* Main Layout Container - Simple 2-column grid */
 .container {
     display: grid;
-    grid-template-columns: 280px 1fr; /* left sidebar, content area (main+toc+footer) */
+    grid-template-columns: 280px 1fr; /* left sidebar | main content area */
     grid-template-rows: 1fr;
     gap: 0;
     width: 100vw;
@@ -81,16 +77,23 @@
     overflow: hidden;
 }
 
-/* Content Wrapper - Contains Main + TOC + Footer */
-.content-wrapper {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1fr; /* main takes 2 columns, TOC takes 1 column */
-    grid-template-rows: 1fr auto;
-    grid-template-areas:
-        'main main toc'
-        'footer footer footer';
+/* Main with Footer - Scrollable container, TOC floats on right */
+.main-with-footer {
     height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* When TOC is shown, make space for it on the right */
+.main-with-footer.with-toc {
+    margin-right: 280px;
+}
+
+/* When TOC is hidden, fill the full width */
+.main-with-footer.no-toc {
+    margin-right: 0;
 }
 
 /* Left Sidebar - Floating overlay (defined in Sidebar.module.css) */
@@ -465,17 +468,15 @@
     content: none;
 }
 
-/* Footer styling - Spans all 3 columns of content-wrapper */
+/* Footer styling - Island within main content */
 .footer {
-    grid-area: footer;
     background: #FFFFFF;
-    border-radius: 0;
-    border: none;
-    border-top: 2px solid var(--border-color);
+    border-radius: 16px;
+    border: 2px solid var(--border-color);
     box-shadow: none;
-    padding: 48px 24px 24px 24px;
-    margin: 0;
-    width: 100%;
+    padding: 48px;
+    margin: 32px 24px 24px 24px;
+    width: auto;
     position: relative;
     transition: none;
     font-family: 'Roboto Mono', 'Consolas', monospace;
