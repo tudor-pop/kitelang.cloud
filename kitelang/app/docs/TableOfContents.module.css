@@ -1,9 +1,10 @@
 .rightSidebar {
-    grid-area: right;
+    grid-area: toc;
     background: transparent;
     border-left: none;
     position: sticky;
-    max-height: calc(100vh - 100px);
+    top: 0;
+    max-height: 100vh;
     overflow-y: auto;
     padding: 24px 24px 24px 8px;
     transition: background-color 0.3s ease;

@@ -5,6 +5,7 @@ import './docs.css';
 import TableOfContents from './TableOfContents';
 import Sidebar from './Sidebar';
 import MainContent from './MainContent';
+import Footer from '../components/Footer';
 
 export default function DocsPage() {
     const [activePage, setActivePage] = useState('page-home');
@@ -177,19 +178,25 @@ export default function DocsPage() {
                     onShowPage={showPage}
                 />
 
-                {/* Main Content */}
-                <MainContent
-                    activePage={activePage}
-                    onShowPage={showPage}
-                    onCopyCode={copyCode}
-                    copyStatus={copyStatus}
-                    contentRef={mainContentRef}
-                    showToc={showToc}
-                    pageDates={pageDates}
-                />
+                {/* Content Area: Main + TOC + Footer */}
+                <div className="content-wrapper">
+                    {/* Main Content */}
+                    <MainContent
+                        activePage={activePage}
+                        onShowPage={showPage}
+                        onCopyCode={copyCode}
+                        copyStatus={copyStatus}
+                        contentRef={mainContentRef}
+                        showToc={showToc}
+                        pageDates={pageDates}
+                    />
 
-                {/* Right Sidebar - Table of Contents */}
-                {showToc && <TableOfContents content={tocContent} show={showToc} />}
+                    {/* Right Sidebar - Table of Contents */}
+                    {showToc && <TableOfContents content={tocContent} show={showToc} />}
+
+                    {/* Footer */}
+                    <Footer />
+                </div>
 
                 {/* Floating Action Buttons */}
                 <div className="fab-container">

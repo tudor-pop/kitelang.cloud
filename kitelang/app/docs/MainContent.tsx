@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Footer from '../components/Footer';
 import EditInfo from './EditInfo';
 import styles from './MainContent.module.css';
 
@@ -399,9 +398,6 @@ export default function MainContent({
                     </div>
                 </div>
             </div>
-
-            {/* Footer */}
-            <Footer />
         </main>
     );
 }

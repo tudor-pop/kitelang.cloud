@@ -6,10 +6,9 @@
     padding: 24px 0;
     transition: transform 0.3s ease;
     z-index: 100;
-    grid-area: side;
     position: sticky;
-    top: 0px; /* Stick below global TopBar */
-    height: calc(100vh); /* Full viewport height minus topbar */
+    top: 0px;
+    height: 100vh;
     align-self: start;
 }
 
