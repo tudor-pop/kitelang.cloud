@@ -3,14 +3,14 @@
     background: var(--bg-primary);
     border-right: 2px solid var(--border-color);
     overflow-y: auto;
-    position: fixed;
-    left: 0;
-    top: 72px; /* Below global TopBar */
-    bottom: 0;
     padding: 24px 0;
     transition: transform 0.3s ease;
     z-index: 100;
-    transform: translateX(0); /* Visible by default on desktop */
+    grid-area: side;
+    position: sticky;
+    top: 72px; /* Stick below global TopBar */
+    height: calc(100vh - 72px); /* Full viewport height minus topbar */
+    align-self: start;
 }
 
 :global([data-theme="dark"]) .leftSidebar {

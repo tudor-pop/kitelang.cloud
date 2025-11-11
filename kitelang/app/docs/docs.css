@@ -55,15 +55,12 @@
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
-    transition: none;
     scroll-behavior: auto;
-    position: relative;
     font-size: 16px;
     font-weight: 400;
-    min-height: 100vh;
-    isolation: isolate;
-    width: 100%;
-    overflow-x: hidden;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 }
 
 .html {
@@ -73,14 +70,15 @@
 /* Main Layout Container - Grid Areas Layout */
 .container {
     display: grid;
-    grid-template-columns: 280px 1fr 280px; /* left sidebar space, main content, right sidebar */
+    grid-template-columns: 280px 1fr 280px; /* left sidebar, main content, right sidebar */
     grid-template-rows: 1fr auto; /* content row, footer row */
     grid-template-areas:
-        '. main right'
-        '. footer footer';
-    min-height: calc(100vh); /* Subtract topbar height */
+        'side main right'
+        'side footer footer';
     gap: 0;
-    width: 100%;
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
     position: relative;
     z-index: 1;
 }
@@ -299,7 +297,6 @@
     border: 2px solid var(--border-color);
     box-shadow: none;
     transition: none;
-    max-width: 100%;
     box-sizing: border-box;
     overflow-x: auto;
 }
@@ -479,7 +476,6 @@
 }
 
 .footer-content {
-    max-width: 1200px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -739,13 +735,13 @@
 
 /* Floating action buttons */
 .fab-container {
-    position: fixed !important;
-    bottom: 30px !important;
+    position: fixed ;
+    bottom: 30px ;
     right: 90px;
-    display: flex !important;
-    flex-direction: column !important;
+    display: flex ;
+    flex-direction: column ;
     gap: 15px;
-    z-index: 100 !important;
+    z-index: 100 ;
 }
 
 .fab {
@@ -883,15 +879,15 @@
 /* Responsive Design */
 @media (max-width: 1400px) {
     .container {
-        grid-template-columns: 280px 1fr; /* Remove right column */
+        grid-template-columns: 280px auto; /* Remove right column */
         grid-template-rows: 1fr auto; /* content row, footer row */
         grid-template-areas:
-            'menu main'
-            'menu footer';
+            'side menu main'
+            'side menu footer';
     }
 
     .right-sidebar {
-        display: none !important;
+        display: none;
     }
 
     .main-content {
