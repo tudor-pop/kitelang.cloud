@@ -79,7 +79,7 @@
 
 /* Main with Footer - Scrollable container, TOC floats on right */
 .main-with-footer {
-    height: 100%;
+    height: calc(100vh - 70px); /* Account for 70px TopBar */
     overflow-y: auto;
     overflow-x: hidden;
     padding: 0;
