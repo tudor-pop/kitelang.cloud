@@ -192,14 +192,7 @@ export default function DocsPage() {
                 {showToc && <TableOfContents content={tocContent} show={showToc} />}
 
                 {/* Floating Action Buttons */}
-                <div
-                    className="fab-container"
-                    style={{
-                        position: 'fixed',
-                        right: showToc ? '330px' : '90px',
-                        bottom: '30px'
-                    }}
-                >
+                <div className="fab-container">
                     <button className="fab" title="Scroll to top" onClick={scrollToTop}>↑</button>
                 </div>
             </div>

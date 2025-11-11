@@ -736,8 +736,8 @@
 /* Floating action buttons */
 .fab-container {
     position: fixed ;
-    bottom: 30px ;
-    right: 90px;
+    bottom: 48px ;
+    right: 48px;
     display: flex ;
     flex-direction: column ;
     gap: 15px;
