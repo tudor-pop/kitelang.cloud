@@ -63,7 +63,7 @@ export default function TopBar({ theme, toggleTheme, activePage = 'home' }: TopB
                         className={`${styles.navButton} ${activePage === 'docs' ? styles.active : ''}`}
                         aria-current={activePage === 'docs' ? 'page' : undefined}
                     >
-                        Documentation
+                        Docs
                     </Link>
                     <Link href="/#features" className={styles.navButton}>Features</Link>
                     <Link
@@ -133,7 +133,7 @@ export default function TopBar({ theme, toggleTheme, activePage = 'home' }: TopB
                         className={`${styles.mobileMenuItem} ${activePage === 'docs' ? styles.mobileMenuItemActive : ''}`}
                         onClick={closeMobileMenu}
                     >
-                        Documentation
+                        Docs
                     </Link>
                     <Link
                         href="/#features"

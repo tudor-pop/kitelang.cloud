@@ -14,56 +14,42 @@ export default function Sidebar({ isOpen, expandedMenus, onToggleMenu, onShowPag
     return (
         <aside className={`${styles.leftSidebar} ${isOpen ? 'open' : ''}`}>
             <ul className="sidebar-menu">
-                    {/* Getting Started Section */}
-                    <li className="menu-section">
-                        <div className="section-label">Getting Started</div>
-                    </li>
                     <li>
                         <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-home'); }} id="nav-home" className="menu-link">
-                            <span className="link-icon">🏠</span>
-                            <span className="link-text">Home</span>
+                            Home
                         </a>
-                    </li>
-
-                    {/* Core Concepts Section */}
-                    <li className="menu-section">
-                        <div className="section-label">Core Concepts</div>
                     </li>
                     <li>
                         <div
                             className={`menu-item expandable ${expandedMenus['concepts'] ? 'expanded' : ''}`}
                             onClick={() => onToggleMenu('concepts')}
                         >
-                            <span className="link-icon">💡</span>
-                            <span className="link-text">Concepts</span>
+                            Concepts
                         </div>
                         <ul className={`nested ${expandedMenus['concepts'] ? 'show' : ''}`}>
                             <li>
                                 <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-overview'); }} id="nav-overview" className="menu-link">
-                                    <span className="link-icon-small">→</span>
-                                    <span className="link-text">Overview</span>
+                                    Overview
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-install'); }} id="nav-install" className="menu-link">
+                                    Install
                                 </a>
                             </li>
                             <li>
                                 <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-basics'); }} id="nav-basics" className="menu-link">
-                                    <span className="link-icon-small">→</span>
-                                    <span className="link-text">Basics</span>
+                                    Basics
                                 </a>
                             </li>
                         </ul>
-                    </li>
-
-                    {/* Language Reference Section */}
-                    <li className="menu-section">
-                        <div className="section-label">Language Reference</div>
                     </li>
                     <li>
                         <div
                             className={`menu-item expandable ${expandedMenus['types'] ? 'expanded' : ''}`}
                             onClick={() => onToggleMenu('types')}
                         >
-                            <span className="link-icon">📝</span>
-                            <span className="link-text">Types</span>
+                            Types
                         </div>
                         <ul className={`nested ${expandedMenus['types'] ? 'show' : ''}`}>
                             <li>
@@ -71,14 +57,12 @@ export default function Sidebar({ isOpen, expandedMenus, onToggleMenu, onShowPag
                                     className={`menu-item expandable ${expandedMenus['basicTypes'] ? 'expanded' : ''}`}
                                     onClick={() => onToggleMenu('basicTypes')}
                                 >
-                                    <span className="link-icon-small">→</span>
-                                    <span className="link-text">Basic Types</span>
+                                    Basic Types
                                 </div>
                                 <ul className={`nested ${expandedMenus['basicTypes'] ? 'show' : ''}`}>
                                     <li>
                                         <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-basic-syntax'); }} id="nav-basic-syntax" className="menu-link">
-                                            <span className="link-icon-small">→</span>
-                                            <span className="link-text">Basic Syntax</span>
+                                            Basic Syntax
                                         </a>
                                     </li>
                                 </ul>
