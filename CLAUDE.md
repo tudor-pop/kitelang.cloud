@@ -117,6 +117,8 @@ The documentation page uses **Next.js with simplified CSS Grid + floating TOC** 
    - Has internal scroll: `overflow-y: auto`
    - Stays fixed when main content scrolls
    - Z-index: 100
+   - **Active state highlighting**: Current page shown with subtle purple background (12% opacity)
+   - **Hover states**: Non-active items get soft grey background (5% opacity), active item maintains purple background
    - **Responsive**: Hidden on screens ≤1100px (replaced by hamburger menu)
 
 3. **Main with Footer** (`div.main-with-footer`)

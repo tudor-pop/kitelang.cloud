@@ -340,25 +340,35 @@ gap: 48px;  /* Extra large (main footer grid) */
 ```css
 .sidebar-menu a {
   display: block;
-  padding: 10px 16px;
+  padding: 8px 20px;
   color: var(--text-secondary);
   font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 8px;
-  margin: 2px 12px;
+  font-weight: 400;
+  transition: color 0.15s ease, background 0.15s ease;
+  border-radius: 0;
+  margin: 0;
+  background: transparent;
   box-shadow: none;
 }
 
 .sidebar-menu a:hover {
-  background: rgba(127, 82, 255, 0.08);
-  color: var(--primary-color);
+  background: rgba(0, 0, 0, 0.05);  /* Light theme: soft grey */
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .sidebar-menu a:hover {
+  background: rgba(255, 255, 255, 0.05);  /* Dark theme: soft grey */
 }
 
 .sidebar-menu a.active {
-  background: rgba(127, 82, 255, 0.12);
+  background: rgba(168, 85, 247, 0.12);  /* Subtle purple tint */
   color: var(--primary-color);
-  font-weight: 600;
+  font-weight: 500;
+}
+
+.sidebar-menu a.active:hover {
+  background: rgba(168, 85, 247, 0.12) !important;  /* Purple stays same on hover */
+  color: var(--primary-color);
 }
 ```
 

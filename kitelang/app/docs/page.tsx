@@ -209,7 +209,7 @@ export default function DocsPage() {
                 </div>
 
                 {/* Right Sidebar - Table of Contents (floating) */}
-                {showToc && <TableOfContents content={tocContent} show={showToc} />}
+                {showToc && <TableOfContents content={tocContent} show={showToc} activeTocItem={activeTocItem} />}
 
                 {/* Floating Action Buttons */}
                 <div className="fab-container">
