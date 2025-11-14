@@ -106,7 +106,7 @@
     text-decoration: none;
     font-size: 14px;
     font-weight: 400;
-    transition: color 0.15s ease;
+    transition: color 0.15s ease, background 0.15s ease;
     position: relative;
     border-radius: 0;
     margin: 0;
@@ -114,18 +114,30 @@
     font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     cursor: pointer;
     border-left: 0;
+    background: transparent;
 }
 
 :global(.sidebar-menu a:hover),
 :global(.sidebar-menu .menu-item:hover) {
-    background: transparent;
+    background: rgba(0, 0, 0, 0.05);
     color: var(--text-primary);
     box-shadow: none;
 }
 
+:global([data-theme="dark"]) :global(.sidebar-menu a:hover),
+:global([data-theme="dark"]) :global(.sidebar-menu .menu-item:hover) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
 :global(.sidebar-menu a.active) {
+    background: rgba(168, 85, 247, 0.12);
     color: var(--primary-color);
     font-weight: 500;
+}
+
+:global(.sidebar-menu a.active:hover) {
+    background: rgba(168, 85, 247, 0.12) !important;
+    color: var(--primary-color);
 }
 
 :global(.sidebar-menu .expandable) {

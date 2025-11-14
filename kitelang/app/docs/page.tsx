@@ -191,6 +191,7 @@ export default function DocsPage() {
                     expandedMenus={expandedMenus}
                     onToggleMenu={toggleMenu}
                     onShowPage={showPage}
+                    activePage={activePage}
                 />
 
                 {/* Content Area: Main + Footer (TOC floats) */}
