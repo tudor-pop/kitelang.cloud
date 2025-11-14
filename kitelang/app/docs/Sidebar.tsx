@@ -24,12 +24,12 @@ export default function Sidebar({ isOpen, expandedMenus, onToggleMenu, onShowPag
                             className={`menu-item expandable ${expandedMenus['concepts'] ? 'expanded' : ''}`}
                             onClick={() => onToggleMenu('concepts')}
                         >
-                            Concepts
+                            Overview
                         </div>
                         <ul className={`nested ${expandedMenus['concepts'] ? 'show' : ''}`}>
                             <li>
                                 <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-overview'); }} id="nav-overview" className="menu-link">
-                                    Overview
+                                    Introduction
                                 </a>
                             </li>
                             <li>

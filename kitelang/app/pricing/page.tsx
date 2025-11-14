@@ -26,15 +26,15 @@ const pricingTiers = [
     },
     {
         tier: 'Pro',
-        price: '$20',
+        price: '$100',
         period: '/month',
         subtitle: 'For growing teams',
         features: [
             'Everything in Free',
             'Managed state backend',
             'Email support',
-            '100-500 employees',
-            '$10M revenue'
+            '100 - 500 employees',
+            '$1M - $10M revenue'
         ],
         buttonText: 'Start Trial',
         buttonType: 'primary' as const,
