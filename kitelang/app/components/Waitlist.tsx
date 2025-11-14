@@ -120,38 +120,102 @@ export default function Waitlist() {
             }
         }
 
-        // Check if email already submitted
-        const submittedEmails = JSON.parse(localStorage.getItem('waitlist_emails') || '[]');
-        if (submittedEmails.includes(email.toLowerCase())) {
-            showToast('This email is already on the waitlist!', 'error');
-            return;
-        }
-
         // Set loading state
         setStatus('loading');
 
-        // Simulate API call (replace with actual API endpoint)
+        // Call the PHP endpoint
         try {
-            // TODO: Replace with actual API call to your email service
-            // Example: await fetch('/api/waitlist', { method: 'POST', body: JSON.stringify({ email }) })
+            const formData = new FormData();
+            formData.append('email', email.toLowerCase());
 
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
+            // Use production URL in development, relative path in production
+            const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
+            const endpoint = isDevelopment
+                ? 'https://kitelang.cloud/waitlist.php'  // Your production URL
+                : '/waitlist.php';
 
-            // For now, just log to console and show success
-            console.log('Waitlist signup:', email);
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                body: formData
+            });
 
-            // Store submission
-            submittedEmails.push(email.toLowerCase());
-            localStorage.setItem('waitlist_emails', JSON.stringify(submittedEmails));
-            localStorage.setItem('waitlist_last_submission', Date.now().toString());
+            console.log('Response status:', response.status);
+            console.log('Response ok:', response.ok);
 
-            setStatus('success');
-            setEmail(''); // Clear the input
-            showToast('Thanks for joining! Check your email for confirmation.', 'success');
+            // Get response text first to debug
+            const responseText = await response.text();
+            console.log('Response text:', responseText);
+            console.log('Response text length:', responseText.length);
+            console.log('Response text trimmed:', responseText.trim());
 
-            // Reset status after a delay
-            setTimeout(() => setStatus('idle'), 3000);
+            // Try to parse JSON (trim whitespace first)
+            let data;
+            try {
+                data = JSON.parse(responseText.trim());
+                console.log('Parsed data:', data);
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                console.error('Raw response:', responseText);
+                console.error('Raw response (hex):', Array.from(responseText).map(c => c.charCodeAt(0).toString(16)).join(' '));
+                setStatus('idle');
+                showToast('Invalid server response. Please try again.', 'error');
+                return;
+            }
+
+            // Handle specific status codes BEFORE checking response.ok
+            if (response.status === 409) {
+                // Email already registered
+                setStatus('idle');
+                showToast(data.message || 'This email is already on the waitlist!', 'error');
+                // Add to local storage to prevent future attempts
+                const submittedEmails = JSON.parse(localStorage.getItem('waitlist_emails') || '[]');
+                if (!submittedEmails.includes(email.toLowerCase())) {
+                    submittedEmails.push(email.toLowerCase());
+                    localStorage.setItem('waitlist_emails', JSON.stringify(submittedEmails));
+                }
+                return;
+            }
+
+            if (response.status === 400) {
+                // Bad request / validation error
+                setStatus('idle');
+                showToast(data.message || 'Invalid email address', 'error');
+                return;
+            }
+
+            if (response.status === 500) {
+                // Server error
+                setStatus('idle');
+                showToast(data.message || 'Server error. Please try again later.', 'error');
+                return;
+            }
+
+            // Check if response is ok (status 200-299)
+            if (!response.ok) {
+                setStatus('idle');
+                showToast(data.message || 'Something went wrong. Please try again.', 'error');
+                return;
+            }
+
+            if (data.success) {
+                // Store submission locally
+                const submittedEmails = JSON.parse(localStorage.getItem('waitlist_emails') || '[]');
+                submittedEmails.push(email.toLowerCase());
+                localStorage.setItem('waitlist_emails', JSON.stringify(submittedEmails));
+                localStorage.setItem('waitlist_last_submission', Date.now().toString());
+
+                setStatus('success');
+                setEmail(''); // Clear the input
+                showToast(data.message || 'Thanks for joining! Check your email for confirmation.', 'success');
+
+                // Reset status after a delay
+                setTimeout(() => setStatus('idle'), 3000);
+            } else {
+                setStatus('idle');
+                showToast(data.message || 'Something went wrong. Please try again.', 'error');
+            }
         } catch (error) {
+            console.error('Fetch error:', error);
             setStatus('idle');
             showToast('Something went wrong. Please try again.', 'error');
         }

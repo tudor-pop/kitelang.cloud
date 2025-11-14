@@ -135,10 +135,10 @@ export default function MainContent({
                     <div className="breadcrumb">
                         <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-home'); }}>Home</a>
                         <span className="breadcrumb-separator">›</span>
-                        <span>Overview</span>
+                        <span>Introduction</span>
                     </div>
 
-                    <h1>Overview</h1>
+                    <h1>Introduction</h1>
 
                     <EditInfo date={pageDates['page-overview']} />
 

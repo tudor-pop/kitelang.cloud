@@ -140,7 +140,7 @@ export default function DocsPage() {
             setShowToc(true);
             setTocContent(
                 <>
-                    <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToTop(); }} data-level="1">Overview</a></li>
+                    <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToTop(); }} data-level="1">Introduction</a></li>
                     <li><a href="#what-is-kite" data-level="2">What is Kite?</a></li>
                     <li><a href="#why-kite" data-level="2">Why Kite?</a></li>
                 </>
