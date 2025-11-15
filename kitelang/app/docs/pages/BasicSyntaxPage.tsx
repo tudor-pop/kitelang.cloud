@@ -1,5 +1,6 @@
 import React from 'react';
 import EditInfo from '../EditInfo';
+import Breadcrumb from '../components/Breadcrumb';
 
 interface BasicSyntaxPageProps {
     onShowPage: (pageId: string) => void;
@@ -11,13 +12,13 @@ interface BasicSyntaxPageProps {
 export default function BasicSyntaxPage({ onShowPage, onCopyCode, copyStatus, pageDates }: BasicSyntaxPageProps) {
     return (
         <div className="content-island">
-            <div className="breadcrumb">
-                <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-home'); }}>Home</a>
-                <span className="breadcrumb-separator">/</span>
-                <a href="#basics">Basics</a>
-                <span className="breadcrumb-separator">/</span>
-                <span>Basic syntax</span>
-            </div>
+            <Breadcrumb
+                items={[
+                    { label: 'Home', onClick: () => onShowPage('page-home') },
+                    { label: 'Basics', onClick: () => onShowPage('page-basics') },
+                    { label: 'Basic syntax' }
+                ]}
+            />
 
             <h1>Basic syntax</h1>
 

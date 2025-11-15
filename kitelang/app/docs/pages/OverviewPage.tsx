@@ -1,5 +1,6 @@
 import React from 'react';
 import EditInfo from '../EditInfo';
+import Breadcrumb from '../components/Breadcrumb';
 
 interface OverviewPageProps {
     onShowPage: (pageId: string) => void;
@@ -9,11 +10,12 @@ interface OverviewPageProps {
 export default function OverviewPage({ onShowPage, pageDates }: OverviewPageProps) {
     return (
         <div className="content-island">
-            <div className="breadcrumb">
-                <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-home'); }}>Home</a>
-                <span className="breadcrumb-separator">›</span>
-                <span>Introduction</span>
-            </div>
+            <Breadcrumb
+                items={[
+                    { label: 'Home', onClick: () => onShowPage('page-home') },
+                    { label: 'Introduction' }
+                ]}
+            />
 
             <h1>Introduction</h1>
 

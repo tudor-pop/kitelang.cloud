@@ -1,5 +1,6 @@
 import React from 'react';
 import EditInfo from '../EditInfo';
+import Breadcrumb from '../components/Breadcrumb';
 
 interface BasicsPageProps {
     onShowPage: (pageId: string) => void;
@@ -11,11 +12,12 @@ interface BasicsPageProps {
 export default function BasicsPage({ onShowPage, onCopyCode, copyStatus, pageDates }: BasicsPageProps) {
     return (
         <div className="content-island">
-            <div className="breadcrumb">
-                <a href="#" onClick={(e) => { e.preventDefault(); onShowPage('page-home'); }}>Home</a>
-                <span className="breadcrumb-separator">›</span>
-                <span>Basics</span>
-            </div>
+            <Breadcrumb
+                items={[
+                    { label: 'Home', onClick: () => onShowPage('page-home') },
+                    { label: 'Basics' }
+                ]}
+            />
 
             <h1>Basic syntax</h1>
 
