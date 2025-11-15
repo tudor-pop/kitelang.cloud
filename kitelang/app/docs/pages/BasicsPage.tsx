@@ -41,9 +41,11 @@ export default function BasicsPage({ onShowPage, onCopyCode, copyStatus, pageDat
                 </p>
             </div>
 
-            <CodeBlock code={`var name = "production"
-var count = 3
-var enabled = true`} />
+            <CodeBlock code={`var name    = "production"  // declare a string variable and initialize it with the value of "production"
+var enabled = true          // declare a boolean variable and initialize it with the value of true
+var count   = 3             // declare a integer variable and initialize it with the value of 3
+
+count         += 2            // assigns a value of 5 to the variable count`} />
         </div>
     );
 }
