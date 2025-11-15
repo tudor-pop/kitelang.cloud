@@ -70,7 +70,7 @@ export default function Sidebar({ isOpen, expandedMenus, onToggleMenu, onShowPag
                             className={`menu-item expandable ${expandedMenus['types'] ? 'expanded' : ''}`}
                             onClick={() => onToggleMenu('types')}
                         >
-                            Types
+                            Concepts
                         </div>
                         <ul className={`nested ${expandedMenus['types'] ? 'show' : ''}`}>
                             <li>
