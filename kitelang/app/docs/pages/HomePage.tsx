@@ -1,5 +1,5 @@
 import React from 'react';
-import EditInfo from '../EditInfo';
+import EditInfo from '../components/EditInfo';
 
 interface HomePageProps {
     pageDates: Record<string, string>;

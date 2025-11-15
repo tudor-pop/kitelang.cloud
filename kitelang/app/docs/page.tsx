@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import './docs.css';
-import TableOfContents from './TableOfContents';
-import Sidebar from './Sidebar';
+import TableOfContents from './components/TableOfContents';
+import Sidebar from './components/Sidebar';
 import MainContent from './MainContent';
 import Footer from '../components/Footer';
 

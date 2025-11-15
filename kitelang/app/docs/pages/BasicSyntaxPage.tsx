@@ -1,5 +1,5 @@
 import React from 'react';
-import EditInfo from '../EditInfo';
+import EditInfo from '../components/EditInfo';
 import Breadcrumb from '../components/Breadcrumb';
 
 interface BasicSyntaxPageProps {
