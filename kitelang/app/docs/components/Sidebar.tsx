@@ -70,31 +70,6 @@ export default function Sidebar({ isOpen, expandedMenus, onToggleMenu, onShowPag
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <h6 style={{
-                            fontSize: '14px',
-                            fontWeight: 600,
-                            margin: '16px 0 8px 16px',
-                            color: 'var(--text-secondary)',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px',
-                            fontFamily: 'IBM Plex Sans, sans-serif'
-                        }}>
-                            Concepts
-                        </h6>
-                        <ul className="nested show">
-                            <li>
-                                <a
-                                    href="#"
-                                    onClick={(e) => { e.preventDefault(); onShowPage('page-basic-syntax'); }}
-                                    id="nav-basic-syntax"
-                                    className={`menu-link ${activePage === 'page-basic-syntax' ? 'active' : ''}`}
-                                >
-                                    Basic Syntax
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
         </aside>
     );

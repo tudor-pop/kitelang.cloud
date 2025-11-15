@@ -12,7 +12,6 @@ export function getPageLastModified(pageId: string): string {
             'page-home': 'kitelang/app/docs/MainContent.tsx',
             'page-overview': 'kitelang/app/docs/MainContent.tsx',
             'page-basics': 'kitelang/app/docs/MainContent.tsx',
-            'page-basic-syntax': 'kitelang/app/docs/MainContent.tsx',
         };
 
         const filePath = pageFileMap[pageId];
@@ -41,7 +40,7 @@ export function getPageLastModified(pageId: string): string {
  * Returns a map of page IDs to formatted dates
  */
 export function getAllPageDates(): Record<string, string> {
-    const pageIds = ['page-home', 'page-overview', 'page-basics', 'page-basic-syntax'];
+    const pageIds = ['page-home', 'page-overview', 'page-basics'];
     const dates: Record<string, string> = {};
 
     for (const pageId of pageIds) {

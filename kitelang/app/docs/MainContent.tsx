@@ -5,7 +5,6 @@ import styles from './MainContent.module.css';
 import HomePage from './pages/HomePage';
 import IntroductionPage from './pages/IntroductionPage';
 import BasicsPage from './pages/BasicsPage';
-import BasicSyntaxPage from './pages/BasicSyntaxPage';
 
 interface MainContentProps {
     activePage: string;
@@ -47,16 +46,6 @@ export default function MainContent({
             {/* Basics Page */}
             <div className={`page-section ${activePage === 'page-basics' ? 'active' : ''}`}>
                 <BasicsPage
-                    onShowPage={onShowPage}
-                    onCopyCode={onCopyCode}
-                    copyStatus={copyStatus}
-                    pageDates={pageDates}
-                />
-            </div>
-
-            {/* Basic Syntax Page */}
-            <div className={`page-section ${activePage === 'page-basic-syntax' ? 'active' : ''}`}>
-                <BasicSyntaxPage
                     onShowPage={onShowPage}
                     onCopyCode={onCopyCode}
                     copyStatus={copyStatus}

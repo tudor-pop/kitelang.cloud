@@ -25,7 +25,6 @@ export default function DocsPage() {
         'page-home': 'January 2025',
         'page-overview': 'January 2025',
         'page-basics': 'January 2025',
-        'page-basic-syntax': 'January 2025',
     });
 
     // Refs
@@ -128,42 +127,82 @@ export default function DocsPage() {
         });
     };
 
+    // Auto-generate TOC based on page headings
+    useEffect(() => {
+        // Wait for DOM to update after page change
+        const generateToc = () => {
+            const activePageElement = document.querySelector('.page-section.active');
+            if (!activePageElement) return;
+
+            // Find all h1, h2, h3 elements in the active page
+            const headings = activePageElement.querySelectorAll('h1, h2, h3');
+
+            if (headings.length === 0) {
+                setShowToc(false);
+                return;
+            }
+
+            // Hide TOC on home page
+            if (activePage === 'page-home') {
+                setShowToc(false);
+                return;
+            }
+
+            setShowToc(true);
+
+            const tocItems: React.ReactNode[] = [];
+
+            headings.forEach((heading, index) => {
+                const tagName = heading.tagName.toLowerCase();
+                const text = heading.textContent || '';
+                const id = heading.getAttribute('id');
+
+                if (tagName === 'h1') {
+                    // First item: page title, scrolls to top
+                    tocItems.push(
+                        <li key={`toc-${index}`}>
+                            <a
+                                href="#"
+                                onClick={(e) => { e.preventDefault(); scrollToTop(); }}
+                                data-level="1"
+                            >
+                                {text}
+                            </a>
+                        </li>
+                    );
+                } else if (tagName === 'h2' && id) {
+                    // h2 with id - level 2
+                    tocItems.push(
+                        <li key={`toc-${index}`}>
+                            <a href={`#${id}`} data-level="2">
+                                {text}
+                            </a>
+                        </li>
+                    );
+                } else if (tagName === 'h3' && id) {
+                    // h3 with id - level 3
+                    tocItems.push(
+                        <li key={`toc-${index}`}>
+                            <a href={`#${id}`} data-level="3">
+                                {text}
+                            </a>
+                        </li>
+                    );
+                }
+            });
+
+            setTocContent(<>{tocItems}</>);
+        };
+
+        // Use setTimeout to ensure DOM is updated
+        const timer = setTimeout(generateToc, 0);
+        return () => clearTimeout(timer);
+    }, [activePage]);
+
     // Show page function
     const showPage = (pageId: string) => {
         setActivePage(pageId);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        // Update TOC based on page
-        if (pageId === 'page-home') {
-            setShowToc(false);
-        } else if (pageId === 'page-overview') {
-            setShowToc(true);
-            setTocContent(
-                <>
-                    <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToTop(); }} data-level="1">Introduction</a></li>
-                    <li><a href="#what-is-kite" data-level="2">What is Kite?</a></li>
-                    <li><a href="#why-kite" data-level="2">Why Kite?</a></li>
-                </>
-            );
-        } else if (pageId === 'page-basics') {
-            setShowToc(true);
-            setTocContent(
-                <>
-                    <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToTop(); }} data-level="1">Basics</a></li>
-                    <li><a href="#package-definition" data-level="2">Package definition and imports</a></li>
-                    <li><a href="#program-entry" data-level="2">Program entry point</a></li>
-                </>
-            );
-        } else if (pageId === 'page-basic-syntax') {
-            setShowToc(true);
-            setTocContent(
-                <>
-                    <li><a href="#" onClick={(e) => { e.preventDefault(); scrollToTop(); }} data-level="1">Basic syntax</a></li>
-                    <li><a href="#package-definition" data-level="2">Package definition and imports</a></li>
-                    <li><a href="#program-entry" data-level="2">Program entry point</a></li>
-                </>
-            );
-        }
     };
 
     return (

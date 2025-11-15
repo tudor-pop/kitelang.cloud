@@ -1,4 +1,5 @@
 import React from 'react';
+import CodeBlock from '../components/CodeBlock';
 
 interface BasicsPageProps {
     onShowPage: (pageId: string) => void;
@@ -16,6 +17,33 @@ export default function BasicsPage({ onShowPage, onCopyCode, copyStatus, pageDat
                 Explore quick examples of Kite&apos;s syntax and key features. Each example demonstrates how to use
                 a specific aspect of the language, with links to detailed documentation at the end.
             </p>
+
+            <h2 id="file-structure">File Structure</h2>
+            <p>
+                Kite source files use the <code>.kite</code> file extension. A <code>.kite</code> file may contain
+                any combination of imports, resource declarations, component definitions, and function declarations.
+            </p>
+
+            <CodeBlock
+                code={`// vars, resources, components, inputs, outputs etc...`}
+                caption="example.kite"
+            />
+
+            <h2 id="variables">Variables</h2>
+            <p>
+                Variables in Kite are declared using the <code>var</code> keyword.
+            </p>
+
+            <div className="info-box">
+                <p>
+                    <strong>💡</strong> var declarations follow the Kite convention of{' '}
+                    <code>&lt;keyword&gt; &lt;type&gt; &lt;name&gt; = &lt;init&gt;</code>
+                </p>
+            </div>
+
+            <CodeBlock code={`var name = "production"
+var count = 3
+var enabled = true`} />
         </div>
     );
 }
