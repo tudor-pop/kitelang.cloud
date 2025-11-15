@@ -56,8 +56,7 @@ export default function QuickStartCards({onShowPage}: QuickStartCardsProps) {
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
             gap: '24px',
-            marginTop: '32px',
-            paddingBottom: '16px'
+            marginTop: '32px'
         }}>
             {cards.map((card, index) => (
                 <QuickStartCard

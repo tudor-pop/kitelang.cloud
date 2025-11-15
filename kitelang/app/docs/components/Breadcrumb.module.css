@@ -12,7 +12,7 @@
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s;
-    border-bottom: 2px solid transparent;
+    border-bottom: 2px solid ;
     display: inline-block;
 }
 

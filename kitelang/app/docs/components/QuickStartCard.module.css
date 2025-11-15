@@ -3,8 +3,10 @@
     display: block;
     background: var(--bg-primary);
     border: 2px solid var(--border-color);
+    border-bottom-color: var(--border-color) !important;
     border-radius: 8px;
     padding: 24px;
+    margin-bottom: 8px;
     transition: transform 0.8s ease, box-shadow 0.8s ease;
     transform: translate(0, 0);
     box-shadow: none;
@@ -13,7 +15,6 @@
 .card:hover {
     transform: translate(-2px, -2px);
     box-shadow: 2px 2px 0 var(--shadow);
-    border-bottom-color: var(--border-color) !important;
 }
 
 .card h3 {
