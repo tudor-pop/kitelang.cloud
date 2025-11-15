@@ -117,8 +117,8 @@
 }
 
 :global(.section-divider) {
-    height: 2px;
-    background: #666666;
+    height: 0;
+    border-top: 2px dashed #e1e1e1;
     margin: 48px 0;
 }
 

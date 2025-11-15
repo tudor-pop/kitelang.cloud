@@ -2,10 +2,11 @@ import React from 'react';
 import EditInfo from '../components/EditInfo';
 
 interface HomePageProps {
+    onShowPage: (pageId: string) => void;
     pageDates: Record<string, string>;
 }
 
-export default function HomePage({ pageDates }: HomePageProps) {
+export default function HomePage({ onShowPage, pageDates }: HomePageProps) {
     return (
         <div className="content-island">
             <h1>Welcome to Kite</h1>
@@ -48,60 +49,76 @@ export default function HomePage({ pageDates }: HomePageProps) {
                 without sacrificing control.
             </p>
 
-            {/* Feature Cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginTop: '48px' }}>
-                {/* Get Started Card */}
-                <div className="feature-card"
-                     style={{ background: '#FAF5FF', border: 'none', borderRadius: '16px', padding: '32px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                        <div style={{ fontSize: '32px' }}>🗺️</div>
-                        <h3 style={{ margin: 0, fontSize: '24px', fontWeight: 600 }}>Get started</h3>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <a href="#overview"
-                           style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '15px', transition: 'color 0.2s' }}>
-                            <span style={{ color: '#F59E0B' }}>✨</span> Overview
-                        </a>
-                        <a href="#install"
-                           style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '15px', transition: 'color 0.2s' }}>
-                            <span style={{ color: '#F59E0B' }}>🔧</span> Install
-                        </a>
-                        <a href="#resources"
-                           style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '15px', transition: 'color 0.2s' }}>
-                            <span style={{ color: '#F59E0B' }}>☀️</span> Resources
-                        </a>
-                    </div>
-                </div>
+            <div className="section-divider"></div>
 
-                {/* Develop Providers Card */}
-                <div className="feature-card"
-                     style={{ background: '#FAF5FF', border: 'none', borderRadius: '16px', padding: '32px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                        <div style={{ fontSize: '32px' }}>👷</div>
-                        <h3 style={{ margin: 0, fontSize: '24px', fontWeight: 600 }}>Developers</h3>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <a href="#develop-plugins"
-                           style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '15px', transition: 'color 0.2s' }}>
-                            <span style={{ color: '#5BB4FF' }}>🎯</span> Create provider plugins
-                        </a>
-                    </div>
-                </div>
+            <h2 style={{ marginTop: '64px', marginBottom: '24px' }}>Getting Started</h2>
 
-                {/* Reference Card */}
-                <div className="feature-card"
-                     style={{ background: '#FAF5FF', border: 'none', borderRadius: '16px', padding: '32px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                        <div style={{ fontSize: '32px' }}>📚</div>
-                        <h3 style={{ margin: 0, fontSize: '24px', fontWeight: 600 }}>Reference</h3>
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                        <a href="#reference"
-                           style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '15px', transition: 'color 0.2s' }}>
-                            <span style={{ color: '#10B981' }}>📚</span> Reference
-                        </a>
-                    </div>
-                </div>
+            <p>Ready to get started with Kite? Here are the essential resources to begin your journey:</p>
+
+            {/* Quick Start Cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px', marginTop: '32px' }}>
+                <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onShowPage('page-overview'); }}
+                    className="quick-start-card"
+                >
+                    <h3>🗺️ Introduction</h3>
+                    <p>Learn about Kite and why it&apos;s the best choice for multi-cloud IaC</p>
+                </a>
+
+                <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onShowPage('page-installation'); }}
+                    className="quick-start-card"
+                >
+                    <h3>📦 Installation</h3>
+                    <p>Install Kite CLI and set up your development environment</p>
+                </a>
+
+                <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onShowPage('page-first-project'); }}
+                    className="quick-start-card"
+                >
+                    <h3>🚀 First Project</h3>
+                    <p>Build your first cloud infrastructure with a step-by-step tutorial</p>
+                </a>
+
+                <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onShowPage('page-basics'); }}
+                    className="quick-start-card"
+                >
+                    <h3>📖 Learn the Basics</h3>
+                    <p>Understand Kite&apos;s syntax, types, and core language features</p>
+                </a>
+
+                <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onShowPage('page-examples'); }}
+                    className="quick-start-card"
+                >
+                    <h3>💡 Example Projects</h3>
+                    <p>Explore sample projects and templates for common use cases</p>
+                </a>
+
+                <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onShowPage('page-develop-plugins'); }}
+                    className="quick-start-card"
+                >
+                    <h3>👷 Develop Plugins</h3>
+                    <p>Create custom provider plugins to extend Kite&apos;s capabilities</p>
+                </a>
+
+                <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); onShowPage('page-reference'); }}
+                    className="quick-start-card"
+                >
+                    <h3>📚 API Reference</h3>
+                    <p>Complete reference documentation for the Kite language</p>
+                </a>
             </div>
         </div>
     );

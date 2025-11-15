@@ -33,7 +33,7 @@ export default function MainContent({
         >
             {/* Home Page */}
             <div className={`page-section ${activePage === 'page-home' ? 'active' : ''}`}>
-                <HomePage pageDates={pageDates} />
+                <HomePage onShowPage={onShowPage} pageDates={pageDates} />
             </div>
 
             {/* Overview Page */}
