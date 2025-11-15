@@ -1,6 +1,4 @@
 import React from 'react';
-import EditInfo from '../components/EditInfo';
-import Breadcrumb from '../components/Breadcrumb';
 
 interface BasicsPageProps {
     onShowPage: (pageId: string) => void;
@@ -12,13 +10,6 @@ interface BasicsPageProps {
 export default function BasicsPage({ onShowPage, onCopyCode, copyStatus, pageDates }: BasicsPageProps) {
     return (
         <div className="content-island">
-            <Breadcrumb
-                items={[
-                    { label: 'Home', onClick: () => onShowPage('page-home') },
-                    { label: 'Basics' }
-                ]}
-            />
-
             <h1>Basic syntax</h1>
 
             <EditInfo date={pageDates['page-basics']} />

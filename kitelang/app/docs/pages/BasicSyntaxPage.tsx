@@ -1,6 +1,4 @@
 import React from 'react';
-import EditInfo from '../components/EditInfo';
-import Breadcrumb from '../components/Breadcrumb';
 
 interface BasicSyntaxPageProps {
     onShowPage: (pageId: string) => void;
@@ -12,17 +10,7 @@ interface BasicSyntaxPageProps {
 export default function BasicSyntaxPage({ onShowPage, onCopyCode, copyStatus, pageDates }: BasicSyntaxPageProps) {
     return (
         <div className="content-island">
-            <Breadcrumb
-                items={[
-                    { label: 'Home', onClick: () => onShowPage('page-home') },
-                    { label: 'Basics', onClick: () => onShowPage('page-basics') },
-                    { label: 'Basic syntax' }
-                ]}
-            />
-
             <h1>Basic syntax</h1>
-
-            <EditInfo date={pageDates['page-basic-syntax']} />
 
             <p>
                 This is a collection of basic syntax elements with examples. At the end of every section, you&apos;ll
