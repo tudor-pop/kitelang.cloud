@@ -116,9 +116,12 @@ The documentation page uses **Next.js with simplified CSS Grid + floating TOC** 
    - Has internal scroll: `overflow-y: auto`
    - Stays fixed when main content scrolls
    - Z-index: 100
+   - **Font**: IBM Plex Sans (professional, technical aesthetic)
+   - **Section headers**: h6 elements (non-expandable) - "Overview" and "Concepts"
    - **Active state highlighting**: Current page shown with subtle purple background (12% opacity)
    - **Hover states**: Non-active items get soft grey background (5% opacity), active item maintains purple background
    - **Responsive**: Hidden on screens ≤1100px (replaced by hamburger menu)
+   - **No breadcrumbs**: Breadcrumb navigation has been removed from all pages
 
 3. **Main with Footer** (`div.main-with-footer`)
    - Column 2 of container
@@ -154,6 +157,7 @@ The documentation page uses **Next.js with simplified CSS Grid + floating TOC** 
    - Has internal scroll: `overflow-y: auto`
    - Only rendered when `showToc` is `true`
    - Z-index: 20
+   - **Font**: IBM Plex Sans (matches sidebar navigation)
    - **Responsive**: Hidden on screens ≤900px
 
 **Scrolling Behavior:**
@@ -211,6 +215,23 @@ The docs page uses **client-side routing** within a single Next.js page:
 2. Update `showPage()` function to handle the new page in `page.tsx`
 3. Add navigation link in `Sidebar.tsx` `.sidebar-menu`
 4. Define TOC structure for that page in the `showPage()` switch statement
+
+#### Key Implementation Details
+
+**Removed Components:**
+- **Breadcrumbs**: Removed from all documentation pages for cleaner navigation
+- **EditInfo component**: "Updated on January 2025" date stamps removed from all pages
+- **"Who Should Use Kite?" section**: Removed from IntroductionPage
+- **Sample code sections**: Package definition, program entry point examples removed from BasicsPage and BasicSyntaxPage
+
+**Sidebar Structure:**
+- Section headers ("Overview", "Concepts") are now **h6 elements** (non-expandable, always visible)
+- Menu items are always visible under their section headers
+- "Basic Types" submenu removed - "Basic Syntax" is now directly under "Concepts"
+- Font: IBM Plex Sans for professional, technical aesthetic
+
+**Page Titles:**
+- "Basic syntax" renamed to "Syntax overview" in BasicsPage and BasicSyntaxPage
 
 ## Design System (Brutalism)
 
@@ -365,12 +386,21 @@ font-family: 'Roboto Mono', 'Consolas', monospace;
 font-family: 'Roboto Mono', 'Consolas', monospace;
 font-size: 0.9em;
 
-/* Sidebar Menu Links - Regular Roboto (NOT monospace) */
-font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+/* Sidebar Menu Links - IBM Plex Sans (professional, technical) */
+font-family: 'IBM Plex Sans', sans-serif;
+font-weight: 500;  /* Menu items */
+/* Section headers: weight 600 */
+
+/* Table of Contents - IBM Plex Sans (matches sidebar) */
+font-family: 'IBM Plex Sans', sans-serif;
+font-weight: 500;  /* Regular links */
+/* Header: weight 700 */
 
 /* Footer Text - Monospace for technical aesthetic */
 font-family: 'Roboto Mono', 'Consolas', monospace;
 ```
+
+**Note**: IBM Plex Sans is loaded only in the docs section (`app/docs/layout.tsx`) and is scoped exclusively to the sidebar navigation and table of contents, giving these navigation elements a professional, technical aesthetic while maintaining excellent readability.
 
 **Heading Scale:**
 ```css
