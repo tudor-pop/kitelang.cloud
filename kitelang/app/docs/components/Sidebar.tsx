@@ -26,13 +26,18 @@ export default function Sidebar({ isOpen, expandedMenus, onToggleMenu, onShowPag
                         </a>
                     </li>
                     <li>
-                        <div
-                            className={`menu-item expandable ${expandedMenus['concepts'] ? 'expanded' : ''}`}
-                            onClick={() => onToggleMenu('concepts')}
-                        >
+                        <h6 style={{
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            margin: '16px 0 8px 16px',
+                            color: 'var(--text-secondary)',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px',
+                            fontFamily: 'IBM Plex Sans, sans-serif'
+                        }}>
                             Overview
-                        </div>
-                        <ul className={`nested ${expandedMenus['concepts'] ? 'show' : ''}`}>
+                        </h6>
+                        <ul className="nested show">
                             <li>
                                 <a
                                     href="#"
@@ -66,32 +71,27 @@ export default function Sidebar({ isOpen, expandedMenus, onToggleMenu, onShowPag
                         </ul>
                     </li>
                     <li>
-                        <div
-                            className={`menu-item expandable ${expandedMenus['types'] ? 'expanded' : ''}`}
-                            onClick={() => onToggleMenu('types')}
-                        >
+                        <h6 style={{
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            margin: '16px 0 8px 16px',
+                            color: 'var(--text-secondary)',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px',
+                            fontFamily: 'IBM Plex Sans, sans-serif'
+                        }}>
                             Concepts
-                        </div>
-                        <ul className={`nested ${expandedMenus['types'] ? 'show' : ''}`}>
+                        </h6>
+                        <ul className="nested show">
                             <li>
-                                <div
-                                    className={`menu-item expandable ${expandedMenus['basicTypes'] ? 'expanded' : ''}`}
-                                    onClick={() => onToggleMenu('basicTypes')}
+                                <a
+                                    href="#"
+                                    onClick={(e) => { e.preventDefault(); onShowPage('page-basic-syntax'); }}
+                                    id="nav-basic-syntax"
+                                    className={`menu-link ${activePage === 'page-basic-syntax' ? 'active' : ''}`}
                                 >
-                                    Basic Types
-                                </div>
-                                <ul className={`nested ${expandedMenus['basicTypes'] ? 'show' : ''}`}>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            onClick={(e) => { e.preventDefault(); onShowPage('page-basic-syntax'); }}
-                                            id="nav-basic-syntax"
-                                            className={`menu-link ${activePage === 'page-basic-syntax' ? 'active' : ''}`}
-                                        >
-                                            Basic Syntax
-                                        </a>
-                                    </li>
-                                </ul>
+                                    Basic Syntax
+                                </a>
                             </li>
                         </ul>
                     </li>
