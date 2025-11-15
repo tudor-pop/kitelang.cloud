@@ -1,0 +1,26 @@
+.breadcrumb {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.breadcrumb a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+    display: inline-block;
+}
+
+.breadcrumb a:hover {
+    color: var(--primary-dark);
+    border-bottom-color: var(--primary-light);
+}
+
+.breadcrumbSeparator {
+    color: var(--text-light);
+}

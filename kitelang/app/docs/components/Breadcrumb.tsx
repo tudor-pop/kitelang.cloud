@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Breadcrumb.module.css';
 
 export interface BreadcrumbItem {
     label: string;
@@ -11,7 +12,7 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb({ items }: BreadcrumbProps) {
     return (
-        <div className="breadcrumb">
+        <div className={styles.breadcrumb}>
             {items.map((item, index) => (
                 <React.Fragment key={index}>
                     {item.onClick ? (
@@ -28,7 +29,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
                         <span>{item.label}</span>
                     )}
                     {index < items.length - 1 && (
-                        <span className="breadcrumb-separator">›</span>
+                        <span className={styles.breadcrumbSeparator}>›</span>
                     )}
                 </React.Fragment>
             ))}
