@@ -53,9 +53,9 @@ count         += 2            // assigns a value of 5 to the variable count`} />
                 and the variable name.
             </p>
 
-            <CodeBlock code={`var int count       = 3            // explicitly declare int
-var string name     = "production" // explicitly declare string
-var boolean enabled = true         // explicitly declare boolean`} />
+            <CodeBlock code={`var number count      = 3             // explicitly declare a number
+var string name    = "production"  // explicitly declare a string
+var boolean enabled = true          // explicitly declare a boolean`} />
         </div>
     );
 }
