@@ -12,8 +12,6 @@ export default function BasicsPage({ onShowPage, onCopyCode, copyStatus, pageDat
         <div className="content-island">
             <h1>Basic syntax</h1>
 
-            <EditInfo date={pageDates['page-basics']} />
-
             <p>
                 This is a collection of basic syntax elements with examples. At the end of every section, you&apos;ll
                 find a link to a detailed description of the related topic.

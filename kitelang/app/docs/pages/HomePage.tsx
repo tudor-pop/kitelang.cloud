@@ -1,5 +1,4 @@
 import React from 'react';
-import EditInfo from '../components/EditInfo';
 import QuickStartCards from '../components/QuickStartCards';
 
 interface HomePageProps {
@@ -11,8 +10,6 @@ export default function HomePage({ onShowPage, pageDates }: HomePageProps) {
     return (
         <div className="content-island">
             <h1>Welcome to Kite</h1>
-
-            <EditInfo date={pageDates['page-home']} />
 
             <p>
                 Kite is a modern IaC language designed for the multi-cloud era. Write your infrastructure once using
