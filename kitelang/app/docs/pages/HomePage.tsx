@@ -1,5 +1,6 @@
 import React from 'react';
 import EditInfo from '../components/EditInfo';
+import QuickStartCards from '../components/QuickStartCards';
 
 interface HomePageProps {
     onShowPage: (pageId: string) => void;
@@ -55,71 +56,7 @@ export default function HomePage({ onShowPage, pageDates }: HomePageProps) {
 
             <p>Ready to get started with Kite? Here are the essential resources to begin your journey:</p>
 
-            {/* Quick Start Cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px', marginTop: '32px' }}>
-                <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); onShowPage('page-overview'); }}
-                    className="quick-start-card"
-                >
-                    <h3>🗺️ Introduction</h3>
-                    <p>Learn about Kite and why it&apos;s the best choice for multi-cloud IaC</p>
-                </a>
-
-                <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); onShowPage('page-installation'); }}
-                    className="quick-start-card"
-                >
-                    <h3>📦 Installation</h3>
-                    <p>Install Kite CLI and set up your development environment</p>
-                </a>
-
-                <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); onShowPage('page-first-project'); }}
-                    className="quick-start-card"
-                >
-                    <h3>🚀 First Project</h3>
-                    <p>Build your first cloud infrastructure with a step-by-step tutorial</p>
-                </a>
-
-                <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); onShowPage('page-basics'); }}
-                    className="quick-start-card"
-                >
-                    <h3>📖 Learn the Basics</h3>
-                    <p>Understand Kite&apos;s syntax, types, and core language features</p>
-                </a>
-
-                <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); onShowPage('page-examples'); }}
-                    className="quick-start-card"
-                >
-                    <h3>💡 Example Projects</h3>
-                    <p>Explore sample projects and templates for common use cases</p>
-                </a>
-
-                <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); onShowPage('page-develop-plugins'); }}
-                    className="quick-start-card"
-                >
-                    <h3>👷 Develop Plugins</h3>
-                    <p>Create custom provider plugins to extend Kite&apos;s capabilities</p>
-                </a>
-
-                <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); onShowPage('page-reference'); }}
-                    className="quick-start-card"
-                >
-                    <h3>📚 API Reference</h3>
-                    <p>Complete reference documentation for the Kite language</p>
-                </a>
-            </div>
+            <QuickStartCards onShowPage={onShowPage} />
         </div>
     );
 }

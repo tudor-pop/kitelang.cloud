@@ -27,7 +27,7 @@
     transition: none;
     width: calc(100% - 48px); /* Account for margins */
     box-sizing: border-box;
-    overflow-x: auto;
+    overflow: visible;
 }
 
 :global([data-theme="dark"] .content-island) {

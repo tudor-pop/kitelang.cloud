@@ -1544,3 +1544,4 @@ The hosting provider (likely GitHub Pages or Netlify) automatically deploys on p
 
 - **LICENSE** - Fair Code license text
 - **LICENSE.html** - Legal terms with FAQ
+- now it is very important to always keep the styles of a component next to the component

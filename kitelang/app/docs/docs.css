@@ -217,37 +217,6 @@
     margin: 48px 0;
 }
 
-/* Quick start cards (Introduction page) */
-.quick-start-card {
-    text-decoration: none;
-    display: block;
-    background: var(--bg-primary);
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    padding: 24px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    transform: translate(0, 0);
-    box-shadow: none;
-}
-
-.quick-start-card:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 4px 4px 0 var(--shadow);
-}
-
-.quick-start-card h3 {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--primary-color);
-}
-
-.quick-start-card p {
-    font-size: 15px;
-    color: var(--text-secondary);
-    margin: 0;
-}
-
 /* Improved link styling */
 .content-island a {
     color: var(--primary-color);
