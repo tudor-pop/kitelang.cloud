@@ -2,12 +2,12 @@ import React from 'react';
 import EditInfo from '../components/EditInfo';
 import Breadcrumb from '../components/Breadcrumb';
 
-interface OverviewPageProps {
+interface IntroductionPageProps {
     onShowPage: (pageId: string) => void;
     pageDates: Record<string, string>;
 }
 
-export default function OverviewPage({ onShowPage, pageDates }: OverviewPageProps) {
+export default function IntroductionPage({ onShowPage, pageDates }: IntroductionPageProps) {
     return (
         <div className="content-island">
             <Breadcrumb

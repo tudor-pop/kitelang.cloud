@@ -3,7 +3,7 @@
 import React from 'react';
 import styles from './MainContent.module.css';
 import HomePage from './pages/HomePage';
-import OverviewPage from './pages/OverviewPage';
+import IntroductionPage from './pages/IntroductionPage';
 import BasicsPage from './pages/BasicsPage';
 import BasicSyntaxPage from './pages/BasicSyntaxPage';
 
@@ -38,7 +38,7 @@ export default function MainContent({
 
             {/* Overview Page */}
             <div className={`page-section ${activePage === 'page-overview' ? 'active' : ''}`}>
-                <OverviewPage
+                <IntroductionPage
                     onShowPage={onShowPage}
                     pageDates={pageDates}
                 />
