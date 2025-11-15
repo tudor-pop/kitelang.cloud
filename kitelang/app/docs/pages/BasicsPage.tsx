@@ -31,7 +31,8 @@ export default function BasicsPage({ onShowPage, onCopyCode, copyStatus, pageDat
 
             <h2 id="variables">Variables</h2>
             <p>
-                Variables in Kite are declared using the <code>var</code> keyword.
+                Variables in Kite are declared using the <code>var</code> keyword. Variables are private to a file,
+                a function, component, or a block scope which means they behave like any other variables in other programming languages.
             </p>
 
             <div className="info-box">
@@ -46,6 +47,15 @@ var enabled = true          // declare a boolean variable and initialize it with
 var count   = 3             // declare a integer variable and initialize it with the value of 3
 
 count         += 2            // assigns a value of 5 to the variable count`} />
+
+            <p>
+                Variables can optionally include an explicit type annotation between the <code>var</code> keyword
+                and the variable name.
+            </p>
+
+            <CodeBlock code={`var int count       = 3            // explicitly declare int
+var string name     = "production" // explicitly declare string
+var boolean enabled = true         // explicitly declare boolean`} />
         </div>
     );
 }
